@@ -1,101 +1,176 @@
 @extends('layouts.app')
 
 @section('content')
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header"><h3 class="float-left">List of categories. </h3><span class="float-right" data-toggle="modal" data-target="#create_category_modal"><i class="fas fa-plus-circle icon-header"></i></span></div>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/datatables.min.css"/">
+<script src="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/colreorder/1.4.1/js/dataTables.colReorder.min.js"></script>
 
-                <div class="card-body">
-                    <table id="category-table" class="table table-striped table-bordered">
+<div class="row">
+    <div class="offset-sm-1 col-sm-10">
+        <div class="row">
+            <div class="col-sm-12 card mb-4 box-shadow pr-0 pl-0">
+                <div class="card-header" id="category-header">
+                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> Category</h4>
+                </div>
+                <div class="card-body pb-0 text-left" id="category-body">
+                    <table class="table" id="category-table">
                         <thead class="thead-dark">
                             <tr>
-                                <th width="5%">#</th>
-                                <th width="60%">Name</th>
-                                <th width="25%">Created_by</th>
-                                <th width="10%" class="text-center">Action</th>
+                                <th scope="col"><input type="checkbox" id="select-all-btn" data-check="false"></th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Updated By</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($categories as $category)
-                            <tr>
-                                <th>{{ $category->id }}</th>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->updater->name }}</td>
-                                <td class="text-center">
-                                    <i class="fas fa-edit icon-small" data-toggle="modal" data-target="#edit_category_modal" data-id="{{ $category->id }}" data-name="{{ $category->name }}"></i>
-                                    <i class="fas fa-trash icon-small" data-id="{{ $category->id }}"></i>
-                                </td>
-                            </tr>
-                            @endforeach
+                            
                         </tbody>
                     </table>
-                    <div class="text-center"> 
-                        {{ $categories->links() }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="create_category_modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Create Category</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group row">
-            <label for="staticEmail" class="col-sm-4 col-form-label">Category Name</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control" id="categoryName_crt" placeholder="Name">
-            </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Create</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="edit_category_modal" tabindex="-1" role="dialog">
+<div id="edit_category_modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Update Category</h5>
+        <h5 class="modal-title">Edit Category</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="form-group row">
-            <label for="staticEmail" class="col-sm-4 col-form-label">Category Name</label>
+            <label for="categoryName_upd" class="col-sm-4 col-form-label">Category Name</label>
             <div class="col-sm-8">
-                <input type="hidden" id="categoryID_upd" value="0">
-                <input type="text" class="form-control" id="categoryName_upd" placeholder="Name">
+                <input type="password" class="form-control" id="categoryName_upd" placeholder="Category Name">
             </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="updateCategory()">Update</button>
+        <button type="button" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(document).ready( function () {
-        $('#category-table').DataTable();
+    var dataTable = null;
+    $(document).ready(function(){
+        var dataObject = [
+            { 
+                data: "all",
+                class: "all-category",
+                render: function(data, type, row){
+                    return '<input type="checkbox" name="selectCol" id="category-'+ data +'" class="check-category" value="'+ data +'" data-column="'+ data +'">';
+                },
+                orderable: false
+            },
+            { 
+                data: "name",
+                class: "name-field"
+            },
+            { 
+                data: "updater",
+                class: "updater-field"
+            },
+            { 
+                data: "action", 
+                class: "action-field",
+                render: function(data, type, row){
+                    return '<span class="mr-2 edit-category" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span onclick=\'deleteCategory('+data+')\'><i class="fas fa-trash"></i></span>';
+                },
+                orderable: false
+            },
+        ];
+
+        dataTable = $('#category-table').DataTable( {
+                            serverSide: true,
+                            aaSorting: [],
+                            stateSave: true,
+                            ajax: "{{ url('/') }}/category/getDataAjax",
+                            columns: dataObject,
+                            pageLength: 25,
+                        });
+
+        //select all checkboxes
+        $("#select-all-btn").change(function(){  
+            $('#category-body tbody input[type="checkbox"]').prop('checked', $(this).prop("checked"));
+            // save localstore
+            setCheckboxChecked();
+        });
+
+        $('body').on('click', '#category-body tbody input[type="checkbox"]', function() {
+            if(false == $(this).prop("checked")){
+                $("#select-all-btn").prop('checked', false); 
+            }
+            if ($('#category-body tbody input[type="checkbox"]:checked').length == $('#category-body tbody input[type="checkbox"]').length ){
+                $("#select-all-btn").prop('checked', true);
+            }
+
+            // save localstore
+            setCheckboxChecked();
+        });
+
+        function setCheckboxChecked(){
+            barcodeCheckList = [];
+            $.each($('.check-barcode'), function( index, value ) {
+                if($(this).prop('checked')){
+                    barcodeCheckList.push($(this).attr("id"));
+                    $(this).closest("tr").addClass('highlight');
+                } else {
+                    $(this).closest("tr").removeClass('highlight');
+                }
+            });
+        }
+
+        function checkCheckboxChecked(){
+            var count_row = 0;
+            var listBarcode = $('.check-barcode');
+            if(listBarcode.length > 0){
+                $.each(listBarcode, function( index, value ) {
+                    if(containsObject($(this).attr("id"), barcodeCheckList)){
+                        $(this).prop('checked', 'true');
+                        count_row++;
+                    }
+                });
+
+                if(count_row == listBarcode.length){
+                    $('#select-all-btn').prop('checked', true);
+                }else{
+                    $('#select-all-btn').prop('checked', false);
+                }
+            }else{
+                $('#select-all-btn').prop('checked', false);
+            }
+        }
+
+        function containsObject(obj, list) {
+            var i;
+            for (i = 0; i < list.length; i++) {
+                if (list[i] === obj) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        $('body').on('click', '#category-body tbody .edit-category', function() {
+            $('#edit_category_modal').modal('show');
+        });
     });
 </script>
+
+<style type="text/css">
+    input[type=checkbox]{
+        cursor: pointer;
+    }
+    .action-field>span{
+        cursor: pointer;
+    }
+</style>
 @endsection

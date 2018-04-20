@@ -24,4 +24,5 @@ Route::get('/contribute', 'SiteController@contribute')->name('contribute');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('category/getDataAjax', 'CategoryController@getDataAjax');
 Route::resource('category', 'CategoryController');

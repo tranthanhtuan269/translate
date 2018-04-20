@@ -27,4 +27,15 @@ class Category extends Model
 	{
 	    return $this->belongsTo('App\User', 'updated_by');
 	}
+
+    public static function getDataForDatatable(){
+        $query = \DB::table('categories')
+                ->join('users', 'users.id', 'categories.updated_by')
+                ->select(
+                        'categories.id as id',
+                        'categories.name as name',
+                        'users.name as updater'
+                        );
+        return collect($query->get());
+    }
 }

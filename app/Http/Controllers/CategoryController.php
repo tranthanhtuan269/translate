@@ -14,8 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(15);;
-        return view('category.index', ['categories' => $categories]);
+        return view('category.index');
     }
 
     /**
@@ -82,5 +81,19 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDataAjax()
+    {
+        $categories = Category::getDataForDatatable();
+
+        return datatables()->of($categories)
+                ->addColumn('action', function ($category) {
+                    return $category->id;
+                })
+                ->addColumn('all', function ($category) {
+                    return $category->id;
+                })
+                ->removeColumn('id')->make(true);
     }
 }
