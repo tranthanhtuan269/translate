@@ -38,4 +38,11 @@ class Category extends Model
                         );
         return collect($query->get());
     }
+
+    public static function deleteMulti($id_list){
+        $list = explode(",",$id_list);
+        $checkCategory = Category::where("created_by", \Auth::user()->id);
+        $checkCategory = $checkCategory->whereIn('id', $list);
+        return ($checkCategory->delete() > 0);
+    }
 }

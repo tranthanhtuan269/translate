@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/datatables.min.css"/">
-<script src="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
-<script src="https://cdn.datatables.net/colreorder/1.4.1/js/dataTables.colReorder.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/api/fnReloadAjax.js"></script>
 
 <div class="row">
     <div class="offset-sm-1 col-sm-10">
@@ -26,6 +26,10 @@
                             
                         </tbody>
                     </table>
+                    <div class="row my-2">
+                        <span style="line-height: 30px; margin-left: 30px;">Action on selected rows:</span>
+                        <span class="btn btn-sm btn-outline-primary ml-2" id="apply-all-btn">Delete</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,12 +49,13 @@
         <div class="form-group row">
             <label for="categoryName_upd" class="col-sm-4 col-form-label">Category Name</label>
             <div class="col-sm-8">
-                <input type="password" class="form-control" id="categoryName_upd" placeholder="Category Name">
+                <input type="hidden" id="categoryID_upd" value="">
+                <input type="text" class="form-control" id="categoryName_upd" placeholder="Category Name">
             </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" id="saveCategory">Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -59,6 +64,7 @@
 
 <script type="text/javascript">
     var dataTable = null;
+    var categoryCheckList = [];
     $(document).ready(function(){
         var dataObject = [
             { 
@@ -81,20 +87,27 @@
                 data: "action", 
                 class: "action-field",
                 render: function(data, type, row){
-                    return '<span class="mr-2 edit-category" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span onclick=\'deleteCategory('+data+')\'><i class="fas fa-trash"></i></span>';
+                    return '<span class="mr-2 edit-category" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span class="delete-category" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
                 },
                 orderable: false
             },
         ];
 
         dataTable = $('#category-table').DataTable( {
-                            serverSide: true,
-                            aaSorting: [],
-                            stateSave: true,
-                            ajax: "{{ url('/') }}/category/getDataAjax",
-                            columns: dataObject,
-                            pageLength: 25,
-                        });
+                        serverSide: true,
+                        aaSorting: [],
+                        stateSave: true,
+                        ajax: "{{ url('/') }}/category/getDataAjax",
+                        columns: dataObject,
+                        pageLength: 25,
+                        fnServerParams: function ( aoData ) {
+                            console.log('call event fnServerParams');
+                        },
+                        fnDrawCallback: function( oSettings ) {
+                            addEventListener();
+                            checkCheckboxChecked();
+                        }
+                    });
 
         //select all checkboxes
         $("#select-all-btn").change(function(){  
@@ -116,23 +129,20 @@
         });
 
         function setCheckboxChecked(){
-            barcodeCheckList = [];
-            $.each($('.check-barcode'), function( index, value ) {
+            categoryCheckList = [];
+            $.each($('.check-category'), function( index, value ) {
                 if($(this).prop('checked')){
-                    barcodeCheckList.push($(this).attr("id"));
-                    $(this).closest("tr").addClass('highlight');
-                } else {
-                    $(this).closest("tr").removeClass('highlight');
+                    categoryCheckList.push($(this).attr("id"));
                 }
             });
         }
 
         function checkCheckboxChecked(){
             var count_row = 0;
-            var listBarcode = $('.check-barcode');
+            var listBarcode = $('.check-category');
             if(listBarcode.length > 0){
                 $.each(listBarcode, function( index, value ) {
-                    if(containsObject($(this).attr("id"), barcodeCheckList)){
+                    if(containsObject($(this).attr("id"), categoryCheckList)){
                         $(this).prop('checked', 'true');
                         count_row++;
                     }
@@ -159,8 +169,129 @@
             return false;
         }
 
-        $('body').on('click', '#category-body tbody .edit-category', function() {
-            $('#edit_category_modal').modal('show');
+        function addEventListener(){
+            $('.edit-category').off('click');
+            $('.edit-category').click(function(){
+                var id      = $(this).attr('data-id');
+                var name    = $(this).attr('data-name');
+
+                $('#edit_category_modal').modal('show');
+
+                $('#categoryID_upd').val(id);
+                $('#categoryName_upd').val(name);
+            });
+
+            $('.delete-category').off('click');
+            $('.delete-category').click(function(){
+                var _self   = $(this);
+                var id      = $(this).attr('data-id');
+                var data    = {
+                    _method             : "DELETE"
+                };
+                $.ajaxSetup({
+                    headers: {
+                      'X-CSRF-TOKEN'    : $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: baseURL+"/category/" + id,
+                    data: data,
+                    method: "POST",
+                    dataType:'json',
+                    success: function (response) {
+                        var html_data = '';
+                        if(response.status == 200){
+                          _self.parent().parent().hide('slow');
+                        }else{
+                          $().toastmessage('showErrorToast', response.Message);
+                        }
+                    },
+                    error: function (data) {
+                      $().toastmessage('showErrorToast', "Login failed. Please check your internet connection and try again.");
+                    }
+                });
+            });
+        }
+
+        $('#saveCategory').click(function(){
+            var data    = {
+                name                : $('#categoryName_upd').val(),
+                _method             : "PUT"
+            };
+            $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN'    : $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: baseURL+"/category/" + $('#categoryID_upd').val(),
+                data: data,
+                method: "POST",
+                dataType:'json',
+                success: function (response) {
+                    var html_data = '';
+                    if(response.status == 200){
+                      location.reload();
+                    }else{
+                      $().toastmessage('showErrorToast', response.Message);
+                    }
+                },
+                error: function (data) {
+                  $().toastmessage('showErrorToast', "Login failed. Please check your internet connection and try again.");
+                }
+            });
+        });
+
+        $('#apply-all-btn').click(function (){
+            var $id_list = '';
+            $.each($('.check-category'), function (key, value){
+                if($(this).prop('checked') == true) {
+                    $id_list += $(this).attr("data-column") + ',';
+                }
+            });
+
+            if ($id_list.length > 0) {
+                var $id_list = '';
+                $.each($('.check-category'), function (key, value){
+                    if($(this).prop('checked') == true) {
+                        $id_list += $(this).attr("data-column") + ',';
+                    }
+                });
+
+                if($id_list.length > 0){
+                    var data = {
+                        id_list:$id_list,
+                        _method:'delete'
+                    };
+                    $.ajaxSetup(
+                    {
+                        headers:
+                        {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ url('/') }}/category/delMulti",
+                        data: data,
+                        success: function (response) {
+                            var obj = $.parseJSON(response);
+                            if(obj.status == 200){
+                                $.each($('.check-category'), function (key, value){
+                                    if($(this).prop('checked') == true) {
+                                        $(this).parent().parent().hide("slow");
+                                    }
+                                });
+                                dataTable.ajax.reload(); 
+                            }
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+            } else {
+
+            }
         });
     });
 </script>

@@ -15,9 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test');
-})->name('test');
+Route::post('/loginAjax', 'SiteController@loginAjax')->name('loginAjax');
+Route::get('/logout', 'SiteController@logout')->name('logout');
 
 Route::get('/contribute', 'SiteController@contribute')->name('contribute');
 
@@ -25,4 +24,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('category/getDataAjax', 'CategoryController@getDataAjax');
+Route::delete('category/delMulti', 'CategoryController@delMulti');
 Route::resource('category', 'CategoryController');
