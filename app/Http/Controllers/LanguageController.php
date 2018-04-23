@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use App\Category;
+use App\Language;
 use Validator,Cache;
 
-class CategoryController extends Controller
+class LanguageController extends Controller
 {
-    private $messages;
+	private $messages;
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('category.index');
+        return view('language.index');
     }
 
     /**
@@ -87,7 +87,7 @@ class CategoryController extends Controller
                 ];
 
                 $messages = [
-                    'name.required'=> isset($this->messages['category.name.required']) ? $this->messages['category.name.required'] : 'The name field is required.',
+                    'name.required'=> isset($this->messages['language.name.required']) ? $this->messages['language.name.required'] : 'The name field is required.',
                 ];
 
 
@@ -101,16 +101,16 @@ class CategoryController extends Controller
                     }
                     $res=array('status'=>"400","Message"=>$errors );
                 }else{
-                    $category = Category::find($id);
-                    if($category){
-                        $category->name         = $request->name;
-                        $category->updated_by   = auth()->user()->id;
-                        $category->updated_at   = date('Y-m-d H:i:s');
+                    $language = Language::find($id);
+                    if($language){
+                        $language->name         = $request->name;
+                        $language->updated_by   = auth()->user()->id;
+                        $language->updated_at   = date('Y-m-d H:i:s');
 
-                        if($category->save()){
-                            $res=array('status'=>"200","Message"=>isset($messages['category.update_success']) ? $messages['category.update_success'] : "The category has been successfully updated!");    
+                        if($language->save()){
+                            $res=array('status'=>"200","Message"=>isset($messages['language.update_success']) ? $messages['language.update_success'] : "The language has been successfully updated!");    
                         }else{
-                            $res=array('status'=>"401","Message"=>isset($this->messages['category.update_error']) ? $this->messages['category.update_error'] : 'The category hasn\' been successfully updated.' );    
+                            $res=array('status'=>"401","Message"=>isset($this->messages['language.update_error']) ? $this->messages['language.update_error'] : 'The language hasn\' been successfully updated.' );    
                         }
                     }
                 }
@@ -130,11 +130,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         if(isset($id)){
-            $category = Category::find($id);
-            if(isset($category) && $category->delete()){
-                $res=array('status'=>"200","Message"=>isset($messages['category.delete_success']) ? $messages['category.delete_success'] : "The category has been successfully deleted!");
+            $language = Language::find($id);
+            if(isset($language) && $language->delete()){
+                $res=array('status'=>"200","Message"=>isset($messages['language.delete_success']) ? $messages['language.delete_success'] : "The language has been successfully deleted!");
             }else{
-                $res=array('status'=>"204","Message"=>isset($messages['category.delete_error']) ? $messages['category.delete_error'] : "The category hasn't been successfully deleted!");
+                $res=array('status'=>"204","Message"=>isset($messages['language.delete_error']) ? $messages['language.delete_error'] : "The language hasn't been successfully deleted!");
             }
             echo json_encode($res);
         }
@@ -145,10 +145,10 @@ class CategoryController extends Controller
             $id_list = $request->input('id_list');
             $id_list = rtrim($id_list, ',');
 
-            if(Category::deleteMulti($id_list)){
-                $res=array('status'=>200,"Message"=>isset($messages['category.delete_multi_success']) ? $messages['category.delete_multi_success'] : "Categories have been successfully deleted!");
+            if(Language::deleteMulti($id_list)){
+                $res=array('status'=>200,"Message"=>isset($messages['language.delete_multi_success']) ? $messages['language.delete_multi_success'] : "Languages have been successfully deleted!");
             }else{
-                $res=array('status'=>"204","Message"=>isset($messages['category.delete_multi_error']) ? $messages['category.delete_multi_error'] : "Categories haven't been successfully deleted!");
+                $res=array('status'=>"204","Message"=>isset($messages['language.delete_multi_error']) ? $messages['language.delete_multi_error'] : "Languages haven't been successfully deleted!");
             }
             echo json_encode($res);
         }
@@ -156,14 +156,14 @@ class CategoryController extends Controller
 
     public function getDataAjax()
     {
-        $categories = Category::getDataForDatatable();
+        $categories = Language::getDataForDatatable();
 
         return datatables()->of($categories)
-                ->addColumn('action', function ($category) {
-                    return $category->id;
+                ->addColumn('action', function ($language) {
+                    return $language->id;
                 })
-                ->addColumn('all', function ($category) {
-                    return $category->id;
+                ->addColumn('all', function ($language) {
+                    return $language->id;
                 })
                 ->removeColumn('id')->make(true);
     }

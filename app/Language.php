@@ -27,4 +27,22 @@ class Language extends Model
 	{
 	    return $this->belongsTo('App\User', 'updated_by');
 	}
+
+    public static function getDataForDatatable(){
+        $query = \DB::table('languages')
+                ->join('users', 'users.id', 'languages.updated_by')
+                ->select(
+                        'languages.id as id',
+                        'languages.name as name',
+                        'users.name as updater'
+                        );
+        return collect($query->get());
+    }
+
+    public static function deleteMulti($id_list){
+        $list = explode(",",$id_list);
+        $checkLanguage = Language::where("created_by", \Auth::user()->id);
+        $checkLanguage = $checkLanguage->whereIn('id', $list);
+        return ($checkLanguage->delete() > 0);
+    }
 }

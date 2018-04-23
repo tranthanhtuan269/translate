@@ -95,7 +95,6 @@
 
         dataTable = $('#category-table').DataTable( {
                         serverSide: true,
-                        aaSorting: [],
                         stateSave: true,
                         ajax: "{{ url('/') }}/category/getDataAjax",
                         columns: dataObject,

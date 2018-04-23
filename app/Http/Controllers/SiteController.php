@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator,File,Auth;
 use Illuminate\Support\Facades\Input;
+use App\Category, App\Language;
 use Cache;
 
 class SiteController extends Controller
@@ -16,6 +17,12 @@ class SiteController extends Controller
         $this->messages = Cache::remember('messages', 1440, function() {
             return \DB::table('messages')->where('category', 2)->pluck('message', 'name');
         });
+    }
+
+    public function welcome(){
+    	$categories = Category::select('id', 'name')->get();
+    	$languages 	= Language::select('id', 'name')->get();
+    	return view('welcome', ['categories' => $categories, 'languages' => $languages]);
     }
 
     public function contribute(){
@@ -64,6 +71,30 @@ class SiteController extends Controller
 	        } catch (\Illuminate\Database\QueryException $ex){
 	            return $ex->getMessage(); 
 	        }
+        }
+    }
+
+    public function uploadAjaxFile(Request $request){
+        $return_data = [];
+        if ($request->ajax()) {
+            if(isset($request->category) && isset($request->category) && isset($request->files)){
+                foreach($request->files as $file){
+                    $string = file_get_contents($file);
+                    $string = str_replace(array("\r", "\n", "\t"), "", $string);
+                    $objs = json_decode($string, true);
+                    foreach ($objs as $obj) {
+                        $obj['slug'] = str_slug($obj['text'], '_');
+                        $return_data[] = $obj;
+                    }
+                }
+                $res=array('status'=>"200","Message"=>isset($messages['translate.upload_success']) ? $messages['translate.upload_success'] : "Upload OK!", "translate" => $return_data);
+            }else{
+                $res=array('status'=>"400","Message"=>isset($messages['translate.upload_unsuccess']) ? $messages['translate.upload_unsuccess'] : "An error occurred during save process, please try again");
+            }
+            echo json_encode($res);
+        }else{
+            $res=array('status'=>"400","Message"=>isset($messages['translate.upload_unsuccess']) ? $messages['translate.upload_unsuccess'] : "An error occurred during save process, please try again");
+            echo json_encode($res);
         }
     }
 
