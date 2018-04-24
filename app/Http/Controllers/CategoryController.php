@@ -35,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -46,7 +46,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $time_created = date('Y-m-d H:i:s');
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        $input = $request->all();
+        $input['created_by'] = auth()->user()->id;
+        $input['updated_by'] = auth()->user()->id;
+        $input['created_at'] = $time_created;
+        $input['updated_at'] = $time_created;
+        
+        Category::create($input);
+        return redirect('category');
     }
 
     /**

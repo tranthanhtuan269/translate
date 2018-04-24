@@ -35,7 +35,8 @@ class Language extends Model
                         'languages.id as id',
                         'languages.name as name',
                         'users.name as updater'
-                        );
+                        )
+                ->orderBy('languages.updated_at', 'desc');
         return collect($query->get());
     }
 

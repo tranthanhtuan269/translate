@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-12 card mb-4 box-shadow pr-0 pl-0">
                 <div class="card-header" id="category-header">
-                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> Category</h4>
+                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> Category <a href="{{ url('/') }}/category/create" class="float-right"><i class="fas fa-plus-circle"></i></a></h4>
                 </div>
                 <div class="card-body pb-0 text-left" id="category-body">
                     <table class="table" id="category-table">
@@ -95,10 +95,15 @@
 
         dataTable = $('#category-table').DataTable( {
                         serverSide: true,
+                        aaSorting: [],
                         stateSave: true,
                         ajax: "{{ url('/') }}/category/getDataAjax",
                         columns: dataObject,
                         pageLength: 25,
+                        colReorder: {
+                            fixedColumnsRight: 1,
+                            fixedColumnsLeft: 1
+                        },
                         fnServerParams: function ( aoData ) {
                             console.log('call event fnServerParams');
                         },
@@ -299,7 +304,8 @@
     input[type=checkbox]{
         cursor: pointer;
     }
-    .action-field>span{
+    .action-field>span,
+    .fa-plus-circle{
         cursor: pointer;
     }
 </style>

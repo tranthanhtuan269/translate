@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function getDataForDatatable(){
+        $query = \DB::table('users')
+                ->select(
+                        'users.id as id',
+                        'users.name as name', 
+                        'users.email as email'
+                        );
+        return collect($query->get());
+    }
 }

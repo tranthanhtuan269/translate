@@ -9,16 +9,16 @@
     <div class="offset-sm-1 col-sm-10">
         <div class="row">
             <div class="col-sm-12 card mb-4 box-shadow pr-0 pl-0">
-                <div class="card-header" id="language-header">
-                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> Languages<a href="{{ url('/') }}/language/create" class="float-right"><i class="fas fa-plus-circle"></i></a></h4>
+                <div class="card-header" id="user-header">
+                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> User</h4>
                 </div>
-                <div class="card-body pb-0 text-left" id="language-body">
-                    <table class="table" id="language-table">
+                <div class="card-body pb-0 text-left" id="user-body">
+                    <table class="table" id="user-table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col"><input type="checkbox" id="select-all-btn" data-check="false"></th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Updated By</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -36,26 +36,26 @@
     </div>
 </div>
 
-<div id="edit_language_modal" class="modal fade" tabindex="-1" role="dialog">
+<div id="edit_user_modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Language</h5>
+        <h5 class="modal-title">Edit User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="form-group row">
-            <label for="languageName_upd" class="col-sm-4 col-form-label">Language Name</label>
+            <label for="userName_upd" class="col-sm-4 col-form-label">User Name</label>
             <div class="col-sm-8">
-                <input type="hidden" id="languageID_upd" value="">
-                <input type="text" class="form-control" id="languageName_upd" placeholder="Language Name">
+                <input type="hidden" id="userID_upd" value="">
+                <input type="text" class="form-control" id="userName_upd" placeholder="User Name">
             </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="saveLanguage">Save</button>
+        <button type="button" class="btn btn-primary" id="saveUser">Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -64,14 +64,37 @@
 
 <script type="text/javascript">
     var dataTable = null;
-    var languageCheckList = [];
+    var userCheckList = [];
     $(document).ready(function(){
+
+        $('#edit_user_modal').on('shown.bs.modal', function () {
+            console.log($('#userID_upd').val());
+            var id      = $('#userID_upd').val();
+            $.ajax({
+                url: baseURL+"/user/getInfoByID/" + id,
+                method: "GET",
+                dataType:'json',
+                success: function (response) {
+                    var html_data = '';
+                    if(response.status == 200){
+                        console.log(response);
+                      // _self.parent().parent().hide('slow');
+                    }else{
+                      $().toastmessage('showErrorToast', response.Message);
+                    }
+                },
+                error: function (data) {
+                  $().toastmessage('showErrorToast', "Login failed. Please check your internet connection and try again.");
+                }
+            });
+        })
+
         var dataObject = [
             { 
                 data: "all",
-                class: "all-language",
+                class: "all-user",
                 render: function(data, type, row){
-                    return '<input type="checkbox" name="selectCol" id="language-'+ data +'" class="check-language" value="'+ data +'" data-column="'+ data +'">';
+                    return '<input type="checkbox" name="selectCol" id="user-'+ data +'" class="check-user" value="'+ data +'" data-column="'+ data +'">';
                 },
                 orderable: false
             },
@@ -80,26 +103,30 @@
                 class: "name-field"
             },
             { 
-                data: "updater",
-                class: "updater-field"
+                data: "email",
+                class: "email-field"
             },
             { 
                 data: "action", 
                 class: "action-field",
                 render: function(data, type, row){
-                    return '<span class="mr-2 edit-language" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span class="delete-language" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
+                    return '<span class="mr-2 edit-user" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span class="delete-user" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
                 },
                 orderable: false
             },
         ];
 
-        dataTable = $('#language-table').DataTable( {
+        dataTable = $('#user-table').DataTable( {
                         serverSide: true,
                         aaSorting: [],
                         stateSave: true,
-                        ajax: "{{ url('/') }}/language/getDataAjax",
+                        ajax: "{{ url('/') }}/user/getDataAjax",
                         columns: dataObject,
                         pageLength: 25,
+                        colReorder: {
+                            fixedColumnsRight: 1,
+                            fixedColumnsLeft: 1
+                        },
                         fnServerParams: function ( aoData ) {
                             console.log('call event fnServerParams');
                         },
@@ -111,16 +138,16 @@
 
         //select all checkboxes
         $("#select-all-btn").change(function(){  
-            $('#language-body tbody input[type="checkbox"]').prop('checked', $(this).prop("checked"));
+            $('#user-body tbody input[type="checkbox"]').prop('checked', $(this).prop("checked"));
             // save localstore
             setCheckboxChecked();
         });
 
-        $('body').on('click', '#language-body tbody input[type="checkbox"]', function() {
+        $('body').on('click', '#user-body tbody input[type="checkbox"]', function() {
             if(false == $(this).prop("checked")){
                 $("#select-all-btn").prop('checked', false); 
             }
-            if ($('#language-body tbody input[type="checkbox"]:checked').length == $('#language-body tbody input[type="checkbox"]').length ){
+            if ($('#user-body tbody input[type="checkbox"]:checked').length == $('#user-body tbody input[type="checkbox"]').length ){
                 $("#select-all-btn").prop('checked', true);
             }
 
@@ -129,20 +156,20 @@
         });
 
         function setCheckboxChecked(){
-            languageCheckList = [];
-            $.each($('.check-language'), function( index, value ) {
+            userCheckList = [];
+            $.each($('.check-user'), function( index, value ) {
                 if($(this).prop('checked')){
-                    languageCheckList.push($(this).attr("id"));
+                    userCheckList.push($(this).attr("id"));
                 }
             });
         }
 
         function checkCheckboxChecked(){
             var count_row = 0;
-            var listBarcode = $('.check-language');
+            var listBarcode = $('.check-user');
             if(listBarcode.length > 0){
                 $.each(listBarcode, function( index, value ) {
-                    if(containsObject($(this).attr("id"), languageCheckList)){
+                    if(containsObject($(this).attr("id"), userCheckList)){
                         $(this).prop('checked', 'true');
                         count_row++;
                     }
@@ -170,19 +197,19 @@
         }
 
         function addEventListener(){
-            $('.edit-language').off('click');
-            $('.edit-language').click(function(){
+            $('.edit-user').off('click');
+            $('.edit-user').click(function(){
                 var id      = $(this).attr('data-id');
                 var name    = $(this).attr('data-name');
 
-                $('#edit_language_modal').modal('show');
+                $('#edit_user_modal').modal('show');
 
-                $('#languageID_upd').val(id);
-                $('#languageName_upd').val(name);
+                $('#userID_upd').val(id);
+                $('#userName_upd').val(name);
             });
 
-            $('.delete-language').off('click');
-            $('.delete-language').click(function(){
+            $('.delete-user').off('click');
+            $('.delete-user').click(function(){
                 var _self   = $(this);
                 var id      = $(this).attr('data-id');
                 var data    = {
@@ -194,7 +221,7 @@
                     }
                 });
                 $.ajax({
-                    url: baseURL+"/language/" + id,
+                    url: baseURL+"/user/" + id,
                     data: data,
                     method: "POST",
                     dataType:'json',
@@ -213,9 +240,9 @@
             });
         }
 
-        $('#saveLanguage').click(function(){
+        $('#saveUser').click(function(){
             var data    = {
-                name                : $('#languageName_upd').val(),
+                name                : $('#userName_upd').val(),
                 _method             : "PUT"
             };
             $.ajaxSetup({
@@ -224,7 +251,7 @@
                 }
             });
             $.ajax({
-                url: baseURL+"/language/" + $('#languageID_upd').val(),
+                url: baseURL+"/user/" + $('#userID_upd').val(),
                 data: data,
                 method: "POST",
                 dataType:'json',
@@ -244,7 +271,7 @@
 
         $('#apply-all-btn').click(function (){
             var $id_list = '';
-            $.each($('.check-language'), function (key, value){
+            $.each($('.check-user'), function (key, value){
                 if($(this).prop('checked') == true) {
                     $id_list += $(this).attr("data-column") + ',';
                 }
@@ -252,7 +279,7 @@
 
             if ($id_list.length > 0) {
                 var $id_list = '';
-                $.each($('.check-language'), function (key, value){
+                $.each($('.check-user'), function (key, value){
                     if($(this).prop('checked') == true) {
                         $id_list += $(this).attr("data-column") + ',';
                     }
@@ -272,12 +299,12 @@
                     });
                     $.ajax({
                         type: "POST",
-                        url: "{{ url('/') }}/language/delMulti",
+                        url: "{{ url('/') }}/user/delMulti",
                         data: data,
                         success: function (response) {
                             var obj = $.parseJSON(response);
                             if(obj.status == 200){
-                                $.each($('.check-language'), function (key, value){
+                                $.each($('.check-user'), function (key, value){
                                     if($(this).prop('checked') == true) {
                                         $(this).parent().parent().hide("slow");
                                     }

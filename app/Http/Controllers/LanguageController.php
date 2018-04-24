@@ -35,7 +35,7 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        //
+        return view('language.create');
     }
 
     /**
@@ -46,7 +46,18 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $time_created = date('Y-m-d H:i:s');
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        $input = $request->all();
+        $input['created_by'] = auth()->user()->id;
+        $input['updated_by'] = auth()->user()->id;
+        $input['created_at'] = $time_created;
+        $input['updated_at'] = $time_created;
+        
+        Language::create($input);
+        return redirect('language');
     }
 
     /**

@@ -25,6 +25,11 @@
       <a class="p-2 text-dark" href="#">Pricing</a>
     </nav> -->
     @if ( Auth::check() )
+      @if( Auth::user()->id == 1)
+      <a class="btn btn-outline-primary mr-2" href="{{ url('user') }}">User</a>
+      <a class="btn btn-outline-primary mr-2" href="{{ url('role') }}">Role</a>
+      <a class="btn btn-outline-primary mr-2" href="{{ url('permission') }}">Permission</a>
+      @endif
       <a class="btn btn-outline-primary mr-2" href="{{ url('category') }}">Category</a>
       <a class="btn btn-outline-primary mr-2" href="{{ url('language') }}">Language</a>
       <a class="btn btn-outline-primary mr-2" href="{{ url('translate') }}">Translate</a>

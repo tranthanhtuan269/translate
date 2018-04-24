@@ -23,6 +23,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('user/getDataAjax', 'UserController@getDataAjax');
+Route::get('user/getInfoByID/{id}', 'UserController@getInfoByID');
+Route::resource('user', 'UserController');
+
+Route::get('role/getDataAjax', 'RoleController@getDataAjax');
+Route::resource('role', 'RoleController');
+
+Route::get('permission/getDataAjax', 'PermissionController@getDataAjax');
+Route::resource('permission', 'PermissionController');
+
 Route::get('category/getDataAjax', 'CategoryController@getDataAjax');
 Route::delete('category/delMulti', 'CategoryController@delMulti');
 Route::resource('category', 'CategoryController');

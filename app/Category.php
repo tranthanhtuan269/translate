@@ -35,7 +35,8 @@ class Category extends Model
                         'categories.id as id',
                         'categories.name as name',
                         'users.name as updater'
-                        );
+                        )
+                ->orderBy('categories.updated_at', 'desc');
         return collect($query->get());
     }
 
