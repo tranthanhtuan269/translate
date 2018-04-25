@@ -83,7 +83,45 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            try{
+                $rules = [
+                    'name'    => 'required',
+                    'route'   => 'required',
+                ];
+
+                $messages = [
+
+                ];
+
+                $validator = Validator::make(Input::all(), $rules, $messages);
+                if ($validator->fails()) {
+                    $errors = [];
+                    foreach ($validator->errors()->toArray() as $key => $value) {
+                        foreach ($value as $k => $v) {
+                            $errors[$key] = $v;
+                        }
+                    }
+                    $res=array('status'=>"400","Message"=>$errors );
+                }else{
+                    $permission = Permission::find($id);
+                    if($permission){
+                        $permission->name         = $request->name;
+                        $permission->route        = strtolower($request->route);
+                        $permission->updated_at   = date('Y-m-d H:i:s');
+
+                        if($permission->save()){
+                            $res=array('status'=>"200","Message"=>isset($messages['permission.update_success']) ? $messages['permission.update_success'] : "The permission has been successfully updated!");    
+                        }else{
+                            $res=array('status'=>"401","Message"=>isset($this->messages['permission.update_error']) ? $this->messages['permission.update_error'] : 'The permission hasn\' been successfully updated.' );    
+                        }
+                    }
+                }
+                echo json_encode($res);
+            } catch (\Illuminate\Database\QueryException $ex){
+                return $ex->getMessage(); 
+            }
+        }
     }
 
     /**

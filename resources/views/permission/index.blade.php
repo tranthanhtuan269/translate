@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="permissionName_upd" class="col-sm-4 col-form-label">Permission Route</label>
+            <label for="permissionRoute_upd" class="col-sm-4 col-form-label">Permission Route</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control" id="permissionRoute_upd" placeholder="Permission Route">
             </div>
@@ -249,6 +249,7 @@
         $('#savePermission').click(function(){
             var data    = {
                 name                : $('#permissionName_upd').val(),
+                route               : $('#permissionRoute_upd').val(),
                 _method             : "PUT"
             };
             $.ajaxSetup({

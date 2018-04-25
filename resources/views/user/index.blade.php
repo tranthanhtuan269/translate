@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-12 card mb-4 box-shadow pr-0 pl-0">
                 <div class="card-header" id="user-header">
-                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> User</h4>
+                    <h4 class="my-0 font-weight-normal"><i class="far fa-list-alt"></i> User <a href="{{ url('/') }}/user/create" class="float-right"><i class="fas fa-plus-circle"></i></a></h4>
                 </div>
                 <div class="card-body pb-0 text-left" id="user-body">
                     <table class="table" id="user-table">
@@ -51,6 +51,42 @@
             <div class="col-sm-8">
                 <input type="hidden" id="userID_upd" value="">
                 <input type="text" class="form-control" id="userName_upd" placeholder="User Name">
+                <div id="userName_err" class="alert alert-danger custom-alert d-none" role="alert">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="userEmail_upd" class="col-sm-4 col-form-label">User Email</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="userEmail_upd" placeholder="User Email">
+                <div id="userEmail_err" class="alert alert-danger custom-alert d-none" role="alert">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="userPassword" class="col-sm-4 col-form-label">User Password</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="userPassword" name="password" value="not_change">
+                <div id="userPass_err" class="alert alert-danger custom-alert d-none" role="alert">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="passConfirm" class="col-sm-4 col-form-label">Password Comfirm</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="passConfirm" name="confirmpassword" value="not_change">
+                <div id="userPassConf_err" class="alert alert-danger custom-alert d-none" role="alert">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="userEmail_upd" class="col-sm-4 col-form-label">User Role</label>
+            <div class="col-sm-8">
+                {{ Form::select('role_id', $roles, null, ['class' => 'form-control', 'id' => 'role_id']) }}
             </div>
         </div>
       </div>
@@ -77,10 +113,13 @@
                 success: function (response) {
                     var html_data = '';
                     if(response.status == 200){
-                        console.log(response);
-                      // _self.parent().parent().hide('slow');
+                        if(response.user.role_id == null){
+                            $("#role_id").val(2);
+                        }else{
+                            $("#role_id").val(response.user.role_id);
+                        }
                     }else{
-                      $().toastmessage('showErrorToast', response.Message);
+                        $().toastmessage('showErrorToast', response.Message);
                     }
                 },
                 error: function (data) {
@@ -110,7 +149,7 @@
                 data: "action", 
                 class: "action-field",
                 render: function(data, type, row){
-                    return '<span class="mr-2 edit-user" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span class="delete-user" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
+                    return '<span class="mr-2 edit-user" data-id="'+data+'" data-name="'+row.name+'" data-email="'+row.email+'"><i class="fas fa-edit"></i></span><span class="delete-user" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
                 },
                 orderable: false
             },
@@ -199,13 +238,21 @@
         function addEventListener(){
             $('.edit-user').off('click');
             $('.edit-user').click(function(){
-                var id      = $(this).attr('data-id');
-                var name    = $(this).attr('data-name');
+                var id              = $(this).attr('data-id');
+                var name            = $(this).attr('data-name');
+                var email           = $(this).attr('data-email');
 
                 $('#edit_user_modal').modal('show');
 
                 $('#userID_upd').val(id);
                 $('#userName_upd').val(name);
+                $('#userEmail_upd').val(email);
+                $('#userPassword').val("not_change");
+                $('#passConfirm').val("not_change");
+                $("#userName_err").addClass("d-none");
+                $("#userEmail_err").addClass("d-none");
+                $("#userPass_err").addClass("d-none");
+                $("#userPassConf_err").addClass("d-none");
             });
 
             $('.delete-user').off('click');
@@ -243,6 +290,10 @@
         $('#saveUser').click(function(){
             var data    = {
                 name                : $('#userName_upd').val(),
+                email               : $('#userEmail_upd').val(),
+                password            : $('#userPassword').val(),
+                confirmpassword     : $('#passConfirm').val(),
+                role_id             : $('#role_id').val(),
                 _method             : "PUT"
             };
             $.ajaxSetup({
@@ -260,7 +311,25 @@
                     if(response.status == 200){
                       location.reload();
                     }else{
-                      $().toastmessage('showErrorToast', response.Message);
+
+                        var message = response.Message;
+                        if(typeof message.name != 'undefined'){
+                            $("#userName_err").html(message.name);
+                            $("#userName_err").removeClass("d-none");
+                        }
+                        if(typeof message.email != 'undefined'){
+                            $("#userEmail_err").html(message.email);
+                            $("#userEmail_err").removeClass("d-none");
+                        }
+                        if(typeof message.password != 'undefined'){
+                            $("#userPass_err").html(message.password);
+                            $("#userPass_err").removeClass("d-none");
+                        }
+                        if(typeof message.confirmpassword != 'undefined'){
+                            $("#userPassConf_err").html(message.confirmpassword);
+                            $("#userPassConf_err").removeClass("d-none");
+                        }
+                      // $().toastmessage('showErrorToast', response.Message);
                     }
                 },
                 error: function (data) {
@@ -329,6 +398,12 @@
     }
     .action-field>span{
         cursor: pointer;
+    }
+    .custom-alert{
+        padding: 5px;
+        font-size: 13px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 </style>
 @endsection

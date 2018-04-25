@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/api/fnReloadAjax.js"></script>
+<!-- Include the plugin's CSS and JS: -->
+<script type="text/javascript" src="{{ url('/') }}/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="{{ url('/') }}/css/bootstrap-multiselect.css" type="text/css"/>
 
 <div class="row">
     <div class="offset-sm-1 col-sm-10">
@@ -52,6 +55,19 @@
                 <input type="text" class="form-control" id="roleName_upd" placeholder="Role Name">
             </div>
         </div>
+        <div class="form-group row">
+            <label for="roleName_upd" class="col-sm-4 col-form-label">Permission List</label>
+            <div class="col-sm-8" id="permistion-group">
+                <select id="permission-list" multiple="multiple">
+                    <?php 
+                        $UPermissions = App\Permission::where('group', 1)->get();
+                    ?>
+                    @foreach($UPermissions as $permission)
+                    <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="saveRole">Save</button>
@@ -65,21 +81,20 @@
     var dataTable = null;
     var roleCheckList = [];
     $(document).ready(function(){
-
         $('#edit_role_modal').on('shown.bs.modal', function () {
             var id      = $('#roleID_upd').val();
             $.ajax({
                 url: baseURL+"/role/getInfoByID/" + id,
                 method: "GET",
-                dataType:'json',
+                dataType:'html',
                 success: function (response) {
-                    var html_data = '';
-                    if(response.status == 200){
-                        console.log(response);
-                      // _self.parent().parent().hide('slow');
-                    }else{
-                      $().toastmessage('showErrorToast', response.Message);
-                    }
+                    $("#permistion-group").html('<select id="permission-list" multiple="multiple"></select>');
+                    $("#permission-list").html(response);
+                    $('#permission-list').multiselect({
+                        includeSelectAllOption: true,
+                        includeSelectAllIfMoreThan: 0,
+                        numberDisplayed: 2
+                    });
                 },
                 error: function (data) {
                   $().toastmessage('showErrorToast', "Login failed. Please check your internet connection and try again.");
@@ -237,6 +252,7 @@
         $('#saveRole').click(function(){
             var data    = {
                 name                : $('#roleName_upd').val(),
+                permission          : $('#permission-list').val().toString() + ',',
                 _method             : "PUT"
             };
             $.ajaxSetup({
@@ -323,6 +339,17 @@
     }
     .action-field>span{
         cursor: pointer;
+    }
+    .multiselect-container>li>a>label{
+        padding: 3px;
+    }
+    .dropdown-menu{
+        min-width: 18rem;
+    }
+    .multiselect-group b{
+        color: #666;
+        text-decoration: underline;
+        font-style: italic;
     }
 </style>
 @endsection

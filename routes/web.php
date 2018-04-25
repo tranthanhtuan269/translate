@@ -28,6 +28,7 @@ Route::get('user/getInfoByID/{id}', 'UserController@getInfoByID');
 Route::resource('user', 'UserController');
 
 Route::get('role/getDataAjax', 'RoleController@getDataAjax');
+Route::get('role/getInfoByID/{id}', 'RoleController@getInfoByID');
 Route::resource('role', 'RoleController');
 
 Route::get('permission/getDataAjax', 'PermissionController@getDataAjax');

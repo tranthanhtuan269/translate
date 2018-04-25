@@ -15,7 +15,7 @@ class RoleController extends Controller
     public function __construct()
     {
         $this->messages = Cache::remember('messages', 1440, function() {
-            return \DB::table('messages')->where('role', 1)->pluck('message', 'name');
+            return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
         });
     }
     /**
@@ -35,8 +35,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all();
-        return view('role.create', ['permissions' => $permissions]);
+        return view('role.create');
     }
 
     /**
@@ -47,7 +46,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $time_created = date('Y-m-d H:i:s');
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        $input = $request->all();
+        $input['permission'] = $input['permission-checked'];
+        $input['created_at'] = $time_created;
+        $input['updated_at'] = $time_created;
+        unset($input['_token']);
+        unset($input['permission-checked']);
+        
+        Role::create($input);
+        return redirect('role');
     }
 
     /**
@@ -91,7 +102,44 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            try{
+                $rules = [
+                    'name'=>'required'
+                ];
+
+                $messages = [
+                    'name.required'=> isset($this->messages['role.name.required']) ? $this->messages['role.name.required'] : 'The name field is required.',
+                ];
+
+                $validator = Validator::make(Input::all(), $rules, $messages);
+                if ($validator->fails()) {
+                    $errors = [];
+                    foreach ($validator->errors()->toArray() as $key => $value) {
+                        foreach ($value as $k => $v) {
+                            $errors[] = $v;
+                        }
+                    }
+                    $res=array('status'=>"400","Message"=>$errors );
+                }else{
+                    $role = Role::find($id);
+                    if($role){
+                        $role->name         = $request->name;
+                        $role->permission   = $request->permission;
+                        $role->updated_at   = date('Y-m-d H:i:s');
+
+                        if($role->save()){
+                            $res=array('status'=>"200","Message"=>isset($messages['role.update_success']) ? $messages['role.update_success'] : "The role has been successfully updated!");    
+                        }else{
+                            $res=array('status'=>"401","Message"=>isset($this->messages['role.update_error']) ? $this->messages['role.update_error'] : 'The role hasn\' been successfully updated.' );    
+                        }
+                    }
+                }
+                echo json_encode($res);
+            } catch (\Illuminate\Database\QueryException $ex){
+                return $ex->getMessage(); 
+            }
+        }
     }
 
     /**
@@ -139,5 +187,41 @@ class RoleController extends Controller
                     return $role->id;
                 })
                 ->removeColumn('id')->make(true);
+    }
+
+    public function getInfoByID($id){
+        if($id){
+            $role = Role::find($id);
+            if($role){
+                $permission = rtrim($role->permission, ',');
+                $permission_list = explode(",",$permission);
+
+                $permissions = Permission::select('id', 'name', 'group')->orderby('group', 'asc')->get();
+                $group = 1;
+                $html = '<optgroup label="User Group">';
+                foreach ($permissions as $p) {
+                    if(in_array($p->id, $permission_list)){
+                        if($p->group != $group){
+                            $html .= '</optgroup>';
+                            if($p->group == 2)
+                            $html .= '<optgroup label="Category Group">';
+                            if($p->group == 3)
+                            $html .= '<optgroup label="Language Group">';
+                            if($p->group == 4)
+                            $html .= '<optgroup label="Translate Group">';
+                            $group = $p->group;
+                        }
+                        $html .= '<option value="'.$p->id.'" selected="selected">'.$p->name.'</option>';
+                        
+                    }else{
+                        $html .= '<option value="'.$p->id.'">'.$p->name.'</option>';
+                    }
+                }
+                $html .= '</optgroup>';
+
+                return $html;
+            }
+        }
+        return '';
     }
 }
