@@ -35,8 +35,8 @@
       <a class="btn btn-outline-primary mr-2" href="{{ url('translate') }}">Translate</a>
       <a class="btn btn-outline-primary mr-2" href="{{ url('logout') }}">Logout</a>
     @else
-      @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@contribute')
-      <a class="btn btn-outline-primary mr-2" href="{{ url('contribute') }}">Contribute</a>
+      @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@contributor')
+      <a class="btn btn-outline-primary mr-2" href="{{ url('contributor') }}">Contributor</a>
       @endif
       @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@welcome')
       <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#login-form">

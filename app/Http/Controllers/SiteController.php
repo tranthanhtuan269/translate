@@ -25,16 +25,6 @@ class SiteController extends Controller
     	return view('welcome', ['categories' => $categories, 'languages' => $languages]);
     }
 
-    public function contribute(){
-        $categories = Category::pluck('name', 'id');
-        $languages  = Language::pluck('name', 'id');
-    	return view('site.contribute', ['categories' => $categories, 'languages' => $languages]);
-    }
-
-    public function storeContribute(Request $request){
-    	
-    }
-
     public function loginAjax(Request $request){
     	if ($request->ajax()) {
 	        try{

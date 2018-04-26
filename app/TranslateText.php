@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class TranslateText extends Model
 {
+    protected $table = 'translate_text';
     protected $fillable = [
-    						'source', 'trans', 'category_id', 
-    						'language_id', 'translate_type', 'status', 
-    						'slug', 'created_by', 'updated_by'
+    						'source_text', 'trans_text', 'category_id', 
+    						'language_id', 'translate_type', 'slug', 'created_by', 'updated_by'
     					];
     
     public function category()

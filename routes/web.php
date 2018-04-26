@@ -17,7 +17,9 @@ Route::post('/loginAjax', 'SiteController@loginAjax')->name('loginAjax');
 Route::post('/uploadAjaxFile', 'SiteController@uploadAjaxFile')->name('uploadAjaxFile');
 Route::get('/logout', 'SiteController@logout')->name('logout');
 
-Route::get('/contribute', 'SiteController@contribute')->name('contribute');
+Route::get('/contributor', 'ContributorController@index')->name('contributor');
+Route::get('/contributor/get', 'ContributorController@getDataByAjax')->name('contributor.get');
+Route::post('/contributor', 'ContributorController@store')->name('contributor.store');
 
 Auth::routes();
 
