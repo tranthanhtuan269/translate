@@ -16,4 +16,10 @@ class Role extends Model
                         );
         return collect($query->get());
     }
+
+    public static function deleteMulti($id_list){
+        $list = explode(",",$id_list);
+        $checkRole = Role::whereIn('id', $list);
+        return ($checkRole->delete() > 0);
+    }
 }

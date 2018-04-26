@@ -29,9 +29,11 @@ Route::resource('user', 'UserController');
 
 Route::get('role/getDataAjax', 'RoleController@getDataAjax');
 Route::get('role/getInfoByID/{id}', 'RoleController@getInfoByID');
+Route::delete('role/delMulti', 'RoleController@delMulti');
 Route::resource('role', 'RoleController');
 
 Route::get('permission/getDataAjax', 'PermissionController@getDataAjax');
+Route::delete('permission/delMulti', 'PermissionController@delMulti');
 Route::resource('permission', 'PermissionController');
 
 Route::get('category/getDataAjax', 'CategoryController@getDataAjax');

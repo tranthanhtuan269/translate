@@ -18,4 +18,10 @@ class Permission extends Model
                         );
         return collect($query->get());
     }
+
+    public static function deleteMulti($id_list){
+        $list = explode(",",$id_list);
+        $checkPermission = Permission::whereIn('id', $list);
+        return ($checkPermission->delete() > 0);
+    }
 }

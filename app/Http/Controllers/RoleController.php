@@ -200,17 +200,17 @@ class RoleController extends Controller
                 $group = 1;
                 $html = '<optgroup label="User Group">';
                 foreach ($permissions as $p) {
+                    if($p->group != $group){
+                        $html .= '</optgroup>';
+                        if($p->group == 2)
+                        $html .= '<optgroup label="Category Group">';
+                        if($p->group == 3)
+                        $html .= '<optgroup label="Language Group">';
+                        if($p->group == 4)
+                        $html .= '<optgroup label="Translate Group">';
+                        $group = $p->group;
+                    }
                     if(in_array($p->id, $permission_list)){
-                        if($p->group != $group){
-                            $html .= '</optgroup>';
-                            if($p->group == 2)
-                            $html .= '<optgroup label="Category Group">';
-                            if($p->group == 3)
-                            $html .= '<optgroup label="Language Group">';
-                            if($p->group == 4)
-                            $html .= '<optgroup label="Translate Group">';
-                            $group = $p->group;
-                        }
                         $html .= '<option value="'.$p->id.'" selected="selected">'.$p->name.'</option>';
                         
                     }else{

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 @if(Auth::check())
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
@@ -169,20 +170,55 @@
     });
 </script>
 @else
+<style type="text/css">
+    .login-form{
+        border:1px solid #ccc;
+        border-radius: 60px;
+    }
+    .login-header{
+        text-align: center;
+        margin: 26px auto;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    .login-body{
+        padding: 10px 20px;
+    }
+</style>
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        <div class="col-md-4 mt-4">
+            <div class="login-form">
+                <div class="login-header">Translation Tool</div>
 
-                <div class="card-body">
+                <div class="login-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
 
-                    You are logged in!
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="userEmail" name="email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" id="userPassword" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center mb-0">
+                            <button type="submit" class="btn btn-primary mb-2">Login</button>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

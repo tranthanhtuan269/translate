@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TOH Translate Tool</title>
+    <title>TOH Translation Tool</title>
     
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -17,7 +17,7 @@
 </head>
 <body>
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">TOH Translate Tool</h5>
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{{ url('/') }}" class="text-dark">TOH Translation Tool</a></h5>
     <!-- <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="#">Features</a>
       <a class="p-2 text-dark" href="#">Enterprise</a>
@@ -35,8 +35,13 @@
       <a class="btn btn-outline-primary mr-2" href="{{ url('translate') }}">Translate</a>
       <a class="btn btn-outline-primary mr-2" href="{{ url('logout') }}">Logout</a>
     @else
-      <a class="btn btn-outline-primary mr-2" href="#">Contribute</a>
-      <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#login-form">Sign in</a>
+      @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@contribute')
+      <a class="btn btn-outline-primary mr-2" href="{{ url('contribute') }}">Contribute</a>
+      @endif
+      @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@welcome')
+      <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#login-form">
+      Sign in</a>
+      @endif
     @endif
   </div>
 

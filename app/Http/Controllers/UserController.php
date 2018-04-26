@@ -169,7 +169,29 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(isset($id)){
+            $user = User::find($id);
+            if(isset($user) && $user->delete()){
+                $res=array('status'=>"200","Message"=>isset($messages['user.delete_success']) ? $messages['user.delete_success'] : "The user has been successfully deleted!");
+            }else{
+                $res=array('status'=>"204","Message"=>isset($messages['user.delete_error']) ? $messages['user.delete_error'] : "The user hasn't been successfully deleted!");
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function delMulti(Request $request){
+        if(isset($request) && $request->input('id_list')){
+            $id_list = $request->input('id_list');
+            $id_list = rtrim($id_list, ',');
+
+            if(User::deleteMulti($id_list)){
+                $res=array('status'=>200,"Message"=>isset($messages['user.delete_multi_success']) ? $messages['user.delete_multi_success'] : "User have been successfully deleted!");
+            }else{
+                $res=array('status'=>"204","Message"=>isset($messages['user.delete_multi_error']) ? $messages['user.delete_multi_error'] : "User haven't been successfully deleted!");
+            }
+            echo json_encode($res);
+        }
     }
 
     public function getDataAjax()

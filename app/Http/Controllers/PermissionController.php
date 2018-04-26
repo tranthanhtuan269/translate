@@ -9,6 +9,15 @@ use Validator,Cache;
 
 class PermissionController extends Controller
 {
+    private $messages;
+
+    public function __construct()
+    {
+        $this->messages = Cache::remember('messages', 1440, function() {
+            return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -132,7 +141,29 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(isset($id)){
+            $permission = Permission::find($id);
+            if(isset($permission) && $permission->delete()){
+                $res=array('status'=>"200","Message"=>isset($messages['permission.delete_success']) ? $messages['permission.delete_success'] : "The permission has been successfully deleted!");
+            }else{
+                $res=array('status'=>"204","Message"=>isset($messages['permission.delete_error']) ? $messages['permission.delete_error'] : "The permission hasn't been successfully deleted!");
+            }
+            echo json_encode($res);
+        }
+    }
+
+    public function delMulti(Request $request){
+        if(isset($request) && $request->input('id_list')){
+            $id_list = $request->input('id_list');
+            $id_list = rtrim($id_list, ',');
+
+            if(Permission::deleteMulti($id_list)){
+                $res=array('status'=>200,"Message"=>isset($messages['permission.delete_multi_success']) ? $messages['permission.delete_multi_success'] : "Permission have been successfully deleted!");
+            }else{
+                $res=array('status'=>"204","Message"=>isset($messages['permission.delete_multi_error']) ? $messages['permission.delete_multi_error'] : "Permission haven't been successfully deleted!");
+            }
+            echo json_encode($res);
+        }
     }
 
     public function getDataAjax()

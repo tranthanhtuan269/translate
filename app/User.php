@@ -36,4 +36,10 @@ class User extends Authenticatable
                         );
         return collect($query->get());
     }
+
+    public static function deleteMulti($id_list){
+        $list = explode(",",$id_list);
+        $checkUser = User::whereIn('id', $list);
+        return ($checkUser->delete() > 0);
+    }
 }
