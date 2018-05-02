@@ -13,27 +13,42 @@
     <script src="{{ url('/') }}/js/alertify.js"></script>
     <script src="{{ url('/') }}/js/jquery.toastmessage.js"></script>
     <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url('/') }}/css/style.css">
     <base href="{{ url('/') }}" target="_self">
 </head>
 <body>
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{{ url('/') }}" class="text-dark">TOH Translation Tool</a></h5>
+  <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 bg-white border-bottom box-shadow nav-holder">
+    <h5 class="my-0 font-weight-normal nav-left"><a href="{{ url('/') }}" class="text-dark company-name">TOH Translation Tool</a></h5>
     <!-- <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="#">Features</a>
       <a class="p-2 text-dark" href="#">Enterprise</a>
       <a class="p-2 text-dark" href="#">Support</a>
       <a class="p-2 text-dark" href="#">Pricing</a>
     </nav> -->
+
     @if ( Auth::check() )
-      @if( Auth::user()->id == 1)
-      <a class="btn btn-outline-primary mr-2" href="{{ url('user') }}">User</a>
-      <a class="btn btn-outline-primary mr-2" href="{{ url('role') }}">Role</a>
-      <a class="btn btn-outline-primary mr-2" href="{{ url('permission') }}">Permission</a>
-      @endif
-      <a class="btn btn-outline-primary mr-2" href="{{ url('category') }}">Category</a>
-      <a class="btn btn-outline-primary mr-2" href="{{ url('language') }}">Language</a>
-      <a class="btn btn-outline-primary mr-2" href="{{ url('translate') }}">Translate</a>
-      <a class="btn btn-outline-primary mr-2" href="{{ url('logout') }}">Logout</a>
+    <ul class="nav justify-content-center nav-center">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Parameter <br/>Configuration</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{ url('category') }}">Category</a>
+          <a class="dropdown-item" href="{{ url('language') }}">Language</a>
+          <a class="dropdown-item" href="{{ url('group') }}">Translate Group</a>
+          @if( Auth::user()->id == 1)
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ url('user') }}">User</a>
+          <a class="dropdown-item" href="{{ url('role') }}">Role</a>
+          <a class="dropdown-item" href="{{ url('permission') }}">Permission</a>
+          @endif
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center" href="#">Translation <br />Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center" href="#">Review <br />Contribute</a>
+      </li>
+    </ul>
     @else
       @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@contributor')
       <a class="btn btn-outline-primary mr-2" href="{{ url('contributor') }}">Contributor</a>
@@ -42,6 +57,18 @@
       <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#login-form">
       Sign in</a>
       @endif
+    @endif
+    @if ( Auth::check() )
+    <!-- <a class="btn btn-outline-primary mr-2 nav-right" href="{{ url('logout') }}">Logout</a> -->
+    <ul class="nav justify-content-center nav-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img src="{{ url('/') }}/images/avatar/{{ Auth::user()->id }}.jpg" width="60" height="60" class="img-thumbnail rounded-circle" /> {{ Auth::user()->name }}</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{ url('category') }}">Profile</a>
+          <a class="dropdown-item" href="{{ url('logout') }}">Logout</a>
+        </div>
+      </li>
+    </ul>
     @endif
   </div>
 
@@ -97,6 +124,9 @@
   <script src="{{ url('/') }}/js/script.js"></script>
   <script type="text/javascript">
     var baseURL = $('base').attr('href');
+    setTimeout(function(){
+       window.location.reload(1);
+    }, 200000);
     $('#signInBtn').click(function(){
       var inputEmail      = $('#inputEmail').val();
       var inputPassword   = $('#inputPassword').val();

@@ -69,7 +69,30 @@ class SiteController extends Controller
     public function uploadAjaxFile(Request $request){
         $return_data = [];
         if ($request->ajax()) {
-            if(isset($request->category) && isset($request->category) && isset($request->files)){
+            if(isset($request->files)){
+                foreach($request->files as $file){
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $destinationPath = base_path('/public/uploads');
+                    $textFile = date('His') . $filename;
+                    $file->move($destinationPath, $textFile);
+                    $return_data[] = ['filename' => $filename, 'new_name' => $textFile ];
+                }
+                $res=array('status'=>"200","Message"=>isset($messages['translate.upload_success']) ? $messages['translate.upload_success'] : "Upload OK!", "fileUploaded" => $return_data);
+            }else{
+                $res=array('status'=>"400","Message"=>isset($messages['translate.upload_unsuccess']) ? $messages['translate.upload_unsuccess'] : "An error occurred during save process, please try again");
+            }
+            echo json_encode($res);
+        }else{
+            $res=array('status'=>"400","Message"=>isset($messages['translate.upload_unsuccess']) ? $messages['translate.upload_unsuccess'] : "An error occurred during save process, please try again");
+            echo json_encode($res);
+        }
+    }
+
+    public function uploadAjaxFileAndProcess(Request $request){
+        $return_data = [];
+        if ($request->ajax()) {
+            if(isset($request->files)){
                 foreach($request->files as $file){
                     $string = file_get_contents($file);
                     $string = str_replace(array("\r", "\n", "\t"), "", $string);

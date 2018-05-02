@@ -15,11 +15,12 @@ Route::get('/', 'SiteController@welcome');
 
 Route::post('/loginAjax', 'SiteController@loginAjax')->name('loginAjax');
 Route::post('/uploadAjaxFile', 'SiteController@uploadAjaxFile')->name('uploadAjaxFile');
+Route::post('/uploadAjaxFileAndProcess', 'SiteController@uploadAjaxFileAndProcess')->name('uploadAjaxFileAndProcess');
 Route::get('/logout', 'SiteController@logout')->name('logout');
 
 Route::get('/contributor', 'ContributorController@index')->name('contributor');
-Route::get('/contributor/get', 'ContributorController@getDataByAjax')->name('contributor.get');
-Route::post('/contributor', 'ContributorController@store')->name('contributor.store');
+Route::get('/contributor/getData', 'ContributorController@getData')->name('contributor.getData');
+Route::put('/contributor', 'ContributorController@update')->name('contributor.update');
 
 Auth::routes();
 
@@ -45,3 +46,7 @@ Route::resource('category', 'CategoryController');
 Route::get('language/getDataAjax', 'LanguageController@getDataAjax');
 Route::delete('language/delMulti', 'LanguageController@delMulti');
 Route::resource('language', 'LanguageController');
+
+Route::get('group/getDataAjax', 'TranslateGroupController@getDataAjax');
+Route::delete('group/delMulti', 'TranslateGroupController@delMulti');
+Route::resource('group', 'TranslateGroupController');

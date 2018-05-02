@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category, App\Language;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        return view('home');
+        $categories = Category::pluck('name', 'id');
+        $languages  = Language::pluck('name', 'id');
+        return view('home', ['categories' => $categories, 'languages' => $languages]);
     }
 }

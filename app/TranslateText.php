@@ -31,4 +31,12 @@ class TranslateText extends Model
 	{
 	    return $this->belongsTo('App\User', 'updated_by');
 	}
+
+    public static function updateContribute($category_id, $language_id, $slug, $trans_text){
+        return TranslateText::where('category_id', $category_id)
+                    ->where('language_id', $language_id)
+                    ->where('slug', $slug)
+                    ->update(['trans_text' => $trans_text, 'translate_type' => 1]);
+
+    }
 }

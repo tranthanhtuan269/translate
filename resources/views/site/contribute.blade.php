@@ -1,63 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<style type="text/css">
-    .custom-label{
-        line-height: 38px;
-    }
-    .head-hold{
-        padding: 8px;
-        border:1px solid #ccc;
-        text-align: center
-    }
-    .body-hold{
-        min-height: 300px;
-        border:1px solid #ccc;
-        border-top:none;
-        display: table;
-        width: 100%;
-        text-align: left;
-        position: relative;
-    }
-    .body-hold>span.text-content{
-        padding: 8px;
-        display: table-cell;
-        vertical-align: middle;
-    }
-    .body-hold>.button-group{
-        position: absolute;
-        bottom: 6px;
-        left: 2%;
-        width: 100%;
-    }
-    .body-hold>.button-group>#improve_btn{
-        width: 96%;
-    }
-    .body-hold>.button-group>#save_btn,
-    .body-hold>.button-group>#cancel_btn{
-        width: 48%;
-    }
-    .pointer{
-        cursor: pointer;
-    }
-    .body-hold>span.text-editor{
-        display: none;
-    }
-    .body-hold>span.text-editor>#comment{
-        border: none;
-    }
-</style>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h1 class="header-text">Language contributor</h1>
+            <h1 class="header-text border-bottom mb-4 mt-2">Language contributor</h1>
 
             <div class="form-group row">
-                <div class="col-sm-1 custom-label">Category:</div>
+                <div class="col-sm-1 custom-label font-weight-bold">Category:</div>
                 <div class="col-sm-5">
                     {{ Form::select('category', $categories, null, ['placeholder' => 'Pick a category', 'class' => 'form-control']) }}
                 </div>
-                <div class="col-sm-1 custom-label">Language:</div>
+                <div class="col-sm-1 custom-label font-weight-bold">Language:</div>
                 <div class="col-sm-5">
                     {{ Form::select('language', $languages, null, ['placeholder' => 'Pick a language', 'class' => 'form-control']) }}
                 </div>
@@ -68,18 +22,17 @@
         <div class="col-md-12">
             <div class="form-group row">
                 <div class="col-sm-6" id="source-hold">
-                    <div class="head-hold"><span class="prev-text"><i class="fas fa-chevron-left mr-3 pointer"></i></span>SOURCE TEXT (<span id="currentNumber">1</span>/<span id="totalNumber">12</span>)<span class="next-text"><i class="fas fa-chevron-right ml-3 pointer"></i></span></div>
+                    <div class="head-hold"><span class="prev-text"><i class="fas fa-chevron-left mr-3 pointer"></i></span> <span class="font-weight-bold"> SOURCE TEXT (<span id="currentNumber">0</span>/<span id="totalNumber">0</span>)</span><span class="next-text"><i class="fas fa-chevron-right ml-3 pointer"></i></span></div>
                     <div class="body-hold">
-                        <span class="text-content">aaa</span>
+                        <span class="text-content"></span>
                     </div>
                 </div>
                 <div class="col-sm-6" id="translate-hold">
-                    <div class="head-hold">TRANSLATED TEXT</div>
+                    <div class="head-hold"> <span class="font-weight-bold">TRANSLATED TEXT</span></div>
                     <div class="body-hold">
-                        <span class="text-content">aaa</span>
-                        <span class="text-editor"><textarea class="form-control" id="comment" rows="10"></textarea></span>
+                        <span class="text-content" contenteditable="false"></span>
                         <div class="button-group">
-                            <button class="btn btn-primary" id="improve_btn">Improve this translation</button>
+                            <button class="btn btn-primary" id="improve_btn" disabled>Improve this translation</button>
                             <button class="btn btn-primary d-none" id="save_btn">Improve</button>
                             <button class="btn btn-default d-none" id="cancel_btn">Cancel</button>
                         </div>
@@ -96,58 +49,58 @@
     }, 1000000);
 
     $(document).ready(function(){
-        $listText = [];
+        var $listText = [];
+        var currentText = 0;
+        var totalText = 0;
         $('.next-text').click(function(){
-            var currentText = parseInt($('#currentNumber').html());
-            var totalText   = parseInt($('#totalNumber').html());
+            currentText = parseInt($('#currentNumber').html());
+            totalText   = parseInt($('#totalNumber').html());
 
             if(currentText == totalText){
                 return;   
             }else{
                 $('#currentNumber').html(currentText+1);
+                importText(currentText);
             }
         });
 
         $('.prev-text').click(function(){
-            var currentText = parseInt($('#currentNumber').html());
-            var totalText   = parseInt($('#totalNumber').html());
+            currentText = parseInt($('#currentNumber').html());
+            totalText   = parseInt($('#totalNumber').html());
 
             if(currentText == 1) {
                 return;
             }else{
+                console.log(currentText);
                 $('#currentNumber').html(currentText-1);
+                importText(currentText-2);
             } 
         });
 
         $( "select[name=category]" ).change(function() {
-            if($( "select[name=category]" ).val() != ''){
-                if($( "select[name=language]" ).val() != ''){
-                    // request
-                    RequestGetTranslate();
-                }
+            if($( "select[name=language]" ).val() != '' && $( "select[name=category]" ).val() != ''){
+                // request
+                RequestGetTranslate();
             }
         });
 
         $( "select[name=language]" ).change(function() {
-            if($( "select[name=language]" ).val() != ''){
-                if($( "select[name=category]" ).val() != ''){
-                    // request
-                    RequestGetTranslate();
-                }
+            if($( "select[name=language]" ).val() != '' && $( "select[name=category]" ).val() != ''){
+                // request
+                RequestGetTranslate();
             }
         });
 
         $('#translate-hold .button-group #improve_btn').click(function(){
             var $translate_content = $('#translate-hold .text-content').html();
-            $('#translate-hold .text-editor #comment').val($translate_content);
             BeforeProcess();
         });
 
         $('#translate-hold .button-group #save_btn').click(function(){
-            var $translate_content  = $('#translate-hold .text-editor #comment').val();
+            var $translate_content  = $('#translate-hold .text-content').html();
             var category            = $('select[name=category]').val();
             var language            = $('select[name=language]').val();
-            var slug                = $('input[name=slug]').val();
+            var slug                = $('#source-hold>.body-hold>.text-content').attr('data-slug');
             
             var _self   = $(this);
             var id      = $(this).attr('data-id');
@@ -155,7 +108,7 @@
                 category            : category,
                 language            : language,
                 slug                : slug,
-                translate           : $translate_content,
+                trans_text          : $translate_content,
                 _method             : "PUT"
             };
             $.ajaxSetup({
@@ -164,16 +117,35 @@
                 }
             });
             $.ajax({
-                url: baseURL+"/contributor/save",
+                url: baseURL+"/contributor",
                 data: data,
                 method: "POST",
                 dataType:'json',
                 success: function (response) {
                     var html_data = '';
                     if(response.status == 200){
-                      _self.parent().parent().hide('slow');
+                        $().toastmessage('showSuccessToast', response.Message);
+                        console.log('currentText: ' + currentText);
+                        console.log('totalText: ' + totalText);
+                        if(currentText + 1 < totalText){
+                            // pop object from array
+                            $listText.splice(currentText,1);
+                            totalText = totalText -1;
+                            importText(currentText);
+                        }else{
+                            if(totalText > 1){
+                                // pop object from array
+                                $listText.splice(currentText,1);
+                                totalText = totalText -1;
+                                importText(currentText-1);    
+                            }else{
+                                // pop object from array
+                                $listText.splice(currentText,1);
+                                loadNull();
+                            }
+                        }
                     }else{
-                      $().toastmessage('showErrorToast', response.Message);
+                        $().toastmessage('showErrorToast', response.Message);
                     }
                 },
                 error: function (data) {
@@ -186,21 +158,23 @@
 
         $('#translate-hold .button-group #cancel_btn').click(function(){
             $translate_content = $('#translate-hold .text-content').html();
-            $('#translate-hold .text-editor #comment').val($translate_content);
+            $('#translate-hold .text-content').html($translate_content);
             AfterProcess();
         });
 
         function BeforeProcess(){
-            $('#translate-hold .text-content').hide();
-            $('#translate-hold .text-editor').show();
+            // $('#translate-hold .text-content').hide();
+            // $('#translate-hold .text-editor').show();
+            $('#translate-hold .text-content').attr('contenteditable', true);
             $('#translate-hold .button-group #save_btn').removeClass('d-none');
             $('#translate-hold .button-group #cancel_btn').removeClass('d-none');
             $('#translate-hold .button-group #improve_btn').addClass('d-none');
         }
 
         function AfterProcess(){
-            $('#translate-hold .text-content').show();
-            $('#translate-hold .text-editor').hide();
+            // $('#translate-hold .text-content').show();
+            // $('#translate-hold .text-editor').hide();
+            $('#translate-hold .text-content').attr('contenteditable', false);
             $('#translate-hold .button-group #save_btn').addClass('d-none');
             $('#translate-hold .button-group #cancel_btn').addClass('d-none');
             $('#translate-hold .button-group #improve_btn').removeClass('d-none');
@@ -213,28 +187,60 @@
                 category            : category,
                 language            : language
             };
-            $.ajaxSetup({
-                headers: {
-                  'X-CSRF-TOKEN'    : $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             $.ajax({
-                url: baseURL+"/contributor/get",
+                url: baseURL+"/contributor/getData",
                 data: data,
                 method: "GET",
                 dataType:'json',
                 success: function (response) {
                     var html_data = '';
                     if(response.status == 200){
-
+                        $listText = response.translateTexts;
+                        totalText = $listText.length;
+                        if(totalText == 0){
+                            loadNull();
+                        }else{
+                            // load the first object
+                            importText(0);
+                            $('#improve_btn').removeAttr("disabled");    
+                        }
                     }else{
-                      $().toastmessage('showErrorToast', response.Message);
+                        // show error message
+                        $().toastmessage('showErrorToast', response.Message);
                     }
                 },
                 error: function (data) {
                   $().toastmessage('showErrorToast', "Login failed. Please check your internet connection and try again.");
                 }
             });
+        }
+
+        function importText(id) {
+            console.log(id);
+            // set current text to 1
+            $('#currentNumber').html(id + 1);
+            // set total of text equal $listText.length
+            $('#totalNumber').html($listText.length);
+            $('#source-hold>.body-hold>.text-content').html($listText[id].source_text);
+            $('#source-hold>.body-hold>.text-content').attr('data-slug', $listText[id].slug);
+            $('#translate-hold>.body-hold>.text-content').html($listText[id].trans_text);
+        }
+
+        function loadNull(){
+            $('#currentNumber').html('0');
+            $('#totalNumber').html('0');
+            $('#source-hold>.body-hold>.text-content').html('');
+            $('#translate-hold>.body-hold>.text-content').html('');
+            $('#improve_btn').attr("disabled", "disabled");
+        }
+
+        function changeDataOfList( slug, trans ) {
+            for (var i in $listText) {
+                if ($listText[i].slug == slug) {
+                    $listText[i].trans = trans;
+                    break; //Stop this loop, we found it!
+                }
+            }
         }
     });
 </script>

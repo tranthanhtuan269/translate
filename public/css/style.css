@@ -1,0 +1,101 @@
+.company-name{
+	padding: 22px 10px 20px;
+	border: 1px solid #ccc;
+	margin-left: 8px;
+}
+
+.nav-holder{
+	width: 100%;
+	min-height: 80px;
+}
+
+.nav-left{
+	width: 20%;
+	position: absolute;
+	line-height: 80px;
+}
+
+.nav-center{
+	width: 60%;
+	position: absolute;
+	left: 20%;
+}
+
+.nav-center li{
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	margin: 5px;
+}
+
+.nav-right{
+	width: 20%;
+	position: absolute;
+	right: 0;
+	line-height: 60px;
+}
+
+.nav-right .dropdown-item{
+	line-height: 32px;
+}
+
+.custom-label{
+    line-height: 38px;
+}
+.head-hold{
+    padding: 8px;
+    border:1px solid #ccc;
+    text-align: center
+}
+.body-hold{
+    min-height: 300px;
+    border:1px solid #ccc;
+    border-top:none;
+    display: table;
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+.body-hold>span.text-content{
+    padding: 8px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.body-hold>.button-group{
+    position: absolute;
+    bottom: 6px;
+    left: 2%;
+    width: 100%;
+}
+.body-hold>.button-group>#improve_btn{
+    width: 96%;
+}
+.body-hold>.button-group>#save_btn,
+.body-hold>.button-group>#cancel_btn{
+    width: 48%;
+}
+.pointer{
+    cursor: pointer;
+}
+
+.input-files{
+	min-height: 100px;
+    display: table;
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+
+.input-files>.text-content{
+    padding: 8px;
+    display: table-cell;
+    vertical-align: middle;
+    border:1px solid #ccc;
+}
+
+.input-files-label{
+	line-height: 95px;
+}
+
+.input-browse{
+	line-height: 95px;
+}

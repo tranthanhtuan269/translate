@@ -6,7 +6,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/api/fnReloadAjax.js"></script>
 
 <div class="row">
-    <div class="offset-sm-1 col-sm-10">
+    <div class="col-sm-12 px-5">
         <div class="row">
             <div class="col-sm-12 card mb-4 box-shadow pr-0 pl-0">
                 <div class="card-header" id="language-header">
