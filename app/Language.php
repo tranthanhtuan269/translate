@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
 {
-    protected $fillable = ['name', 'created_by', 'updated_by'];
+    protected $fillable = ['name', 'code', 'created_by', 'updated_by'];
     
     public function commonTexts()
     {
@@ -34,6 +34,7 @@ class Language extends Model
                 ->select(
                         'languages.id as id',
                         'languages.name as name',
+                        'languages.code as code',
                         'users.name as updater'
                         )
                 ->orderBy('languages.updated_at', 'desc');

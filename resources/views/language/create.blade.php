@@ -18,6 +18,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="languageCode" class="col-sm-2 col-form-label">Language Code</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="languageCode" name="code" placeholder="Language Code">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="offset-sm-5 col-sm-2">
                             <button type="submit" class="btn btn-primary mb-2">Submit</button>
                             </div>
@@ -28,8 +34,4 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    
-</script>
 @endsection

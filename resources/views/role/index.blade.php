@@ -332,24 +332,4 @@
         });
     });
 </script>
-
-<style type="text/css">
-    input[type=checkbox]{
-        cursor: pointer;
-    }
-    .action-field>span{
-        cursor: pointer;
-    }
-    .multiselect-container>li>a>label{
-        padding: 3px;
-    }
-    .dropdown-menu{
-        min-width: 18rem;
-    }
-    .multiselect-group b{
-        color: #666;
-        text-decoration: underline;
-        font-style: italic;
-    }
-</style>
 @endsection

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Role;
 use Validator,Cache;
+use App\Http\Requests\UpdateInfoRequest;
+use Auth;
 
 class UserController extends Controller
 {
@@ -216,6 +218,32 @@ class UserController extends Controller
             $res=array('status'=>"200","Message"=>isset($messages['user.find_success']) ? $messages['user.find_success'] : "The user is exist!", "user" => $user);    
         }else{
             $res=array('status'=>"401","Message"=>isset($this->messages['user.find_unsuccess']) ? $this->messages['category.find_unsuccess'] : 'The user is not exist.', "user" => null);    
+        }
+        echo json_encode($res);
+    }
+
+    public function updateSefl(UpdateInfoRequest $request)
+    {
+        if(strlen($request->password) > 0 || strlen($request->repassword) > 0) {
+                $this->validate($request, [
+                    'password' => 'min:6|max:100|same:repassword',
+                    'repassword' => 'min:6|max:100'
+                ]);
+            }
+        
+        $user           = Auth::user();
+        $user->name     = $request->name;
+        if(strlen($request->avatar) > 0){
+            $user->avatar   = $request->avatar;
+        }
+        if(strlen($request->password) > 0){
+            $user->password = Hash::make($request->password);
+        }
+
+        if($user->save()){
+            $res=array('status'=>"200","Message"=>isset($messages['user.update_success']) ? $messages['user.update_success'] : "The update has been success!", "user" => $user);    
+        }else{
+            $res=array('status'=>"401","Message"=>isset($this->messages['user.update_unsuccess']) ? $this->messages['user.update_unsuccess'] : 'The user is not exist.', "user" => null);    
         }
         echo json_encode($res);
     }

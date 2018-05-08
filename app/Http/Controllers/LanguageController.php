@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreLanguageRequest;
+use App\Http\Requests\UpdateLanguageRequest;
 use Illuminate\Support\Facades\Input;
 use App\Language;
 use Validator,Cache;
@@ -44,12 +46,9 @@ class LanguageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLanguageRequest $request)
     {
         $time_created = date('Y-m-d H:i:s');
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
         $input = $request->all();
         $input['created_by'] = auth()->user()->id;
         $input['updated_by'] = auth()->user()->id;
@@ -89,46 +88,24 @@ class LanguageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLanguageRequest $request, $id)
     {
-        if ($request->ajax()) {
-            try{
-                $rules = [
-                    'name'=>'required'
-                ];
+        $language = Language::find($id);
+        if($language){
+            $language->name         = $request->name;
+            $language->code         = $request->code;
+            $language->updated_by   = auth()->user()->id;
+            $language->updated_at   = date('Y-m-d H:i:s');
 
-                $messages = [
-                    'name.required'=> isset($this->messages['language.name.required']) ? $this->messages['language.name.required'] : 'The name field is required.',
-                ];
-
-
-                $validator = Validator::make(Input::all(), $rules, $messages);
-                if ($validator->fails()) {
-                    $errors = [];
-                    foreach ($validator->errors()->toArray() as $key => $value) {
-                        foreach ($value as $k => $v) {
-                            $errors[] = $v;
-                        }
-                    }
-                    $res=array('status'=>"400","Message"=>$errors );
-                }else{
-                    $language = Language::find($id);
-                    if($language){
-                        $language->name         = $request->name;
-                        $language->updated_by   = auth()->user()->id;
-                        $language->updated_at   = date('Y-m-d H:i:s');
-
-                        if($language->save()){
-                            $res=array('status'=>"200","Message"=>isset($messages['language.update_success']) ? $messages['language.update_success'] : "The language has been successfully updated!");    
-                        }else{
-                            $res=array('status'=>"401","Message"=>isset($this->messages['language.update_error']) ? $this->messages['language.update_error'] : 'The language hasn\' been successfully updated.' );    
-                        }
-                    }
-                }
-                echo json_encode($res);
-            } catch (\Illuminate\Database\QueryException $ex){
-                return $ex->getMessage(); 
+            if($language->save()){
+                $res=array('status'=>"200","Message"=>isset($messages['language.update_success']) ? $messages['language.update_success'] : "The language has been successfully updated!");    
+            }else{
+                $res=array('status'=>"401","Message"=>isset($this->messages['language.update_error']) ? $this->messages['language.update_error'] : 'The language hasn\' been successfully updated.' );
             }
+            echo json_encode($res);
+        }else{
+            $res=array('status'=>"401","Message"=>isset($this->messages['language.update_error']) ? $this->messages['language.update_error'] : 'The language hasn\' been successfully updated.' );
+            echo json_encode($res);
         }
     }
 

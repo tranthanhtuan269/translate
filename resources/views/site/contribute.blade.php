@@ -4,7 +4,11 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h1 class="header-text border-bottom mb-4 mt-2">Language contributor</h1>
+            <h1 class="header-text mb-4 mt-2">
+                <span class="border-bottom">
+                Language contributor
+                </span>
+            </h1>
 
             <div class="form-group row">
                 <div class="col-sm-1 custom-label font-weight-bold">Category:</div>
@@ -44,10 +48,6 @@
 </div>
 
 <script type="text/javascript">
-    setTimeout(function(){
-       window.location.reload(1);
-    }, 1000000);
-
     $(document).ready(function(){
         var $listText = [];
         var currentText = 0;
@@ -97,6 +97,7 @@
         });
 
         $('#translate-hold .button-group #save_btn').click(function(){
+            var $source_content     = $('#source-hold .text-content').html();
             var $translate_content  = $('#translate-hold .text-content').html();
             var category            = $('select[name=category]').val();
             var language            = $('select[name=language]').val();
@@ -108,6 +109,7 @@
                 category            : category,
                 language            : language,
                 slug                : slug,
+                source_text         : $source_content,
                 trans_text          : $translate_content,
                 _method             : "PUT"
             };

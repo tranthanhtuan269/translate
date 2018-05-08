@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateContributeRequest extends FormRequest
+class DeleteTranslateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class UpdateContributeRequest extends FormRequest
     public function rules()
     {
         return [
-            'category'      => 'required',
-            'language'      => 'required',
-            'slug'          => 'required',
-            'source_text'   => 'required',
-            'trans_text'    => 'required'
+            'slug' => 'required|max:255',
+            'language' => 'required',
+            'category' => 'required'
         ];
     }
 }

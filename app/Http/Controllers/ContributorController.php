@@ -26,7 +26,16 @@ class ContributorController extends Controller
     }
 
     public function update(UpdateContributeRequest $request){
-        $translate = TranslateText::updateContribute($request->category, $request->language, $request->slug, $request->trans_text);
+        $translate = TranslateText::updateContribute(
+                                                    $request->category, 
+                                                    $request->category, 
+                                                    $request->language, 
+                                                    $request->language, 
+                                                    $request->slug, 
+                                                    $request->source_text, 
+                                                    $request->trans_text, 
+                                                    1
+                                                );
 
         $res=array('status'=>200,"Message"=>isset($messages['category.delete_multi_success']) ? $messages['category.delete_multi_success'] : "Translate text has been updated! Thank you for your contribution!");
     	echo json_encode($res);

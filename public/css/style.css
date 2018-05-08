@@ -41,11 +41,18 @@
 .custom-label{
     line-height: 38px;
 }
+
+.custom-label-right{
+    float: right;
+    text-align: right;
+}
+
 .head-hold{
     padding: 8px;
     border:1px solid #ccc;
     text-align: center
 }
+
 .body-hold{
     min-height: 300px;
     border:1px solid #ccc;
@@ -55,24 +62,29 @@
     text-align: left;
     position: relative;
 }
+
 .body-hold>span.text-content{
     padding: 8px;
     display: table-cell;
     vertical-align: middle;
 }
+
 .body-hold>.button-group{
     position: absolute;
     bottom: 6px;
     left: 2%;
     width: 100%;
 }
+
 .body-hold>.button-group>#improve_btn{
     width: 96%;
 }
+
 .body-hold>.button-group>#save_btn,
 .body-hold>.button-group>#cancel_btn{
     width: 48%;
 }
+
 .pointer{
     cursor: pointer;
 }
@@ -98,4 +110,62 @@
 
 .input-browse{
 	line-height: 95px;
+}
+
+.edit-group,
+.delete-group{
+    cursor: pointer;
+}
+
+#group-table_filter,
+#translate-table_filter{
+    display: none;
+}
+
+#group-table .languages-field{
+    position: relative;
+}
+#group-table .languages-field .group-language-plus{
+    position: absolute;
+    right: 8px;
+    top: 15px;
+    cursor: pointer;
+    color: #3fce08;
+}
+
+input[type=checkbox]{
+    cursor: pointer;
+}
+.action-field>span{
+    cursor: pointer;
+}
+.multiselect-container>li>a>label{
+    padding: 3px;
+}
+.dropdown-menu{
+    min-width: 18rem;
+}
+.multiselect-group b{
+    color: #666;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+.languages-field .language-name{
+    width: 96%;
+}
+
+.download-btn{
+    float: right;
+    color: #0000EE;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.export-list{
+    float:right;
+    padding-right: 35px;
+    color: #0000EE;
+    cursor: pointer;
+    text-decoration: underline;
 }

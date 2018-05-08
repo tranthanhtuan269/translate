@@ -18,6 +18,7 @@
                             <tr>
                                 <th scope="col"><input type="checkbox" id="select-all-btn" data-check="false"></th>
                                 <th scope="col">Name</th>
+                                <th scope="col">Code</th>
                                 <th scope="col">Updated By</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -53,6 +54,12 @@
                 <input type="text" class="form-control" id="languageName_upd" placeholder="Language Name">
             </div>
         </div>
+        <div class="form-group row">
+            <label for="languageCode_upd" class="col-sm-4 col-form-label">Language Code</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="languageCode_upd" placeholder="Language Code">
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="saveLanguage">Save</button>
@@ -80,6 +87,10 @@
                 class: "name-field"
             },
             { 
+                data: "code",
+                class: "code-field"
+            },
+            { 
                 data: "updater",
                 class: "updater-field"
             },
@@ -87,7 +98,7 @@
                 data: "action", 
                 class: "action-field",
                 render: function(data, type, row){
-                    return '<span class="mr-2 edit-language" data-id="'+data+'" data-name="'+row.name+'"><i class="fas fa-edit"></i></span><span class="delete-language" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
+                    return '<span class="mr-2 edit-language" data-id="'+data+'" data-name="'+row.name+'" data-code="'+row.code+'"><i class="fas fa-edit"></i></span><span class="delete-language" data-id="'+data+'"><i class="fas fa-trash"></i></span>';
                 },
                 orderable: false
             },
@@ -174,11 +185,13 @@
             $('.edit-language').click(function(){
                 var id      = $(this).attr('data-id');
                 var name    = $(this).attr('data-name');
+                var code    = $(this).attr('data-code');
 
                 $('#edit_language_modal').modal('show');
 
                 $('#languageID_upd').val(id);
                 $('#languageName_upd').val(name);
+                $('#languageCode_upd').val(code);
             });
 
             $('.delete-language').off('click');
@@ -201,7 +214,7 @@
                     success: function (response) {
                         var html_data = '';
                         if(response.status == 200){
-                          _self.parent().parent().hide('slow');
+                          dataTable.ajax.reload();
                         }else{
                           $().toastmessage('showErrorToast', response.Message);
                         }
@@ -216,6 +229,7 @@
         $('#saveLanguage').click(function(){
             var data    = {
                 name                : $('#languageName_upd').val(),
+                code                : $('#languageCode_upd').val(),
                 _method             : "PUT"
             };
             $.ajaxSetup({
@@ -231,9 +245,10 @@
                 success: function (response) {
                     var html_data = '';
                     if(response.status == 200){
-                      location.reload();
+                        $('#edit_language_modal').modal('toggle');
+                        dataTable.ajax.reload();
                     }else{
-                      $().toastmessage('showErrorToast', response.Message);
+                        $().toastmessage('showErrorToast', response.Message);
                     }
                 },
                 error: function (data) {
@@ -277,11 +292,6 @@
                         success: function (response) {
                             var obj = $.parseJSON(response);
                             if(obj.status == 200){
-                                $.each($('.check-language'), function (key, value){
-                                    if($(this).prop('checked') == true) {
-                                        $(this).parent().parent().hide("slow");
-                                    }
-                                });
                                 dataTable.ajax.reload(); 
                             }
                         },

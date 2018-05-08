@@ -13,6 +13,8 @@
 
 Route::get('/', 'SiteController@welcome');
 
+Route::get('/test', 'HomeController@test');
+
 Route::post('/loginAjax', 'SiteController@loginAjax')->name('loginAjax');
 Route::post('/uploadAjaxFile', 'SiteController@uploadAjaxFile')->name('uploadAjaxFile');
 Route::post('/uploadAjaxFileAndProcess', 'SiteController@uploadAjaxFileAndProcess')->name('uploadAjaxFileAndProcess');
@@ -25,9 +27,11 @@ Route::put('/contributor', 'ContributorController@update')->name('contributor.up
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'HomeController@profile')->name('profile');
 
 Route::get('user/getDataAjax', 'UserController@getDataAjax');
 Route::get('user/getInfoByID/{id}', 'UserController@getInfoByID');
+Route::put('user/updateSefl', 'UserController@updateSefl')->name('user.updateSefl');
 Route::resource('user', 'UserController');
 
 Route::get('role/getDataAjax', 'RoleController@getDataAjax');
@@ -47,6 +51,18 @@ Route::get('language/getDataAjax', 'LanguageController@getDataAjax');
 Route::delete('language/delMulti', 'LanguageController@delMulti');
 Route::resource('language', 'LanguageController');
 
-Route::get('group/getDataAjax', 'TranslateGroupController@getDataAjax');
-Route::delete('group/delMulti', 'TranslateGroupController@delMulti');
-Route::resource('group', 'TranslateGroupController');
+Route::get('translates/getDataAjax', 'TranslateController@getDataAjax');
+Route::post('translate', 'TranslateController@translate');
+Route::delete('translates/delete', 'TranslateController@delete');
+Route::delete('translates/delMulti', 'TranslateController@delMulti');
+Route::put('translates/adminUpdate', 'TranslateController@adminUpdate');
+Route::post('translates/createFileExport', 'TranslateController@createFileExport');
+Route::resource('translates', 'TranslateController');
+
+Route::get('groups/getDataAjax', 'TranslateGroupController@getDataAjax');
+Route::get('groups/{group}/getLanguages', 'TranslateGroupController@getLanguages');
+Route::post('groups/{group}/addLanguages', 'TranslateGroupController@addLanguages');
+Route::delete('groups/delMulti', 'TranslateGroupController@delMulti');
+Route::resource('groups', 'TranslateGroupController');
+
+Route::post('images/uploadImage', 'HomeController@uploadImage');

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Category;
 use Validator,Cache;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -44,12 +46,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $time_created = date('Y-m-d H:i:s');
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
         $input = $request->all();
         $input['created_by'] = auth()->user()->id;
         $input['updated_by'] = auth()->user()->id;
@@ -89,47 +88,21 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        if ($request->ajax()) {
-            try{
-                $rules = [
-                    'name'=>'required'
-                ];
+        $category = Category::find($id);
+        if($category){
+            $category->name         = $request->name;
+            $category->updated_by   = auth()->user()->id;
+            $category->updated_at   = date('Y-m-d H:i:s');
 
-                $messages = [
-                    'name.required'=> isset($this->messages['category.name.required']) ? $this->messages['category.name.required'] : 'The name field is required.',
-                ];
-
-
-                $validator = Validator::make(Input::all(), $rules, $messages);
-                if ($validator->fails()) {
-                    $errors = [];
-                    foreach ($validator->errors()->toArray() as $key => $value) {
-                        foreach ($value as $k => $v) {
-                            $errors[] = $v;
-                        }
-                    }
-                    $res=array('status'=>"400","Message"=>$errors );
-                }else{
-                    $category = Category::find($id);
-                    if($category){
-                        $category->name         = $request->name;
-                        $category->updated_by   = auth()->user()->id;
-                        $category->updated_at   = date('Y-m-d H:i:s');
-
-                        if($category->save()){
-                            $res=array('status'=>"200","Message"=>isset($messages['category.update_success']) ? $messages['category.update_success'] : "The category has been successfully updated!");    
-                        }else{
-                            $res=array('status'=>"401","Message"=>isset($this->messages['category.update_error']) ? $this->messages['category.update_error'] : 'The category hasn\' been successfully updated.' );    
-                        }
-                    }
-                }
-                echo json_encode($res);
-            } catch (\Illuminate\Database\QueryException $ex){
-                return $ex->getMessage(); 
+            if($category->save()){
+                $res=array('status'=>"200","Message"=>isset($messages['category.update_success']) ? $messages['category.update_success'] : "The category has been successfully updated!");    
+            }else{
+                $res=array('status'=>"401","Message"=>isset($this->messages['category.update_error']) ? $this->messages['category.update_error'] : 'The category hasn\' been successfully updated.' );    
             }
         }
+        echo json_encode($res);
     }
 
     /**

@@ -205,9 +205,9 @@
                     success: function (response) {
                         var html_data = '';
                         if(response.status == 200){
-                          _self.parent().parent().hide('slow');
+                            dataTable.ajax.reload();
                         }else{
-                          $().toastmessage('showErrorToast', response.Message);
+                            $().toastmessage('showErrorToast', response.Message);
                         }
                     },
                     error: function (data) {
@@ -235,9 +235,10 @@
                 success: function (response) {
                     var html_data = '';
                     if(response.status == 200){
-                      location.reload();
+                        $('#edit_category_modal').modal('toggle');
+                        dataTable.ajax.reload();
                     }else{
-                      $().toastmessage('showErrorToast', response.Message);
+                        $().toastmessage('showErrorToast', response.Message);
                     }
                 },
                 error: function (data) {
@@ -281,12 +282,7 @@
                         success: function (response) {
                             var obj = $.parseJSON(response);
                             if(obj.status == 200){
-                                $.each($('.check-category'), function (key, value){
-                                    if($(this).prop('checked') == true) {
-                                        $(this).parent().parent().hide("slow");
-                                    }
-                                });
-                                dataTable.ajax.reload(); 
+                                dataTable.ajax.reload();
                             }
                         },
                         error: function (data) {
