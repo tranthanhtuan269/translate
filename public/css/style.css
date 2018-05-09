@@ -169,3 +169,21 @@ input[type=checkbox]{
     cursor: pointer;
     text-decoration: underline;
 }
+
+.link-list{
+    color: #007bff;
+    text-align: center;
+}
+
+.link-list a{
+    margin: 0 10px;
+}
+
+.link-list a.active{
+    font-weight: bold;
+}
+
+#review-page .edit-translate,
+#review-page .delete-translate{
+    color: #007bff;
+}

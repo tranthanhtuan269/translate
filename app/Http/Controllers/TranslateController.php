@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Common\Helper;
+use App\Common\Helper, App\Common\TranslateExport;
 use App\TranslateText, App\Language, App\Category;
+use App\Http\Requests\StoreTranslateRequest;
 use App\Http\Requests\UpdateTranslateRequest;
 
 class TranslateController extends Controller
@@ -33,7 +34,9 @@ class TranslateController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::pluck('name', 'id');
+        $languages = Language::pluck('name', 'id');
+        return view('translate_text.create', ['categories' => $categories, 'languages' => $languages]);
     }
 
     /**
@@ -42,9 +45,27 @@ class TranslateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTranslateRequest $request)
     {
-        //
+        $time_created = date('Y-m-d H:i:s');
+        $translate = new TranslateText;
+        $translate->source_text     = $request->source_text;
+        $translate->trans_text      = $request->translated_text;
+        $translate->category_id     = $request->category;
+        $translate->language_id     = $request->language;
+        $translate->translate_type  = $request->status;
+        $translate->slug            = str_slug($request->source_text, '_');
+        $translate->created_by      = \Auth::user()->id;
+        $translate->updated_by      = \Auth::user()->id;
+        $translate->created_at      = $time_created;
+        $translate->updated_at      = $time_created;
+
+        if($translate->save()){
+            $res=array('status'=>201,"Message"=>isset($messages['translate.created_success']) ? $messages['translate.created_success'] : "Translate text has been created!");
+        }else{
+            $res=array('status'=>"400","Message"=>isset($messages['translate.created_unsuccess']) ? $messages['category.created_unsuccess'] : "Translate text hasn't been created!");
+        }
+        echo json_encode($res);
     }
 
     /**
@@ -165,10 +186,47 @@ class TranslateController extends Controller
                 })->make(true);
     }
 
+    public function getDataAjaxReview()
+    {
+        $translates = TranslateText::getDataReviewForDatatable();
+
+        return datatables()->of($translates)
+                ->addColumn('action', function ($translate) {
+                    return 1;
+                })
+                /*->addColumn('all', function ($translate) {
+                    return 1;
+                })*/->make(true);
+    }
+
     public function createFileExport(Request $request){
-        $translates = TranslateText::getDataForExport(
-                                        $request->search, $request->category, $request->language, $request->status);
-        
-        $linkFile = Helper::exportList($translates);
+        return (
+            new TranslateExport(
+                    $request->search, 
+                    $request->category, 
+                    $request->language, 
+                    $request->status
+                )
+            )->download('translate.xlsx');
+    }
+
+    public function reviewContribute(){
+        $categories = Category::pluck('name', 'id');
+        $languages = Language::pluck('name', 'id');
+        return view('translate_text.review', [
+                        'categories' => $categories, 
+                        'languages' => $languages
+                    ]);
+    }
+
+    public function confirm(Request $request){
+        $confirm = TranslateText::confirmObject($request->slug, $request->category, $request->language);
+
+        if($confirm){
+            $res=array('status'=>200,"Message"=>isset($messages['translate.confirm_success']) ? $messages['translate.confirm_success'] : "Translate text has been confirmed!");
+        }else{
+            $res=array('status'=>"204","Message"=>isset($messages['translate.confirm_unsuccess']) ? $messages['category.confirm_unsuccess'] : "Translate text hasn't been confirmed!");
+        }
+        echo json_encode($res);
     }
 }

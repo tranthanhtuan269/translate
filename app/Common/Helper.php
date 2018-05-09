@@ -229,11 +229,4 @@ Class Helper{
         }
         return true;
     }
-
-    public static function exportList($list){
-        dd($list);
-        $xml = new \SimpleXMLElement("<?xml version=\"1.0\"?><resources></resources>");
-
-        dd(Helper::array2XML($list, 'admin_export', 'export_xml', $xml));
-    }
 }

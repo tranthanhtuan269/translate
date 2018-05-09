@@ -163,6 +163,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
 
         Orchestra\Parser\XmlServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -215,6 +216,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

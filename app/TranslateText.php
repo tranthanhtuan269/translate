@@ -107,10 +107,39 @@ class TranslateText extends Model
         return collect($query->get());
     }
 
+    public static function getDataReviewForDatatable(){
+        $query = \DB::table('translate_text')
+                ->join('languages', 'languages.id', 'translate_text.language_id')
+                ->join('categories', 'categories.id', 'translate_text.category_id')
+                ->select(
+                            'translate_text.source_text as source_text',
+                            'translate_text.trans_text as trans_text',
+                            'translate_text.translate_type as translate_type',
+                            'translate_text.slug as slug',
+                            'languages.id as language_id',
+                            'languages.name as language_name',
+                            'categories.id as category_id',
+                            'categories.name as category_name'
+                        )
+                ->where('translate_text.translate_type', 1)
+                ->orderBy('translate_text.updated_at', 'desc');
+        return collect($query->get());
+    }
+
     public static function deleteObject($slug, $category, $language){
         $return = TranslateText::where('category_id', $category)
                     ->where('language_id', $language)
                     ->where('slug', $slug)->delete();
+        return $return;
+    }
+
+    public static function confirmObject($slug, $category, $language){
+        $return = TranslateText::where('category_id', $category)
+                    ->where('language_id', $language)
+                    ->where('slug', $slug)
+                    ->update([
+                        'translate_type' => 2
+                        ]);
         return $return;
     }
 
@@ -127,15 +156,19 @@ class TranslateText extends Model
                 ->join('languages', 'languages.id', 'translate_text.language_id')
                 ->join('categories', 'categories.id', 'translate_text.category_id')
                 ->select(
-                            'translate_text.source_text as source_text',
-                            'translate_text.trans_text as trans_text',
-                            'translate_text.translate_type as translate_type',
-                            'translate_text.slug as slug',
-                            'languages.id as language_id',
-                            'languages.name as language_name',
-                            'categories.id as category_id',
-                            'categories.name as category_name'
-                        );
+                    \DB::raw('
+                        translate_text.source_text as source_text,
+                        translate_text.trans_text as trans_text,
+                        languages.name as language_name,
+                        categories.name as category_name,
+                        case translate_text.translate_type
+                            when 0 then "Auto"
+                            when 1 then "Contributor"
+                            when 2 then "Confirmed"
+                        end as translate_type 
+                    ')
+                            
+                );
 
         if(isset($category)){
             $query->where('categories.id', $category);
@@ -157,6 +190,6 @@ class TranslateText extends Model
         }
 
         $query->orderBy('translate_text.updated_at', 'desc');
-        return collect($query->get());
+        return $query;
     }
 }

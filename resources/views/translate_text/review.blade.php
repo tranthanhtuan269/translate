@@ -8,54 +8,23 @@
 <script type="text/javascript" src="{{ url('/') }}/js/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap-multiselect.css" type="text/css"/>
 
-<div class="container-fluid">
+<div class="container-fluid" id="review-page">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h1 class="header-text mb-4 mt-2">
-              <span class="border-bottom">Translation Management</span>
+              <span class="border-bottom">Review contributor</span>
             </h1>
 
             <div class="form-group row">
-                <div class="col-sm-8 offset-1">
-                    <input type="text" name="search_txt" class="form-control" placeholder="Search text...">
-                </div>
-                <div class="col-sm-1"><div class="btn btn-primary btn-search">Search</div></div>
-                <div class="col-sm-2"><div class="btn btn-warning"><a href="{{ url('/') }}/translates/create">New translation</a></div></div>
-            </div>
-
-            <div class="form-group row">
-                <label for="category" class="col-sm-1 offset-1 col-form-label">Category:</label>
-                <div class="col-sm-2">
-                    {{ Form::select('category', $categories, null, ['class' => 'form-control', 'id' => 'category-select', 'placeholder'=> 'Select a category']) }}
-                </div>
-                <label for="language" class="col-sm-1 offset-1 col-form-label">Language:</label>
-                <div class="col-sm-2">
-                    {{ Form::select('language', $languages, null, ['class' => 'form-control', 'id' => 'language-select', 'placeholder'=> 'Select a language']) }}
-                </div>
-                <label for="status" class="col-sm-1 offset-1 col-form-label">Status:</label>
-                <div class="col-sm-2" style="padding-right: 48px;">
-                    {{ Form::select('status', [0 => 'Auto', 1 => 'Contributor', 2 => 'Comfirmed'], null, ['class' => 'form-control', 'id' => 'status-select', 'placeholder'=> 'All']) }}
-                </div>
-            </div>
-
-            <div class="form-group row">
-            	<div class="col-sm-11 offset-1 pl-0">
-            		<span class="export-list">
-            			<a href="{{ url('/') }}/translates/createFileExport?search=&category=&language=&status=" id="export-excel"> 
-            				Export list
-            			</a>
-            		</span>
-            	</div>
                 <div class="col-sm-11 offset-1 pl-0">
                     <table class="table" id="translate-table">
                       <thead class="thead-dark">
                           <tr>
-                              <th scope="col"><input type="checkbox" id="select-all-btn" data-check="false"></th>
+                              <!-- <th scope="col"><input type="checkbox" id="select-all-btn" data-check="false"></th> -->
                               <th scope="col">Source text</th>
                               <th scope="col">Translated text</th>
                               <th scope="col">In Language</th>
                               <th scope="col">Category</th>
-                              <th scope="col">Status</th>
                               <th scope="col">Action</th>
                           </tr>
                       </thead>
@@ -63,10 +32,10 @@
                           
                       </tbody>
                     </table>
-                    <div class="row my-2">
+                    <!-- <div class="row my-2">
                         <span style="line-height: 30px; margin-left: 30px;">Action on selected rows:</span>
                         <span class="btn btn-sm btn-outline-primary ml-2" id="apply-all-btn">Delete</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -126,7 +95,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="save-translate-edit">Save</button>
+        <button type="button" class="btn btn-primary" id="save-translate-edit">Confirm</button>
       </div>
     </div>
   </div>
@@ -134,19 +103,18 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-  	var url_export_link = baseURL + '/translates/createFileExport';
     var dataTable = null;
     var groupCheckList = [];
     $(".alert-danger").hide();
     var dataObject = [
-        { 
+        /*{ 
             data: "all",
             class: "all-translate",
             render: function(data, type, row){
                 return '<input type="checkbox" name="selectCol" class="check-translate" data-slug="'+row.slug+'" data-category="'+row.category_id+'" data-language="'+row.language_id+'">';
             },
             orderable: false
-        },
+        },*/
         { 
             data: "source_text",
             class: "source_text-field"
@@ -170,25 +138,10 @@
             },
         },
         { 
-            data: "translate_type",
-            class: "translate_type-field",
-            render: function(data, type, row){
-            	if(row.translate_type == 0){
-            		return 'Auto';
-            	}else if(row.translate_type == 1){
-            		return 'Contributor';
-            	}else if(row.translate_type == 2){
-            		return 'Confirmed';
-            	}else{
-            		return '';
-            	}
-            },
-        },
-        { 
             data: "action", 
             class: "action-field",
             render: function(data, type, row){
-            	return '<span class="mr-2 edit-translate" data-slug="'+row.slug+'" data-category="'+row.category_id+'" data-language="'+row.language_id+'"><i class="fas fa-edit"></i></span><span class="delete-translate"  data-slug="'+row.slug+'" data-category="'+row.category_id+'" data-language="'+row.language_id+'"><i class="fas fa-trash"></i></span>';
+            	return '<span class="mr-2 edit-translate" data-slug="'+row.slug+'" data-category="'+row.category_id+'" data-language="'+row.language_id+'">Edit</span><span class="delete-translate"  data-slug="'+row.slug+'" data-category="'+row.category_id+'" data-language="'+row.language_id+'">Confirm</span>';
             },
             orderable: false
         },
@@ -200,7 +153,7 @@
                     stateSave: true,
                     // searching: false,
                     bLengthChange: false,
-                    ajax: "{{ url('/') }}/translates/getDataAjax",
+                    ajax: "{{ url('/') }}/translates/getDataAjaxReview",
                     columns: dataObject,
                     pageLength: 25,
                     colReorder: {
@@ -208,62 +161,19 @@
                         fixedColumnsLeft: 1
                     },
                     fnServerParams: function ( aoData ) {
-                    	$('input[name=search_txt]').val(aoData.search.value);
-                    	if(aoData.columns[3].search.value != ''){
-                    		$('#language-select').val(aoData.columns[3].search.value);
-                    	}
-                    	if(aoData.columns[4].search.value != ''){
-                    		$('#category-select').val(aoData.columns[4].search.value);
-                    	}
-                    	if(aoData.columns[5].search.value != ''){
-                    		$('#status-select').val(aoData.columns[5].search.value);
-                    	}
-                    	changeLinkDownloadExcel();
+
                     },
                     fnDrawCallback: function( oSettings ) {
                         addEventListener();
-                        checkCheckboxChecked();
+                        // checkCheckboxChecked();
                     },
                     fnCreatedRow: function (nRow, aData, iDataIndex) {
                         $(nRow).attr('id', 'group-' + aData.action);
                     },
                 });
 
-    $('#category-select').change(function(){
-    	var category_selected = $(this).val();
-    	dataTable.column(4).search(category_selected).draw();
-    	changeLinkDownloadExcel();
-    });
-
-    $('#language-select').change(function(){
-    	var language_selected = $(this).val();
-	    dataTable.column(3).search(language_selected).draw();
-	    changeLinkDownloadExcel();
-    });
-
-    $('#status-select').change(function(){
-    	dataTable.column(5).search($(this).val()).draw();
-    	changeLinkDownloadExcel();
-    });
-
-    $('.btn-search').on('click', function() {
-      dataTable.search($('input[name=search_txt]').val()).draw();
-      changeLinkDownloadExcel();
-    });
-
-    function changeLinkDownloadExcel(){
-    	var link_download_excel = url_export_link + '?';
-    	
-    	link_download_excel += 'search=' + $('input[name=search_txt]').val();
-    	link_download_excel += '&category=' + $('#category-select').val();
-    	link_download_excel += '&language=' + $('#language-select').val();
-    	link_download_excel += '&status=' + $('#status-select').val();
-
-    	$('#export-excel').attr('href', link_download_excel);
-    }
-
     //select all checkboxes
-    $("#select-all-btn").change(function(){  
+    /*$("#select-all-btn").change(function(){  
         $('#translate-table tbody input[type="checkbox"]').prop('checked', $(this).prop("checked"));
         // save localstore
         setCheckboxChecked();
@@ -320,7 +230,7 @@
       }
 
       return false;
-    }
+    }*/
 
     function addEventListener(){
         $('.edit-translate').off('click');
@@ -357,7 +267,7 @@
 				slug          		: $slug,
 				language          	: $language,
 				category          	: $category,
-				_method     		: "DELETE"
+				_method     		: "PUT"
 	      	}
 
             $.ajaxSetup({
@@ -366,7 +276,7 @@
                 }
             });
             $.ajax({
-                url: baseURL+"/translates/delete",
+                url: baseURL+"/translates/confirm",
                 data: data,
                 method: "POST",
                 dataType:'json',
@@ -384,43 +294,7 @@
             });
         });
     }
-
-    // $('.export-list').click(function(){
-    // 	var $search    			= $('input[name=search_txt]').val();
-    // 	var $category    		= $('#category-select').val();
-    //     var $language    		= $('#language-select').val();
-    //     var $status    			= $('#status-select').val();
-
-    //     var data 		= {
-				// search          	: $search,
-				// category          	: $category,
-				// language          	: $language,
-				// status          	: $status
-	   //    	}
-
-    //     $.ajaxSetup(
-    //     {
-    //         headers:
-    //         {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-        
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "{{ url('/') }}/translates/createFileExport",
-    //         data: data,
-    //         success: function (response) {
-    //             var obj = $.parseJSON(response);
-    //             if(obj.status == 200){
-    //                 // dataTable.ajax.reload(); 
-    //             }
-    //         },
-    //         error: function (data) {
-    //         }
-    //     });
-    // });
-
+/*
     $('#apply-all-btn').click(function (){
         var $obj_list = [];
 
@@ -468,7 +342,7 @@
                 }
             });
         }
-    });
+    });*/
 
     $('#save-translate-edit').click(function(){
       $('.alert-danger').hide();

@@ -51,7 +51,7 @@
         <a class="nav-link text-center" href="{{ url('translates') }}">Translation <br />Management</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-center" href="#">Review <br />Contribute</a>
+        <a class="nav-link text-center" href="{{ url('translates/review') }}">Review <br />Contribute</a>
       </li>
     </ul>
     <ul class="nav justify-content-center nav-right">

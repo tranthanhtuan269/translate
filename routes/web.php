@@ -52,11 +52,16 @@ Route::delete('language/delMulti', 'LanguageController@delMulti');
 Route::resource('language', 'LanguageController');
 
 Route::get('translates/getDataAjax', 'TranslateController@getDataAjax');
+Route::get('translates/getDataAjaxReview', 'TranslateController@getDataAjaxReview');
 Route::post('translate', 'TranslateController@translate');
 Route::delete('translates/delete', 'TranslateController@delete');
 Route::delete('translates/delMulti', 'TranslateController@delMulti');
 Route::put('translates/adminUpdate', 'TranslateController@adminUpdate');
-Route::post('translates/createFileExport', 'TranslateController@createFileExport');
+Route::get('translates/createFileExport', 'TranslateController@createFileExport');
+Route::get('translates/createFromFile', 'TranslateController@createFromFile');
+Route::post('translates/createFromFile', 'TranslateController@createFromFile');
+Route::get('translates/review', 'TranslateController@reviewContribute');
+Route::put('translates/confirm', 'TranslateController@confirm');
 Route::resource('translates', 'TranslateController');
 
 Route::get('groups/getDataAjax', 'TranslateGroupController@getDataAjax');
