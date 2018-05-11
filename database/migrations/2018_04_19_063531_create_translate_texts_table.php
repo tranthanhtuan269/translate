@@ -14,9 +14,9 @@ class CreateTranslateTextsTable extends Migration
     public function up()
     {
         Schema::create('translate_texts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('keyword', 255);
             $table->string('source', 255);
-            $table->string('trans', 255)->nullable();
+            $table->string('trans', 255);
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('language_id');
             $table->tinyInteger('translate_type')->default(0);

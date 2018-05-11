@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRoleToUsersTable extends Migration
+class CreateTranslateGroupLanguage extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddRoleToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('email');
+        Schema::create('translate_group_language', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('translate_group_id');
+            $table->unsignedInteger('language_id');
         });
     }
 
