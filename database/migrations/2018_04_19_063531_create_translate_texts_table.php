@@ -20,7 +20,6 @@ class CreateTranslateTextsTable extends Migration
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('language_id');
             $table->tinyInteger('translate_type')->default(0);
-            $table->string('slug', 255);
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();
