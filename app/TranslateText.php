@@ -9,7 +9,7 @@ use Auth;
 
 class TranslateText extends Model
 {
-    protected $table = 'translate_text';
+    protected $table = 'translate_texts';
     protected $fillable = [
     						'keyword' ,'source_text', 'trans_text', 'category_id', 
     						'language_id', 'translate_type', 'created_by', 'updated_by'
@@ -160,58 +160,58 @@ class TranslateText extends Model
     }
 
     public static function getDataForDatatable(){
-        $query = \DB::table('translate_text')
-                ->join('languages', 'languages.id', 'translate_text.language_id')
-                ->join('categories', 'categories.id', 'translate_text.category_id')
+        $query = \DB::table('translate_texts')
+                ->join('languages', 'languages.id', 'translate_texts.language_id')
+                ->join('categories', 'categories.id', 'translate_texts.category_id')
                 ->select(
-                            'translate_text.source_text as source_text',
-                            'translate_text.trans_text as trans_text',
-                            'translate_text.translate_type as translate_type',
-                            'translate_text.keyword as keyword',
+                            'translate_texts.source_text as source_text',
+                            'translate_texts.trans_text as trans_text',
+                            'translate_texts.translate_type as translate_type',
+                            'translate_texts.keyword as keyword',
                             'languages.id as language_id',
                             'languages.name as language_name',
                             'categories.id as category_id',
                             'categories.name as category_name'
                         )
-                ->orderBy('translate_text.updated_at', 'desc');
+                ->orderBy('translate_texts.updated_at', 'desc');
         return collect($query->get());
     }
 
     public static function getDataReviewForDatatable(){
-        $query = \DB::table('translate_text')
-                ->join('languages', 'languages.id', 'translate_text.language_id')
-                ->join('categories', 'categories.id', 'translate_text.category_id')
+        $query = \DB::table('translate_texts')
+                ->join('languages', 'languages.id', 'translate_texts.language_id')
+                ->join('categories', 'categories.id', 'translate_texts.category_id')
                 ->select(
-                            'translate_text.source_text as source_text',
-                            'translate_text.trans_text as trans_text',
-                            'translate_text.translate_type as translate_type',
-                            'translate_text.keyword as keyword',
+                            'translate_texts.source_text as source_text',
+                            'translate_texts.trans_text as trans_text',
+                            'translate_texts.translate_type as translate_type',
+                            'translate_texts.keyword as keyword',
                             'languages.id as language_id',
                             'languages.name as language_name',
                             'categories.id as category_id',
                             'categories.name as category_name'
                         )
-                ->where('translate_text.translate_type', 1)
-                ->orderBy('translate_text.updated_at', 'desc');
+                ->where('translate_texts.translate_type', 1)
+                ->orderBy('translate_texts.updated_at', 'desc');
         return collect($query->get());
     }
 
     public static function getTextMiss(){
-        $query = \DB::table('translate_text')
-                ->join('languages', 'languages.id', 'translate_text.language_id')
+        $query = \DB::table('translate_texts')
+                ->join('languages', 'languages.id', 'translate_texts.language_id')
                 ->select(
-                            'translate_text.source_text as source_text',
-                            'translate_text.trans_text as trans_text',
-                            'translate_text.translate_type as translate_type',
-                            'translate_text.keyword as keyword',
-                            'translate_text.category_id as category_id',
+                            'translate_texts.source_text as source_text',
+                            'translate_texts.trans_text as trans_text',
+                            'translate_texts.translate_type as translate_type',
+                            'translate_texts.keyword as keyword',
+                            'translate_texts.category_id as category_id',
                             'languages.id as language_id',
                             'languages.name as language_name',
                             'languages.code as language_code'
                         )
-                ->where('translate_text.trans_text', null)
-                ->orWhere('translate_text.trans_text', '')
-                ->orderBy('translate_text.updated_at', 'desc');
+                ->where('translate_texts.trans_text', null)
+                ->orWhere('translate_texts.trans_text', '')
+                ->orderBy('translate_texts.updated_at', 'desc');
         return collect($query->get());   
     }
 
@@ -241,16 +241,16 @@ class TranslateText extends Model
     }
 
     public static function getDataForExport($search, $category, $language, $status){
-        $query = \DB::table('translate_text')
-                ->join('languages', 'languages.id', 'translate_text.language_id')
-                ->join('categories', 'categories.id', 'translate_text.category_id')
+        $query = \DB::table('translate_texts')
+                ->join('languages', 'languages.id', 'translate_texts.language_id')
+                ->join('categories', 'categories.id', 'translate_texts.category_id')
                 ->select(
                     \DB::raw('
-                        translate_text.source_text as source_text,
-                        translate_text.trans_text as trans_text,
+                        translate_texts.source_text as source_text,
+                        translate_texts.trans_text as trans_text,
                         languages.name as language_name,
                         categories.name as category_name,
-                        case translate_text.translate_type
+                        case translate_texts.translate_type
                             when 0 then "Auto"
                             when 1 then "Contributor"
                             when 2 then "Confirmed"
@@ -272,13 +272,13 @@ class TranslateText extends Model
         }
 
         if(isset($search)){
-            $query->orWhere('translate_text.source_text', 'like', '%'.$search.'%');   
-            $query->orWhere('translate_text.trans_text', 'like', '%'.$search.'%');   
+            $query->orWhere('translate_texts.source_text', 'like', '%'.$search.'%');   
+            $query->orWhere('translate_texts.trans_text', 'like', '%'.$search.'%');   
             $query->orWhere('languages.name', 'like', '%'.$search.'%');   
             $query->orWhere('categories.name', 'like', '%'.$search.'%');   
         }
 
-        $query->orderBy('translate_text.updated_at', 'desc');
+        $query->orderBy('translate_texts.updated_at', 'desc');
         return collect($query->get());
     }
 }
