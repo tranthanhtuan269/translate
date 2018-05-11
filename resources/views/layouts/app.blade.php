@@ -160,7 +160,8 @@
         success: function (response) {
             var html_data = '';
             if(response.status == 200){
-              location.reload();
+              // location.reload();
+              window.location.href = "{{ url('/') }}/home";
             }else{
               $('#error-text').html('<div class="alert alert-danger" role="alert">' + response.Message + '</div>');
             }

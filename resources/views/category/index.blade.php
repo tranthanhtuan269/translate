@@ -97,6 +97,7 @@
                         serverSide: true,
                         aaSorting: [],
                         stateSave: true,
+                        bLengthChange: false,
                         ajax: "{{ url('/') }}/category/getDataAjax",
                         columns: dataObject,
                         pageLength: 25,

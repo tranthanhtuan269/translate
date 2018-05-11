@@ -187,3 +187,17 @@ input[type=checkbox]{
 #review-page .delete-translate{
     color: #007bff;
 }
+
+.translate_text u{
+    color: #007bff;
+    cursor: pointer;   
+}
+
+.lh-38{
+    line-height: 38px;
+}
+
+.multiselect-container{
+    max-height: 400px;
+    overflow: auto;
+}

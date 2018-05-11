@@ -16,6 +16,7 @@ class UserController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->messages = Cache::remember('messages', 1440, function() {
             return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
         });
@@ -202,10 +203,10 @@ class UserController extends Controller
 
         return datatables()->of($users)
                 ->addColumn('action', function ($user) {
-                    return $user->id;
+                    return $user['id'];
                 })
                 ->addColumn('all', function ($user) {
-                    return $user->id;
+                    return $user['id'];
                 })
                 ->removeColumn('id')->make(true);
     }

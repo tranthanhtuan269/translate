@@ -89,30 +89,6 @@ class SiteController extends Controller
         }
     }
 
-    public function uploadAjaxFileAndProcess(Request $request){
-        $return_data = [];
-        if ($request->ajax()) {
-            if(isset($request->files)){
-                foreach($request->files as $file){
-                    $string = file_get_contents($file);
-                    $string = str_replace(array("\r", "\n", "\t"), "", $string);
-                    $objs = json_decode($string, true);
-                    foreach ($objs as $obj) {
-                        $obj['slug'] = str_slug($obj['text'], '_');
-                        $return_data[] = $obj;
-                    }
-                }
-                $res=array('status'=>"200","Message"=>isset($messages['translate.upload_success']) ? $messages['translate.upload_success'] : "Upload OK!", "translate" => $return_data);
-            }else{
-                $res=array('status'=>"400","Message"=>isset($messages['translate.upload_unsuccess']) ? $messages['translate.upload_unsuccess'] : "An error occurred during save process, please try again");
-            }
-            echo json_encode($res);
-        }else{
-            $res=array('status'=>"400","Message"=>isset($messages['translate.upload_unsuccess']) ? $messages['translate.upload_unsuccess'] : "An error occurred during save process, please try again");
-            echo json_encode($res);
-        }
-    }
-
     public function logout(){
         Auth::logout();
         return redirect('/');

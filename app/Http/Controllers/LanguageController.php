@@ -15,6 +15,7 @@ class LanguageController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->messages = Cache::remember('messages', 1440, function() {
             return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
         });
@@ -148,10 +149,10 @@ class LanguageController extends Controller
 
         return datatables()->of($categories)
                 ->addColumn('action', function ($language) {
-                    return $language->id;
+                    return $language['id'];
                 })
                 ->addColumn('all', function ($language) {
-                    return $language->id;
+                    return $language['id'];
                 })
                 ->removeColumn('id')->make(true);
     }

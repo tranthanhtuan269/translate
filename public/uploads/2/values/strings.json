@@ -1,0 +1,778 @@
+[
+    {
+        "name": "app_name",
+        "text": "Weather Forecast"
+    },
+    {
+        "name": "alert_loading_data",
+        "text": "Loading data\u2026"
+    },
+    {
+        "name": "alert_detecting_data",
+        "text": "Detecting current location\u2026"
+    },
+    {
+        "name": "navigation_drawer_open",
+        "text": "Open"
+    },
+    {
+        "name": "navigation_drawer_close",
+        "text": "Close"
+    },
+    {
+        "name": "search_location",
+        "text": "Search location"
+    },
+    {
+        "name": "network_not_found",
+        "text": "Network not found"
+    },
+    {
+        "name": "max_temperature",
+        "text": "Max:"
+    },
+    {
+        "name": "min_temperature",
+        "text": "Min:"
+    },
+    {
+        "name": "wind",
+        "text": "Wind:"
+    },
+    {
+        "name": "distance_km",
+        "text": "km\/h"
+    },
+    {
+        "name": "distance_mi",
+        "text": "mi\/h"
+    },
+    {
+        "name": "settings",
+        "text": "Setting"
+    },
+    {
+        "name": "settings_home",
+        "text": "Home"
+    },
+    {
+        "name": "unit_settings",
+        "text": "Unit setting"
+    },
+    {
+        "name": "settings_temperature",
+        "text": "Temperature"
+    },
+    {
+        "name": "settings_distance",
+        "text": "Distance"
+    },
+    {
+        "name": "settings_developer",
+        "text": "Developer"
+    },
+    {
+        "name": "settings_share",
+        "text": "Share"
+    },
+    {
+        "name": "settings_rate",
+        "text": "Rate"
+    },
+    {
+        "name": "settings_more_app",
+        "text": "More App"
+    },
+    {
+        "name": "home_more",
+        "text": "More \u2026"
+    },
+    {
+        "name": "title_daily_weather",
+        "text": "Daily Weather"
+    },
+    {
+        "name": "title_hourly_weather",
+        "text": "Hourly Weather"
+    },
+    {
+        "name": "details_weather_humidity",
+        "text": "Humidity:"
+    },
+    {
+        "name": "details_weather_precipitation",
+        "text": "Precipitation:"
+    },
+    {
+        "name": "details_weather_wind_chill",
+        "text": "Wind chill:"
+    },
+    {
+        "name": "details_weather_wind_speed",
+        "text": "Wind speed:"
+    },
+    {
+        "name": "details_weather_wind_direct",
+        "text": "Wind Direction:"
+    },
+    {
+        "name": "details_weather_dew_point",
+        "text": "Dew Point:"
+    },
+    {
+        "name": "details_weather_pressure",
+        "text": "Pressure:"
+    },
+    {
+        "name": "details_sunset",
+        "text": "Sunset:"
+    },
+    {
+        "name": "details_sunrise",
+        "text": "Sunrise:"
+    },
+    {
+        "name": "dialog_delete_address",
+        "text": "Delete address"
+    },
+    {
+        "name": "dialog_msg_delete_address",
+        "text": "Do you want to delete this address?"
+    },
+    {
+        "name": "dialog_button_delete",
+        "text": "Delete"
+    },
+    {
+        "name": "dialog_button_cancel",
+        "text": "Cancel"
+    },
+    {
+        "name": "title_gps_settings",
+        "text": "GPS settings"
+    },
+    {
+        "name": "msg_gps_settings",
+        "text": "GPS is not enabled. Do you want to go to settings menu?"
+    },
+    {
+        "name": "button_settings",
+        "text": "Settings"
+    },
+    {
+        "name": "button_cancel",
+        "text": "Cancel"
+    },
+    {
+        "name": "btn_yes",
+        "text": "Yes"
+    },
+    {
+        "name": "btn_no",
+        "text": "No"
+    },
+    {
+        "name": "Done",
+        "text": "Done"
+    },
+    {
+        "name": "day_monday",
+        "text": "Monday"
+    },
+    {
+        "name": "day_tuesday",
+        "text": "Tuesday"
+    },
+    {
+        "name": "day_wednesday",
+        "text": "Wednesday"
+    },
+    {
+        "name": "day_thursday",
+        "text": "Thursday"
+    },
+    {
+        "name": "day_friday",
+        "text": "Friday"
+    },
+    {
+        "name": "day_saturday",
+        "text": "Saturday"
+    },
+    {
+        "name": "day_sunday",
+        "text": "Sunday"
+    },
+    {
+        "name": "direction_north",
+        "text": "North"
+    },
+    {
+        "name": "direction_north_north_east",
+        "text": "North North East"
+    },
+    {
+        "name": "direction_north_east",
+        "text": "North East"
+    },
+    {
+        "name": "direction_east_north_east",
+        "text": "East North East"
+    },
+    {
+        "name": "direction_east",
+        "text": "East"
+    },
+    {
+        "name": "direction_east_south_east",
+        "text": "East South East"
+    },
+    {
+        "name": "direction_south_east",
+        "text": "South East"
+    },
+    {
+        "name": "direction_south_south_east",
+        "text": "South South East"
+    },
+    {
+        "name": "direction_south",
+        "text": "South"
+    },
+    {
+        "name": "direction_south_south_west",
+        "text": "South South West"
+    },
+    {
+        "name": "direction_south_west",
+        "text": "South West"
+    },
+    {
+        "name": "direction_west_south_west",
+        "text": "West South West"
+    },
+    {
+        "name": "direction_west",
+        "text": "West"
+    },
+    {
+        "name": "direction_west_north_west",
+        "text": "West North West"
+    },
+    {
+        "name": "direction_north_west",
+        "text": "North West"
+    },
+    {
+        "name": "direction_north_norh_west",
+        "text": "North North West"
+    },
+    {
+        "name": "txt_partly_cloudy",
+        "text": "Partly Cloudy"
+    },
+    {
+        "name": "txt_overcast",
+        "text": "Overcast"
+    },
+    {
+        "name": "txt_clear",
+        "text": "Clear"
+    },
+    {
+        "name": "txt_mostly_cloudy",
+        "text": "Mostly Cloudy"
+    },
+    {
+        "name": "txt_dizzle",
+        "text": "Drizzle"
+    },
+    {
+        "name": "txt_light_rain",
+        "text": "Light Rain"
+    },
+    {
+        "name": "heavy_rain",
+        "text": "Heavy Rain"
+    },
+    {
+        "name": "txt_rain_breezy",
+        "text": "Rain and breezy"
+    },
+    {
+        "name": "txt_rain",
+        "text": "Rain"
+    },
+    {
+        "name": "txt_notification",
+        "text": "Notification"
+    },
+    {
+        "name": "txt_lock_screen",
+        "text": "Lock Screen"
+    },
+    {
+        "name": "txt_click_add_to_location",
+        "text": "Click to add location"
+    },
+    {
+        "name": "txt_advertisement",
+        "text": "Add location"
+    },
+    {
+        "name": "txt_off_lock_screen",
+        "text": "You will miss important weather information if you turn off lock screen feature."
+    },
+    {
+        "name": "txt_enable_notification",
+        "text": "Please enable System Notification in Settings."
+    },
+    {
+        "name": "txt_keep",
+        "text": "Keep it"
+    },
+    {
+        "name": "txt_turn_off",
+        "text": "Turn off"
+    },
+    {
+        "name": "txt_detele_back",
+        "text": "Please choose at least one location."
+    },
+    {
+        "name": "msg_network_setttings",
+        "text": "Network is not enabled. Do you want to go to settings menu?"
+    },
+    {
+        "name": "msg_lock_screen_on",
+        "text": "Lock screen feature is turned on."
+    },
+    {
+        "name": "txt_current_location",
+        "text": "Current Location"
+    },
+    {
+        "name": "txt_edit_location",
+        "text": "Edit Location"
+    },
+    {
+        "name": "txt_my_location",
+        "text": "My Location"
+    },
+    {
+        "name": "txt_status_bar",
+        "text": "Status bar"
+    },
+    {
+        "name": "msg_exit_app",
+        "text": "Do you want to leave app?"
+    },
+    {
+        "name": "msg_exit_app_cb",
+        "text": "Never ask again"
+    },
+    {
+        "name": "txt_time_format",
+        "text": "Time Format"
+    },
+    {
+        "name": "app_version",
+        "text": "Version"
+    },
+    {
+        "name": "lbl_get_full_version",
+        "text": "Get Pro Version"
+    },
+    {
+        "name": "lbl_cloud_cover",
+        "text": "Cloud Cover:"
+    },
+    {
+        "name": "lbl_alert_phone_state_permission_denied",
+        "text": "Access phone state denied! The app required to access phone state to control state of lock screen feature."
+    },
+    {
+        "name": "lbl_get_pro_version_title",
+        "text": "Buy a professional version to remove ads and motivate us to work hard to improve the product better."
+    },
+    {
+        "name": "lbl_ok",
+        "text": "OK, buy now"
+    },
+    {
+        "name": "lbl_later",
+        "text": "Later"
+    },
+    {
+        "name": "lbl_no_thanks",
+        "text": "No, thanks"
+    },
+    {
+        "name": "lbl_recent_search_address_description",
+        "text": "Recent results, click Search to find more..."
+    },
+    {
+        "name": "lbl_no_result_found",
+        "text": "No result found"
+    },
+    {
+        "name": "lbl_manage_location",
+        "text": "Manage location"
+    },
+    {
+        "name": "lbl_select_addresses_to_delete",
+        "text": "Select addresses you want to delete"
+    },
+    {
+        "name": "lbl_please_wait",
+        "text": "Please wait..."
+    },
+    {
+        "name": "lbl_weather_radar",
+        "text": "Weather Radar"
+    },
+    {
+        "name": "lbl_alert_overlay_permission_denied",
+        "text": "Overlay permission was denied! Lock-screen feature require overlay permission."
+    },
+    {
+        "name": "lbl_alert_gps_low_accuracy_mode",
+        "text": "GPS setting of your device not set for high accuracy mode, please go to GPS settings and set to high accuracy mode."
+    },
+    {
+        "name": "txt_stormy",
+        "text": "Stormy"
+    },
+    {
+        "name": "txt_sunny",
+        "text": "Sunny"
+    },
+    {
+        "name": "txt_cloudy",
+        "text": "Cloudy"
+    },
+    {
+        "name": "txt_windy",
+        "text": "Windy"
+    },
+    {
+        "name": "txt_hurricanes",
+        "text": "Hurricanes"
+    },
+    {
+        "name": "txt_typhoons",
+        "text": "Typhoons"
+    },
+    {
+        "name": "txt_foggy",
+        "text": "Foggy"
+    },
+    {
+        "name": "txt_snow",
+        "text": "Snow"
+    },
+    {
+        "name": "txt_hail",
+        "text": "Hail"
+    },
+    {
+        "name": "txt_sleet",
+        "text": "Sleet"
+    },
+    {
+        "name": "lbl_fell_live",
+        "text": "Feel like"
+    },
+    {
+        "name": "lbl_radar",
+        "text": "Radar"
+    },
+    {
+        "name": "lbl_forecast",
+        "text": "Forecast"
+    },
+    {
+        "name": "lbl_wind_gust",
+        "text": "Wind Gust"
+    },
+    {
+        "name": "lbl_dew_point",
+        "text": "Dew Point"
+    },
+    {
+        "name": "lbl_msl_pressure",
+        "text": "MSL Pressure"
+    },
+    {
+        "name": "lbl_emoji",
+        "text": "Emoji"
+    },
+    {
+        "name": "lbl_pressure",
+        "text": "Pressure"
+    },
+    {
+        "name": "lbl_rain_snow",
+        "text": "Rain, Snow"
+    },
+    {
+        "name": "lbl_clouds",
+        "text": "Clouds"
+    },
+    {
+        "name": "lbl_waves",
+        "text": "Waves"
+    },
+    {
+        "name": "lbl_currents",
+        "text": "Currents"
+    },
+    {
+        "name": "lbl_index_uv",
+        "text": "UV Index"
+    },
+    {
+        "name": "lbl_ozone",
+        "text": "Ozone"
+    },
+    {
+        "name": "lbl_wind_speed",
+        "text": "Wind Speed"
+    },
+    {
+        "name": "lbl_temperature",
+        "text": "Temperature"
+    },
+    {
+        "name": "lbl_wind",
+        "text": "Wind"
+    },
+    {
+        "name": "txt_mostly_sunny",
+        "text": "Mostly Sunny"
+    },
+    {
+        "name": "txt_partly_sunny",
+        "text": "Partly Sunny"
+    },
+    {
+        "name": "txt_haze",
+        "text": "Haze"
+    },
+    {
+        "name": "txt_showers",
+        "text": "Showers"
+    },
+    {
+        "name": "txt_thunderstorm",
+        "text": "Thunderstorm"
+    },
+    {
+        "name": "txt_sandstorm",
+        "text": "Sandstorm"
+    },
+    {
+        "name": "txt_snowstorm",
+        "text": "Snowstorm"
+    },
+    {
+        "name": "txt_tornadoes",
+        "text": "Tornadoes"
+    },
+    {
+        "name": "txt_blizzard",
+        "text": "Blizzard"
+    },
+    {
+        "name": "txt_mist",
+        "text": "Mist"
+    },
+    {
+        "name": "txt_drought",
+        "text": "Drought"
+    },
+    {
+        "name": "txt_wildfire",
+        "text": "Wildfire"
+    },
+    {
+        "name": "txt_avalanche",
+        "text": "Avalanche"
+    },
+    {
+        "name": "txt_breezy",
+        "text": "Breezy"
+    },
+    {
+        "name": "txt_dust",
+        "text": "Dust"
+    },
+    {
+        "name": "txt_smoky",
+        "text": "Smoky"
+    },
+    {
+        "name": "txt_blustery",
+        "text": "Blustery"
+    },
+    {
+        "name": "txt_humid",
+        "text": "Humid"
+    },
+    {
+        "name": "txt_fair",
+        "text": "Fair"
+    },
+    {
+        "name": "txt_ice_pellet",
+        "text": "Ice Pellet"
+    },
+    {
+        "name": "txt_ice_crystals",
+        "text": "Ice Crystals"
+    },
+    {
+        "name": "txt_cold",
+        "text": "Cold"
+    },
+    {
+        "name": "txt_hot",
+        "text": "Hot"
+    },
+    {
+        "name": "txt_dry",
+        "text": "Dry"
+    },
+    {
+        "name": "txt_wet",
+        "text": "Wet"
+    },
+    {
+        "name": "lbl_details",
+        "text": "Details"
+    },
+    {
+        "name": "lbl_chance_of_rain",
+        "text": "Chance of rain:"
+    },
+    {
+        "name": "lbl_moon_phases",
+        "text": "Moon Phases:"
+    },
+    {
+        "name": "lbl_date_format",
+        "text": "Date Format"
+    },
+    {
+        "name": "lbl_choose_date_format",
+        "text": "Choose date format"
+    },
+    {
+        "name": "lbl_choose_wind_speed_format",
+        "text": "Choose Wind Speed format"
+    },
+    {
+        "name": "lbl_choose_pressure_format",
+        "text": "Choose Pressure format"
+    },
+    {
+        "name": "lbl_choose_precipitation_format",
+        "text": "Choose Precipitation format"
+    },
+    {
+        "name": "distance_ms",
+        "text": "m\/s"
+    },
+    {
+        "name": "unit_mm",
+        "text": "mm"
+    },
+    {
+        "name": "unit_in",
+        "text": "in"
+    },
+    {
+        "name": "unit_mmHg",
+        "text": "mmHg"
+    },
+    {
+        "name": "unit_hPa",
+        "text": "hPa"
+    },
+    {
+        "name": "unit_mbar",
+        "text": "mbar"
+    },
+    {
+        "name": "unit_dobson",
+        "text": "DU"
+    },
+    {
+        "name": "unit_inHg",
+        "text": "inHg"
+    },
+    {
+        "name": "txt_new_moon",
+        "text": "New moon"
+    },
+    {
+        "name": "txt_waxing_crescent",
+        "text": "Waxing crescent"
+    },
+    {
+        "name": "txt_first_quarter",
+        "text": "First quarter"
+    },
+    {
+        "name": "txt_waxing_gibbous",
+        "text": "Waxing gibbous"
+    },
+    {
+        "name": "txt_full_moon",
+        "text": "Full moon"
+    },
+    {
+        "name": "txt_waning_gibbous",
+        "text": "Waning gibbous"
+    },
+    {
+        "name": "txt_third_quarter",
+        "text": "Third quarter"
+    },
+    {
+        "name": "txt_waning_crescent",
+        "text": "Waning crescent"
+    },
+    {
+        "name": "txt_dark_moon",
+        "text": "Dark moon"
+    },
+    {
+        "name": "lbl_rain_probability",
+        "text": "Rain probability:"
+    },
+    {
+        "name": "lbl_low",
+        "text": "Low"
+    },
+    {
+        "name": "lbl_moderate",
+        "text": "Moderate"
+    },
+    {
+        "name": "lbl_high",
+        "text": "High"
+    },
+    {
+        "name": "lbl_very_high",
+        "text": "Very high"
+    },
+    {
+        "name": "lbl_extreme",
+        "text": "Extreme"
+    },
+    {
+        "name": "lbl_system",
+        "text": "System"
+    }
+]

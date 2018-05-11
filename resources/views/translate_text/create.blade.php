@@ -17,6 +17,16 @@
             </div>
             
             <div class="form-group row">
+                <div class="col-sm-4 custom-label-right font-weight-bold">Keyword:</div>
+                <div class="col-sm-4">
+                    {{ Form::text('keyword', '', ['class' => 'form-control', 'placeholder' => 'Keyword']) }}
+                    <div class="alert alert-danger" id="keyword-error" role="alert" style="display: none;">
+                        This is a danger alert—check it out!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group row">
                 <div class="col-sm-4 custom-label-right font-weight-bold">Source text:</div>
                 <div class="col-sm-4">
                     {{ Form::text('source_text', '', ['class' => 'form-control', 'placeholder' => 'Source text']) }}
@@ -81,6 +91,7 @@
         $base_url = $('base').attr('href');
 
         $('#save-change').click(function(){
+            var keyword             = $('input[name=keyword]').val();
             var source_text         = $('input[name=source_text]').val();
             var translated_text     = $('input[name=translated_text]').val();
             var language            = $('#language-select').val();
@@ -88,6 +99,7 @@
             var status              = $('#status-select').val();
 
             var data    = {
+                keyword             : keyword,
                 source_text         : source_text,
                 translated_text     : translated_text,
                 language            : language,

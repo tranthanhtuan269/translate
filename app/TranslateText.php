@@ -3,14 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Common\AutoTranslate;
+use App\Language;
 use Auth;
 
 class TranslateText extends Model
 {
     protected $table = 'translate_text';
     protected $fillable = [
-    						'source_text', 'trans_text', 'category_id', 
-    						'language_id', 'translate_type', 'slug', 'created_by', 'updated_by'
+    						'keyword' ,'source_text', 'trans_text', 'category_id', 
+    						'language_id', 'translate_type', 'created_by', 'updated_by'
     					];
     
     public function category()
@@ -35,13 +37,12 @@ class TranslateText extends Model
 
     public static function updateContribute(
                                     $category_id, $category_before, $language_id, 
-                                    $language_before, $slug, $source_text, $trans_text, $translate_type){
+                                    $language_before, $keyword, $source_text, $trans_text, $translate_type){
 
         return TranslateText::where('category_id', $category_before)
                     ->where('language_id', $language_before)
-                    ->where('slug', $slug)
+                    ->where('keyword', $keyword)
                     ->update([
-                        'slug' => str_slug($source_text, '_'), 
                         'source_text' => $source_text, 
                         'trans_text' => $trans_text, 
                         'category_id' => $category_id, 
@@ -50,41 +51,110 @@ class TranslateText extends Model
                         ]);
     }
 
-    public static function findBySlug($slug, $category, $language, $source_text){
+    public static function findByKeyword($keyword, $category, $language, $source_text){
         $return = TranslateText::where('category_id', $category)
                     ->where('language_id', $language)
-                    ->where('slug', $slug)->first();
+                    ->where('keyword', $keyword)->first();
 
         if(!isset($return)){
             $return = TranslateText::where('category_id', [5])
                     ->where('language_id', $language)
-                    ->where('slug', $slug)->first();
+                    ->where('keyword', $keyword)->first();
             if(!isset($return)){
                 $return = TranslateText::whereNotIn('category_id', [$category, 5])
                     ->where('language_id', $language)
-                    ->where('slug', $slug)->first();
+                    ->where('keyword', $keyword)->first();
                 if(!isset($return)){
-                    $time_created = date('Y-m-d H:i:s');
-                    // call API google translate
-
-                    // save to datable with 
-                    $translate_text = new TranslateText;
-                    $translate_text->category_id = $category;
-                    $translate_text->language_id = $language;
-                    $translate_text->slug = $slug;
-                    $translate_text->source_text = $source_text;
-                    $translate_text->trans_text = "";
-                    $translate_text->translate_type = 0;
-                    $translate_text->created_by = Auth::user()->id;
-                    $translate_text->updated_by = Auth::user()->id;
-                    $translate_text->created_at = $time_created;
-                    $translate_text->updated_at = $time_created;
-                    $translate_text->save();
-
-                    return $translate_text;
+                    // get language code
+                    $language_code = Language::getLanguageCode($language);
+                    if($language_code != ''){
+                        // call API google translate
+                        $autoTranslate = TranslateText::autoTranslateToCreate(
+                                        $keyword,
+                                        $source_text,
+                                        $category,
+                                        $language,
+                                        $language_code
+                                    );
+                        return $autoTranslate;
+                    }
                 }
             }
         }
+
+        return $return;
+    }
+
+    public static function autoTranslateToCreate(
+                                $keyword, $source, $category, $language, $language_code){
+        // call api google translate
+        $autoTranslate = new AutoTranslate($source, 'en', $language_code);
+        $time_created = date('Y-m-d H:i:s');
+        $obj = $autoTranslate->callApi();
+        if($obj != null)
+        {
+            if(isset($obj['error']))
+            {
+                echo "Error is : ".$obj['error']['message'];
+            }
+            else
+            {
+                $translated_text = $obj['data']['translations'][0]['translatedText'];
+                // save to datable with 
+                $translate_text                 = new TranslateText;
+                $translate_text->keyword        = $keyword;
+                $translate_text->category_id    = $category;
+                $translate_text->language_id    = $language;
+                $translate_text->source_text    = $source;
+                $translate_text->trans_text     = $translated_text;
+                $translate_text->translate_type = 0;
+                $translate_text->created_by     = Auth::user()->id;
+                $translate_text->updated_by     = Auth::user()->id;
+                $translate_text->created_at     = $time_created;
+                $translate_text->updated_at     = $time_created;
+                $translate_text->save();
+
+                return $translate_text;
+            }
+        }
+        return null;
+    }
+
+    public static function autoTranslateToUpdate(
+                                $keyword, $source, $category, $language, $language_code){
+        // call api google translate
+        $autoTranslate = new AutoTranslate($source, 'en', $language_code);
+        $obj = $autoTranslate->callApi();
+        if($obj != null)
+        {
+            if(isset($obj['error']))
+            {
+                $update = TranslateText::updateTranslate($keyword, $category, $language, "Find not found!", 0);
+            }
+            else
+            {
+                $update = TranslateText::updateTranslate($keyword, $category, $language, $obj['data']['translations'][0]['translatedText'], 0);
+                return $update;
+            }
+        }
+        return null;
+    }
+
+    public static function checkExist($keyword, $category, $language){
+        $return = TranslateText::where('language_id', $language)
+                    ->where('category_id', $category)
+                    ->where('keyword', $keyword)->first();
+
+        return $return;
+    }
+
+    public static function updateTranslate($keyword, $category, $language, $trans_text, $translate_type = 2){
+        $return = TranslateText::where('category_id', $category)
+                    ->where('language_id', $language)
+                    ->where('keyword', $keyword)->update([
+                            'trans_text' => $trans_text,
+                            'translate_type' => $translate_type
+                        ]);
 
         return $return;
     }
@@ -97,7 +167,7 @@ class TranslateText extends Model
                             'translate_text.source_text as source_text',
                             'translate_text.trans_text as trans_text',
                             'translate_text.translate_type as translate_type',
-                            'translate_text.slug as slug',
+                            'translate_text.keyword as keyword',
                             'languages.id as language_id',
                             'languages.name as language_name',
                             'categories.id as category_id',
@@ -115,7 +185,7 @@ class TranslateText extends Model
                             'translate_text.source_text as source_text',
                             'translate_text.trans_text as trans_text',
                             'translate_text.translate_type as translate_type',
-                            'translate_text.slug as slug',
+                            'translate_text.keyword as keyword',
                             'languages.id as language_id',
                             'languages.name as language_name',
                             'categories.id as category_id',
@@ -126,17 +196,36 @@ class TranslateText extends Model
         return collect($query->get());
     }
 
-    public static function deleteObject($slug, $category, $language){
+    public static function getTextMiss(){
+        $query = \DB::table('translate_text')
+                ->join('languages', 'languages.id', 'translate_text.language_id')
+                ->select(
+                            'translate_text.source_text as source_text',
+                            'translate_text.trans_text as trans_text',
+                            'translate_text.translate_type as translate_type',
+                            'translate_text.keyword as keyword',
+                            'translate_text.category_id as category_id',
+                            'languages.id as language_id',
+                            'languages.name as language_name',
+                            'languages.code as language_code'
+                        )
+                ->where('translate_text.trans_text', null)
+                ->orWhere('translate_text.trans_text', '')
+                ->orderBy('translate_text.updated_at', 'desc');
+        return collect($query->get());   
+    }
+
+    public static function deleteObject($keyword, $category, $language){
         $return = TranslateText::where('category_id', $category)
                     ->where('language_id', $language)
-                    ->where('slug', $slug)->delete();
+                    ->where('keyword', $keyword)->delete();
         return $return;
     }
 
-    public static function confirmObject($slug, $category, $language){
+    public static function confirmObject($keyword, $category, $language){
         $return = TranslateText::where('category_id', $category)
                     ->where('language_id', $language)
-                    ->where('slug', $slug)
+                    ->where('keyword', $keyword)
                     ->update([
                         'translate_type' => 2
                         ]);
@@ -146,7 +235,7 @@ class TranslateText extends Model
     public static function deleteMulti($obj_list){
         $return = true;
         foreach($obj_list as $obj){
-            $return &= TranslateText::deleteObject($obj->slug, $obj->category, $obj->language);
+            $return &= TranslateText::deleteObject($obj->keyword, $obj->category, $obj->language);
         }
         return $return;
     }
@@ -190,6 +279,6 @@ class TranslateText extends Model
         }
 
         $query->orderBy('translate_text.updated_at', 'desc');
-        return $query;
+        return collect($query->get());
     }
 }

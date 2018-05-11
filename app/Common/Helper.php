@@ -5,6 +5,8 @@ namespace App\Common;
 use Illuminate\Support\Facades\Storage;
 use App\TranslateGroup;
 use App\TranslateText;
+use App\Category;
+use App\Language;
 
 Class Helper{
 
@@ -18,18 +20,22 @@ Class Helper{
         $languageList = TranslateGroup::getLanguages($group);
         $outputList['none'] = [];
         foreach($languageList as $lang){
-            $outputList[$lang->code] = [];
+            $outputList[$lang['code']] = [];
         }
 
         $xml = \XmlParser::load($file);
 
         foreach($xml->getContent()->string as $string){
+            $text       = '';
+            $keyword    = '';
             // content file upload
             $outObj         = new OutPut();
-            $outObj->text  = $string->__toString();
+            $outObj->text   = $string->__toString();
+            $text = $outObj->text;
             foreach($string->attributes() as $a => $b){
                 if($a == "name"){
                     $outObj->name = $b->__toString();
+                    $keyword = $outObj->name;
                     break;
                 }
             }
@@ -39,9 +45,7 @@ Class Helper{
             foreach($languageList as $lang){
                 $outObj         = new OutPut();
 
-                $slug = str_slug($string->__toString(), '_');
-
-                $translateText = TranslateText::findBySlug($slug, $category, $lang->id, $string->__toString());
+                $translateText = TranslateText::findByKeyword($keyword, $category, $lang['id'], $text);
                 if($translateText){
                     $outObj->text  = $translateText->trans_text;
                 }else{
@@ -54,13 +58,13 @@ Class Helper{
                         break;
                     }
                 }
-                $outputList[$lang->code][] = $outObj;
+                $outputList[$lang['code']][] = $outObj;
             }
         }
 
         $outputListFile['none'] = Helper::storeFileByExt($outputList['none'], 'none', $fileName, 'xml');
         foreach($languageList as $lang){
-            $outputListFile[$lang->code] = Helper::storeFileByExt($outputList[$lang->code], $lang->code, $fileName, 'xml');
+            $outputListFile[$lang['code']] = Helper::storeFileByExt($outputList[$lang['code']], $lang['code'], $fileName, 'xml');
         }
         return $outputListFile;
     }
@@ -74,7 +78,7 @@ Class Helper{
         $languageList = TranslateGroup::getLanguages($group);
         $outputList['none'] = [];
         foreach($languageList as $lang){
-            $outputList[$lang->code] = [];
+            $outputList[$lang['code']] = [];
         }
 
         $string = file_get_contents($file);
@@ -98,7 +102,7 @@ Class Helper{
 
                 $slug = str_slug($obj['text'], '_');
 
-                $translateText = TranslateText::findBySlug($slug, $category, $lang->id, $obj['text']);
+                $translateText = TranslateText::findByKeyword($slug, $category, $lang['id'], $obj['text']);
                 if($translateText){
                     $outObj->text  = $translateText->trans_text;
                 }else{
@@ -107,13 +111,13 @@ Class Helper{
                 if(isset($obj['name'])){
                     $outObj->name = $obj['name'];
                 }
-                $outputList[$lang->code][] = $outObj;
+                $outputList[$lang['code']][] = $outObj;
             }
         }
 
         $outputListFile['none'] = Helper::storeFileByExt($outputList['none'], 'none', $fileName, 'json');
         foreach($languageList as $lang){
-            $outputListFile[$lang->code] = Helper::storeFileByExt($outputList[$lang->code], $lang->code, $fileName, 'json');
+            $outputListFile[$lang['code']] = Helper::storeFileByExt($outputList[$lang['code']], $lang['code'], $fileName, 'json');
         }
         return $outputListFile;
     }
@@ -228,5 +232,178 @@ Class Helper{
             mkdir($dir, 0777, true);
         }
         return true;
+    }
+
+    public static function ExportFileExcel2($arrayList){
+        \Excel::create('translate', function($excel) use ($arrayList) {
+
+            $excel->sheet('Worksheet', function($sheet) use ($arrayList) {
+
+                $sheet->fromArray($arrayList->toArray());
+
+            });
+
+        })->export('xlsx');
+    }
+
+    public static function ReadFileExcel2($file, $category){
+        ini_set('memory_limit', '2048M');
+        $returnCheck = \Excel::load($file)->skipRows(1)->takeRows(1)->get();
+
+        if(!method_exists($returnCheck, 'getHeading')){
+            return back()->with(['flash_message_err_and_reload' => 'The File is not formatted correctly']);
+        }else{
+            $dataCheck = $returnCheck->getHeading();
+            if(!(in_array('keyword',$dataCheck, TRUE) && 
+                in_array('source_text',$dataCheck, TRUE) && 
+                in_array('translated_text',$dataCheck, TRUE) && 
+                in_array('in_language',$dataCheck, TRUE) && 
+                in_array('category',$dataCheck, TRUE) && 
+                in_array('status',$dataCheck, TRUE))){
+                return back()->with(['flash_message_err_and_reload' => 'The File is not formatted correctly']);
+            }
+
+            // if file is ok, then load all data and process
+            $results = \Excel::load($file);
+            $data = $results->toArray();
+            $time_created = date('Y-m-d H:i:s');
+            $user_create  = \Auth::user()->id;
+
+            if (count($data) > 0) {
+                // Kiểm tra xem file có đúng định dạng như file Example ko
+                if (isset($data[0]['keyword']) && isset($data[0]['source_text']) && isset($data[0]['category']) && isset($data[0]['status'])) {
+                    $list_check = false;
+
+                    // lay du lieu trong ban category va language ra day
+                    $categories = Category::pluck('id', 'name');
+                    $languages  = Language::select('id')->get();
+
+                    foreach ($data as $row) {
+                        foreach($languages as $lang){
+                            $checkExist = TranslateText::checkExist(
+                                                $row['keyword'], 
+                                                $categories[$row['category']], 
+                                                $lang['id']);
+                            $list_check = true;
+                            if(!$checkExist){
+                                // if not exist then add to database
+                                $translate = new TranslateText;
+
+                                $translate->keyword = $row['keyword'];
+                                $translate->source_text = $row['source_text'];
+                                $translate->trans_text = '';
+                                $translate->language_id = $lang['id'];
+                                $translate->category_id = $categories[$row['category']];
+                                $translate->translate_type = Helper::getValueStatus($row['status']);
+                                $translate->created_by = $user_create;
+                                $translate->created_at = $time_created;
+                                $translate->updated_by = $user_create;
+                                $translate->updated_at = $time_created;
+
+                                $translate->save();
+                                $list_check = true;
+                            }
+                        }
+                    }
+                    return $list_check;
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        }
+    }
+
+    public static function ImportFileExcel2($file, $category){
+        ini_set('memory_limit', '2048M');
+        $returnCheck = \Excel::load($file)->skipRows(1)->takeRows(1)->get();
+
+        if(!method_exists($returnCheck, 'getHeading')){
+            return back()->with(['flash_message_err_and_reload' => 'The File is not formatted correctly']);
+        }else{
+            $dataCheck = $returnCheck->getHeading();
+            if(!(in_array('keyword',$dataCheck, TRUE) && 
+                in_array('source_text',$dataCheck, TRUE) && 
+                in_array('translated_text',$dataCheck, TRUE) && 
+                in_array('in_language',$dataCheck, TRUE) && 
+                in_array('category',$dataCheck, TRUE) && 
+                in_array('status',$dataCheck, TRUE))){
+                return back()->with(['flash_message_err_and_reload' => 'The File is not formatted correctly']);
+            }
+
+            // if file is ok, then load all data and process
+            $results = \Excel::load($file);
+            $data = $results->toArray();
+            $time_created = date('Y-m-d H:i:s');
+            $user_create  = \Auth::user()->id;
+
+            if (count($data) > 0) {
+                // Kiểm tra xem file có đúng định dạng như file Example ko
+                if (isset($data[0]['keyword']) && isset($data[0]['translated_text']) && isset($data[0]['in_language']) && isset($data[0]['category']) && isset($data[0]['status'])) {
+                    $list_check = false;
+
+                    // lay du lieu trong ban category va language ra day
+                    $categories = Category::pluck('id', 'name');
+                    $languages  = Language::pluck('id', 'name');
+
+                    foreach ($data as $row) {
+                        $cate_id = $categories[$row['category']];
+                        $lang_id = $languages[$row['in_language']];
+
+                        $checkExist = TranslateText::checkExist(
+                                            $row['keyword'], 
+                                            $cate_id, 
+                                            $lang_id);
+                        $list_check = true;
+
+                        if($checkExist){
+                            if(strlen($row['translated_text']) > 0){
+                                $updateTranslate = TranslateText::updateTranslate(
+                                                    $row['keyword'], 
+                                                    $cate_id, 
+                                                    $lang_id,
+                                                    $row['translated_text']
+                                                );
+                            }else{
+                                $updateTranslate = TranslateText::updateTranslate(
+                                                    $row['keyword'], 
+                                                    $cate_id, 
+                                                    $lang_id,
+                                                    $row['translated_text'],
+                                                    0
+                                                );
+                            }
+                            $list_check = true;
+                        }
+                    }
+                    return $list_check;
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        }
+    }
+
+    public static function getValueStatus($status){
+        switch ($status) {
+            case 'Auto':
+                return 0;
+                break;
+
+            case 'Contributor':
+                return 1;
+                break;
+
+            case 'Confirmed':
+                return 2;
+                break;
+            
+            default:
+                return 0;
+                break;
+        }
     }
 }

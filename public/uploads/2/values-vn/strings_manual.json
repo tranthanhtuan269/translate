@@ -1,0 +1,166 @@
+[
+    {
+        "name": "txt_humid_cloudy",
+        "text": ""
+    },
+    {
+        "name": "lbl_location_not_found",
+        "text": ""
+    },
+    {
+        "name": "lbl_got_it",
+        "text": ""
+    },
+    {
+        "name": "lbl_more_details",
+        "text": ""
+    },
+    {
+        "name": "lbl_checkbox_weather_news",
+        "text": ""
+    },
+    {
+        "name": "lbl_today_weather_news",
+        "text": ""
+    },
+    {
+        "name": "lbl_daily_weather_news",
+        "text": ""
+    },
+    {
+        "name": "lbl_grant",
+        "text": ""
+    },
+    {
+        "name": "lbl_description_today_weather_news_permission",
+        "text": ""
+    },
+    {
+        "name": "lbl_preparing_data",
+        "text": ""
+    },
+    {
+        "name": "lbl_turn_off_feature_description",
+        "text": ""
+    },
+    {
+        "name": "lbl_app_settings",
+        "text": ""
+    },
+    {
+        "name": "lbl_confirm_turn_off_weather_news",
+        "text": ""
+    },
+    {
+        "name": "lbl_transparent_widget",
+        "text": ""
+    },
+    {
+        "name": "lbl_chance_of_rain_",
+        "text": ""
+    },
+    {
+        "name": "lbl_chance_of_snow",
+        "text": ""
+    },
+    {
+        "name": "lbl_report_problem",
+        "text": ""
+    },
+    {
+        "name": "lbl_how_to_add_widgets",
+        "text": ""
+    },
+    {
+        "name": "lbl_app_widgets",
+        "text": ""
+    },
+    {
+        "name": "lbl_widget",
+        "text": ""
+    },
+    {
+        "name": "distance_knot",
+        "text": ""
+    },
+    {
+        "name": "distance_fts",
+        "text": ""
+    },
+    {
+        "name": "lbl_weather_widgets",
+        "text": ""
+    },
+    {
+        "name": "lbl_information",
+        "text": ""
+    },
+    {
+        "name": "lbl_guide",
+        "text": ""
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_0",
+        "text": ""
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_1",
+        "text": ""
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_2",
+        "text": ""
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_3",
+        "text": ""
+    },
+    {
+        "name": "lbl_next",
+        "text": ""
+    },
+    {
+        "name": "lbl_ok_got_it",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_wind_speed_unit",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_pressure_unit",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_precipitation_unit",
+        "text": ""
+    },
+    {
+        "name": "lbl_how_to_add_widget",
+        "text": ""
+    },
+    {
+        "name": "lbl_languages",
+        "text": ""
+    },
+    {
+        "name": "lbl_auto",
+        "text": ""
+    },
+    {
+        "name": "lbl_select_language",
+        "text": ""
+    },
+    {
+        "name": "msg_restart_to_change_config",
+        "text": ""
+    },
+    {
+        "name": "lbl_breezy_and_party_cloudy",
+        "text": ""
+    },
+    {
+        "name": "lbl_dark_background",
+        "text": ""
+    }
+]

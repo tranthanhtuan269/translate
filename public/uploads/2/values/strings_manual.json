@@ -1,0 +1,166 @@
+[
+    {
+        "name": "txt_humid_cloudy",
+        "text": "Humid and Partly Cloudy"
+    },
+    {
+        "name": "lbl_location_not_found",
+        "text": "Location not found"
+    },
+    {
+        "name": "lbl_got_it",
+        "text": "Got it"
+    },
+    {
+        "name": "lbl_more_details",
+        "text": "More details"
+    },
+    {
+        "name": "lbl_checkbox_weather_news",
+        "text": "Do not show daily weather news"
+    },
+    {
+        "name": "lbl_today_weather_news",
+        "text": "Today Weather News"
+    },
+    {
+        "name": "lbl_daily_weather_news",
+        "text": "Daily weather news"
+    },
+    {
+        "name": "lbl_grant",
+        "text": "Grant"
+    },
+    {
+        "name": "lbl_description_today_weather_news_permission",
+        "text": "We have a new fantastic feature: Today weather news, which helps you never miss any latest weather information each day. Please grant overlay permission to enjoy this new feature."
+    },
+    {
+        "name": "lbl_preparing_data",
+        "text": "Preparing data..."
+    },
+    {
+        "name": "lbl_turn_off_feature_description",
+        "text": "You can turn off this feature in"
+    },
+    {
+        "name": "lbl_app_settings",
+        "text": "app settings"
+    },
+    {
+        "name": "lbl_confirm_turn_off_weather_news",
+        "text": "You will miss important daily weather news if turn off this feature"
+    },
+    {
+        "name": "lbl_transparent_widget",
+        "text": "Transparent widget"
+    },
+    {
+        "name": "lbl_chance_of_rain_",
+        "text": "Chance of rain"
+    },
+    {
+        "name": "lbl_chance_of_snow",
+        "text": "Chance of snow"
+    },
+    {
+        "name": "lbl_report_problem",
+        "text": "Report problem"
+    },
+    {
+        "name": "lbl_how_to_add_widgets",
+        "text": "How to add weather widget to home screen?"
+    },
+    {
+        "name": "lbl_app_widgets",
+        "text": "App widgets"
+    },
+    {
+        "name": "lbl_widget",
+        "text": "Widget"
+    },
+    {
+        "name": "distance_knot",
+        "text": "knots"
+    },
+    {
+        "name": "distance_fts",
+        "text": "ft\/s"
+    },
+    {
+        "name": "lbl_weather_widgets",
+        "text": "Weather widgets"
+    },
+    {
+        "name": "lbl_information",
+        "text": "Information"
+    },
+    {
+        "name": "lbl_guide",
+        "text": "Guide"
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_0",
+        "text": "Step 1: Tap and hold an empty space on home screen, you will see Widgets option at the bottom of the screen."
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_1",
+        "text": "Step 2: Tap the Widgets icon to go to the widgets list."
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_2",
+        "text": "Step 3: Tap and hold any widget of Weather app then drag it to an empty area on a home screen."
+    },
+    {
+        "name": "lbl_guide_app_widgets_step_3",
+        "text": "Step 4: The weather widget has been added to the home screen."
+    },
+    {
+        "name": "lbl_next",
+        "text": "Next"
+    },
+    {
+        "name": "lbl_ok_got_it",
+        "text": "OK, Got it"
+    },
+    {
+        "name": "lbl_choose_wind_speed_unit",
+        "text": "Choose Wind Speed unit"
+    },
+    {
+        "name": "lbl_choose_pressure_unit",
+        "text": "Choose Pressure unit"
+    },
+    {
+        "name": "lbl_choose_precipitation_unit",
+        "text": "Choose Precipitation unit"
+    },
+    {
+        "name": "lbl_how_to_add_widget",
+        "text": "How to add a widget"
+    },
+    {
+        "name": "lbl_languages",
+        "text": "Languages"
+    },
+    {
+        "name": "lbl_auto",
+        "text": "Auto"
+    },
+    {
+        "name": "lbl_select_language",
+        "text": "Select Language"
+    },
+    {
+        "name": "msg_restart_to_change_config",
+        "text": "App will restart now to apply language changed"
+    },
+    {
+        "name": "lbl_breezy_and_party_cloudy",
+        "text": "Breezy and Partly Cloudy"
+    },
+    {
+        "name": "lbl_dark_background",
+        "text": "Dark background"
+    }
+]

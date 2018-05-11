@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Common\Helper, App\Common\TranslateExport;
+use App\Common\Helper, App\Common\TranslateExport2;
 use App\TranslateText, App\Language, App\Category;
 use App\Http\Requests\StoreTranslateRequest;
 use App\Http\Requests\UpdateTranslateRequest;
+use App\Http\Requests\AutoTranslateRequest;
 
 class TranslateController extends Controller
 {
@@ -17,6 +18,7 @@ class TranslateController extends Controller
      */
     public function index()
     {
+        $this->middleware('auth');
         $categories = Category::pluck('name', 'id');
         $languages = Language::pluck('name', 'id');
         $translates = TranslateText::where('category_id', 1)->where('language_id', 1)->get();
@@ -39,6 +41,13 @@ class TranslateController extends Controller
         return view('translate_text.create', ['categories' => $categories, 'languages' => $languages]);
     }
 
+    public function createFromFile()
+    {
+        $categories = Category::pluck('name', 'id');
+        $languages = Language::pluck('name', 'id');
+        return view('translate_text.createFromFile', ['categories' => $categories, 'languages' => $languages]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -49,12 +58,12 @@ class TranslateController extends Controller
     {
         $time_created = date('Y-m-d H:i:s');
         $translate = new TranslateText;
+        $translate->keyword         = $request->keyword;
         $translate->source_text     = $request->source_text;
         $translate->trans_text      = $request->translated_text;
         $translate->category_id     = $request->category;
         $translate->language_id     = $request->language;
         $translate->translate_type  = $request->status;
-        $translate->slug            = str_slug($request->source_text, '_');
         $translate->created_by      = \Auth::user()->id;
         $translate->updated_by      = \Auth::user()->id;
         $translate->created_at      = $time_created;
@@ -114,7 +123,7 @@ class TranslateController extends Controller
     }
 
     public function delete(Request $request){
-        $delete = TranslateText::deleteObject($request->slug, $request->category, $request->language);
+        $delete = TranslateText::deleteObject($request->keyword, $request->category, $request->language);
 
         if($delete){
             $res=array('status'=>200,"Message"=>isset($messages['translate.delete_success']) ? $messages['translate.delete_success'] : "Translate text has been deleted!");
@@ -167,7 +176,7 @@ class TranslateController extends Controller
     }
 
     public function adminUpdate(UpdateTranslateRequest $request){
-        $translate = TranslateText::updateContribute($request->category, $request->category_before, $request->language, $request->language_before, $request->slug, $request->sourceText, $request->translatedText, 2);
+        $translate = TranslateText::updateContribute($request->category, $request->category_before, $request->language, $request->language_before, $request->keyword, $request->sourceText, $request->translatedText, 2);
 
         $res=array('status'=>200,"Message"=>isset($messages['translate.update_success']) ? $messages['translate.update_success'] : "Translate text has been updated!");
         echo json_encode($res);
@@ -199,6 +208,8 @@ class TranslateController extends Controller
                 })*/->make(true);
     }
 
+    /* Function run in maatwebsite/excel 3.0 */
+    /* maatwebsite/excel 3.0 do not support import file */
     public function createFileExport(Request $request){
         return (
             new TranslateExport(
@@ -208,6 +219,20 @@ class TranslateController extends Controller
                     $request->status
                 )
             )->download('translate.xlsx');
+    }
+
+    /* Function run in maatwebsite/excel 2.1 */
+    /* maatwebsite/excel 2.1 suport import file */
+    public function createFileExport2(Request $request){
+        $translateExport = new TranslateExport2(
+                    $request->search, 
+                    $request->category, 
+                    $request->language, 
+                    $request->status
+                );
+
+        $arrayList = $translateExport->collection();
+        return Helper::ExportFileExcel2($arrayList);
     }
 
     public function reviewContribute(){
@@ -220,13 +245,81 @@ class TranslateController extends Controller
     }
 
     public function confirm(Request $request){
-        $confirm = TranslateText::confirmObject($request->slug, $request->category, $request->language);
+        $confirm = TranslateText::confirmObject($request->keyword, $request->category, $request->language);
 
         if($confirm){
             $res=array('status'=>200,"Message"=>isset($messages['translate.confirm_success']) ? $messages['translate.confirm_success'] : "Translate text has been confirmed!");
         }else{
             $res=array('status'=>"204","Message"=>isset($messages['translate.confirm_unsuccess']) ? $messages['category.confirm_unsuccess'] : "Translate text hasn't been confirmed!");
         }
+        echo json_encode($res);
+    }
+
+    public function uploadSourceFile(Request $request){
+        if(isset($request->files) && isset($request->category)){
+            
+            $category   = $request->category;
+            $return     = null;
+            foreach($request->files as $file){
+                switch($file->getClientOriginalExtension())
+                {
+                    case "xlsx":
+                    case "xls":
+                    case "csv": $return = Helper::ReadFileExcel2($file, $category);
+                    break;
+
+                    default:
+                    break;
+                }
+            }
+
+            $res=array('status'=>"200","return"=> $return);
+
+            echo json_encode($res);
+        }
+    }
+
+    public function uploadTranslateFolder(Request $request){
+        if(isset($request->files) && isset($request->category)){
+            
+            $category   = $request->category;
+            $return     = null;
+            foreach($request->files as $file){
+                switch($file->getClientOriginalExtension())
+                {
+                    case "xlsx":
+                    case "xls":
+                    case "csv": $return = Helper::ImportFileExcel2($file, $category);
+                    break;
+
+                    default:
+                    break;
+                }
+            }
+
+            $listTextMiss = TranslateText::getTextMiss();
+
+            $res=array('status'=>"200","return"=> $return, 'listTextMiss' => $listTextMiss);
+
+            echo json_encode($res);
+        }
+    }
+
+    public function autoTranslate(AutoTranslateRequest $request){
+        $update = TranslateText::autoTranslateToUpdate(
+                                $request->keyword, 
+                                $request->source, 
+                                $request->category, 
+                                $request->language, 
+                                $request->language_code
+                                );
+
+        if($update){
+            $res=array('status'=>"200");            
+        }else{
+            $res=array('status'=>"400");
+        }
+
         echo json_encode($res);
     }
 }

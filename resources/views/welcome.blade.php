@@ -191,38 +191,73 @@
             <div class="login-form">
                 <div class="login-header">Translation Tool</div>
 
-                <div class="login-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
+                <div class="login-body">                    
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="userEmail" name="email" placeholder="Email">
                         </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="userEmail" name="email" placeholder="Email">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="userPassword" name="password" placeholder="Password">
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control" id="userPassword" name="password" placeholder="Password">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <span id="error-text" style="display: none;"><div class="alert alert-danger" role="alert">Email or Password is incorrect.</div></span>
                         </div>
-                        <div class="form-group row justify-content-center mb-0">
-                            <button type="submit" class="btn btn-primary mb-2">Login</button>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                            </a>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group row justify-content-center mb-0">
+                        <div class="btn btn-primary mb-2" id="login-btn">Login</div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#login-btn').click(function(){
+            var $email = $('#userEmail').val();
+            var $password = $('#userPassword').val();
+
+            var data = {
+                email : $email,
+                password : $password
+            }
+
+            $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('/') }}/loginAjax",
+                data: data,
+                dataType: 'json',
+                beforeSend: function( xhr ) {
+                    $('#error-text').hide();
+                },
+                complete: function(data) {
+                    console.log(data);
+                    if(data.responseJSON.status == 200){
+                        window.location.href = "{{ url('/') }}/home";
+                    }else{
+                        $('#error-text').html('<div class="alert alert-danger" role="alert">' + data.responseJSON.Message + '</div>');
+                        $('#error-text').show();
+                        return;
+                    }
+                }
+            });
+        });
+    })
+</script>
 @endif
 @endsection

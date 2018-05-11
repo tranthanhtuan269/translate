@@ -24,9 +24,9 @@ class UpdateContributeRequest extends FormRequest
     public function rules()
     {
         return [
+            'keyword'       => 'required',
             'category'      => 'required',
             'language'      => 'required',
-            'slug'          => 'required',
             'source_text'   => 'required',
             'trans_text'    => 'required'
         ];

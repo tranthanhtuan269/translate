@@ -14,6 +14,7 @@ class RoleController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->messages = Cache::remember('messages', 1440, function() {
             return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
         });
@@ -181,10 +182,10 @@ class RoleController extends Controller
 
         return datatables()->of($roles)
                 ->addColumn('action', function ($role) {
-                    return $role->id;
+                    return $role['id'];
                 })
                 ->addColumn('all', function ($role) {
-                    return $role->id;
+                    return $role['id'];
                 })
                 ->removeColumn('id')->make(true);
     }
@@ -198,23 +199,25 @@ class RoleController extends Controller
 
                 $permissions = Permission::select('id', 'name', 'group')->orderby('group', 'asc')->get();
                 $group = 1;
-                $html = '<optgroup label="User Group">';
+                $html = '<optgroup label="User Group" class="group-1">';
                 foreach ($permissions as $p) {
                     if($p->group != $group){
                         $html .= '</optgroup>';
                         if($p->group == 2)
-                        $html .= '<optgroup label="Category Group">';
+                        $html .= '<optgroup label="Category Group" class="group-'.$p->id.'">';
                         if($p->group == 3)
-                        $html .= '<optgroup label="Language Group">';
+                        $html .= '<optgroup label="Language Group" class="group-'.$p->id.'">';
                         if($p->group == 4)
-                        $html .= '<optgroup label="Translate Group">';
+                        $html .= '<optgroup label="Translate Group" class="group-'.$p->id.'">';
+                        if($p->group == 5)
+                        $html .= '<optgroup label="Translate" class="group-'.$p->id.'">';
                         $group = $p->group;
                     }
                     if(in_array($p->id, $permission_list)){
-                        $html .= '<option value="'.$p->id.'" selected="selected">'.$p->name.'</option>';
+                        $html .= '<option value="'.$p->id.'" selected="selected" class="group-'.$p->group.'">'.$p->name.'</option>';
                         
                     }else{
-                        $html .= '<option value="'.$p->id.'">'.$p->name.'</option>';
+                        $html .= '<option value="'.$p->id.'" class="group-'.$p->group.'">'.$p->name.'</option>';
                     }
                 }
                 $html .= '</optgroup>';

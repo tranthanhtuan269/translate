@@ -114,22 +114,24 @@ function requestTranslate(formData, filenameFull, filenameShort){
         processData: false,
         cache: false,
         beforeSend: function( xhr ) {
-        	var html = "";
-		    html += "<tr id='"+filenameShort+"'>";
-            html += "<td class='input-file-list'>"+filenameFull+"</td>";
-            html += "<td class='progress-list'>";
-            $.each($listLanguageInGroup, function( index, value ) {
-			  	html += "<div class='link-download "+value.name+"'> - Translate to "+value.name+"<span class='image-loading'><img src='"+$base_url+"/images/loading.gif' style='float:right;' width='20' height='20'></span></div>";
-			});
-            html += "</td>";
-            html += "</tr>";
+        	if($('#' + filenameShort).length == 0){
+	        	var html = "";
+			    html += "<tr id='"+filenameShort+"'>";
+	            html += "<td class='input-file-list'>"+filenameFull+"</td>";
+	            html += "<td class='progress-list'>";
+	            $.each($listLanguageInGroup, function( index, value ) {
+				  	html += "<div class='link-download "+value.name+"'> - Translate to "+value.name+"<span class='image-loading'><img src='"+$base_url+"/images/loading.gif' style='float:right;' width='20' height='20'></span></div>";
+				});
+	            html += "</td>";
+	            html += "</tr>";
 
-		  	$('#translate-return-body').append(html);
+			  	$('#translate-return-body').append(html);
+		  	}
 		},
         complete: function(data) {
             if(data.status == 200){
-				$('.progress-list .image-loading img').attr('src', $base_url+'/images/check-mark.svg');
-				$('.download-btn').removeClass('d-none');
+				$('#' + filenameShort + ' .progress-list .image-loading img').attr('src', $base_url+'/images/check-mark.svg');
+				$('#' + filenameShort + ' .download-btn').removeClass('d-none');
             }
         }
     });

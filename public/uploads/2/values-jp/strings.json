@@ -1,0 +1,778 @@
+[
+    {
+        "name": "app_name",
+        "text": ""
+    },
+    {
+        "name": "alert_loading_data",
+        "text": ""
+    },
+    {
+        "name": "alert_detecting_data",
+        "text": ""
+    },
+    {
+        "name": "navigation_drawer_open",
+        "text": ""
+    },
+    {
+        "name": "navigation_drawer_close",
+        "text": ""
+    },
+    {
+        "name": "search_location",
+        "text": ""
+    },
+    {
+        "name": "network_not_found",
+        "text": ""
+    },
+    {
+        "name": "max_temperature",
+        "text": ""
+    },
+    {
+        "name": "min_temperature",
+        "text": ""
+    },
+    {
+        "name": "wind",
+        "text": ""
+    },
+    {
+        "name": "distance_km",
+        "text": ""
+    },
+    {
+        "name": "distance_mi",
+        "text": ""
+    },
+    {
+        "name": "settings",
+        "text": ""
+    },
+    {
+        "name": "settings_home",
+        "text": ""
+    },
+    {
+        "name": "unit_settings",
+        "text": ""
+    },
+    {
+        "name": "settings_temperature",
+        "text": ""
+    },
+    {
+        "name": "settings_distance",
+        "text": ""
+    },
+    {
+        "name": "settings_developer",
+        "text": ""
+    },
+    {
+        "name": "settings_share",
+        "text": ""
+    },
+    {
+        "name": "settings_rate",
+        "text": ""
+    },
+    {
+        "name": "settings_more_app",
+        "text": ""
+    },
+    {
+        "name": "home_more",
+        "text": ""
+    },
+    {
+        "name": "title_daily_weather",
+        "text": ""
+    },
+    {
+        "name": "title_hourly_weather",
+        "text": ""
+    },
+    {
+        "name": "details_weather_humidity",
+        "text": ""
+    },
+    {
+        "name": "details_weather_precipitation",
+        "text": ""
+    },
+    {
+        "name": "details_weather_wind_chill",
+        "text": ""
+    },
+    {
+        "name": "details_weather_wind_speed",
+        "text": ""
+    },
+    {
+        "name": "details_weather_wind_direct",
+        "text": ""
+    },
+    {
+        "name": "details_weather_dew_point",
+        "text": ""
+    },
+    {
+        "name": "details_weather_pressure",
+        "text": ""
+    },
+    {
+        "name": "details_sunset",
+        "text": ""
+    },
+    {
+        "name": "details_sunrise",
+        "text": ""
+    },
+    {
+        "name": "dialog_delete_address",
+        "text": ""
+    },
+    {
+        "name": "dialog_msg_delete_address",
+        "text": ""
+    },
+    {
+        "name": "dialog_button_delete",
+        "text": ""
+    },
+    {
+        "name": "dialog_button_cancel",
+        "text": ""
+    },
+    {
+        "name": "title_gps_settings",
+        "text": ""
+    },
+    {
+        "name": "msg_gps_settings",
+        "text": ""
+    },
+    {
+        "name": "button_settings",
+        "text": ""
+    },
+    {
+        "name": "button_cancel",
+        "text": ""
+    },
+    {
+        "name": "btn_yes",
+        "text": ""
+    },
+    {
+        "name": "btn_no",
+        "text": ""
+    },
+    {
+        "name": "Done",
+        "text": ""
+    },
+    {
+        "name": "day_monday",
+        "text": ""
+    },
+    {
+        "name": "day_tuesday",
+        "text": ""
+    },
+    {
+        "name": "day_wednesday",
+        "text": ""
+    },
+    {
+        "name": "day_thursday",
+        "text": ""
+    },
+    {
+        "name": "day_friday",
+        "text": ""
+    },
+    {
+        "name": "day_saturday",
+        "text": ""
+    },
+    {
+        "name": "day_sunday",
+        "text": ""
+    },
+    {
+        "name": "direction_north",
+        "text": ""
+    },
+    {
+        "name": "direction_north_north_east",
+        "text": ""
+    },
+    {
+        "name": "direction_north_east",
+        "text": ""
+    },
+    {
+        "name": "direction_east_north_east",
+        "text": ""
+    },
+    {
+        "name": "direction_east",
+        "text": ""
+    },
+    {
+        "name": "direction_east_south_east",
+        "text": ""
+    },
+    {
+        "name": "direction_south_east",
+        "text": ""
+    },
+    {
+        "name": "direction_south_south_east",
+        "text": ""
+    },
+    {
+        "name": "direction_south",
+        "text": ""
+    },
+    {
+        "name": "direction_south_south_west",
+        "text": ""
+    },
+    {
+        "name": "direction_south_west",
+        "text": ""
+    },
+    {
+        "name": "direction_west_south_west",
+        "text": ""
+    },
+    {
+        "name": "direction_west",
+        "text": ""
+    },
+    {
+        "name": "direction_west_north_west",
+        "text": ""
+    },
+    {
+        "name": "direction_north_west",
+        "text": ""
+    },
+    {
+        "name": "direction_north_norh_west",
+        "text": ""
+    },
+    {
+        "name": "txt_partly_cloudy",
+        "text": ""
+    },
+    {
+        "name": "txt_overcast",
+        "text": ""
+    },
+    {
+        "name": "txt_clear",
+        "text": ""
+    },
+    {
+        "name": "txt_mostly_cloudy",
+        "text": ""
+    },
+    {
+        "name": "txt_dizzle",
+        "text": ""
+    },
+    {
+        "name": "txt_light_rain",
+        "text": ""
+    },
+    {
+        "name": "heavy_rain",
+        "text": ""
+    },
+    {
+        "name": "txt_rain_breezy",
+        "text": ""
+    },
+    {
+        "name": "txt_rain",
+        "text": ""
+    },
+    {
+        "name": "txt_notification",
+        "text": ""
+    },
+    {
+        "name": "txt_lock_screen",
+        "text": ""
+    },
+    {
+        "name": "txt_click_add_to_location",
+        "text": ""
+    },
+    {
+        "name": "txt_advertisement",
+        "text": ""
+    },
+    {
+        "name": "txt_off_lock_screen",
+        "text": ""
+    },
+    {
+        "name": "txt_enable_notification",
+        "text": ""
+    },
+    {
+        "name": "txt_keep",
+        "text": ""
+    },
+    {
+        "name": "txt_turn_off",
+        "text": ""
+    },
+    {
+        "name": "txt_detele_back",
+        "text": ""
+    },
+    {
+        "name": "msg_network_setttings",
+        "text": ""
+    },
+    {
+        "name": "msg_lock_screen_on",
+        "text": ""
+    },
+    {
+        "name": "txt_current_location",
+        "text": ""
+    },
+    {
+        "name": "txt_edit_location",
+        "text": ""
+    },
+    {
+        "name": "txt_my_location",
+        "text": ""
+    },
+    {
+        "name": "txt_status_bar",
+        "text": ""
+    },
+    {
+        "name": "msg_exit_app",
+        "text": ""
+    },
+    {
+        "name": "msg_exit_app_cb",
+        "text": ""
+    },
+    {
+        "name": "txt_time_format",
+        "text": ""
+    },
+    {
+        "name": "app_version",
+        "text": ""
+    },
+    {
+        "name": "lbl_get_full_version",
+        "text": ""
+    },
+    {
+        "name": "lbl_cloud_cover",
+        "text": ""
+    },
+    {
+        "name": "lbl_alert_phone_state_permission_denied",
+        "text": ""
+    },
+    {
+        "name": "lbl_get_pro_version_title",
+        "text": ""
+    },
+    {
+        "name": "lbl_ok",
+        "text": ""
+    },
+    {
+        "name": "lbl_later",
+        "text": ""
+    },
+    {
+        "name": "lbl_no_thanks",
+        "text": ""
+    },
+    {
+        "name": "lbl_recent_search_address_description",
+        "text": ""
+    },
+    {
+        "name": "lbl_no_result_found",
+        "text": ""
+    },
+    {
+        "name": "lbl_manage_location",
+        "text": ""
+    },
+    {
+        "name": "lbl_select_addresses_to_delete",
+        "text": ""
+    },
+    {
+        "name": "lbl_please_wait",
+        "text": ""
+    },
+    {
+        "name": "lbl_weather_radar",
+        "text": ""
+    },
+    {
+        "name": "lbl_alert_overlay_permission_denied",
+        "text": ""
+    },
+    {
+        "name": "lbl_alert_gps_low_accuracy_mode",
+        "text": ""
+    },
+    {
+        "name": "txt_stormy",
+        "text": ""
+    },
+    {
+        "name": "txt_sunny",
+        "text": ""
+    },
+    {
+        "name": "txt_cloudy",
+        "text": ""
+    },
+    {
+        "name": "txt_windy",
+        "text": ""
+    },
+    {
+        "name": "txt_hurricanes",
+        "text": ""
+    },
+    {
+        "name": "txt_typhoons",
+        "text": ""
+    },
+    {
+        "name": "txt_foggy",
+        "text": ""
+    },
+    {
+        "name": "txt_snow",
+        "text": ""
+    },
+    {
+        "name": "txt_hail",
+        "text": ""
+    },
+    {
+        "name": "txt_sleet",
+        "text": ""
+    },
+    {
+        "name": "lbl_fell_live",
+        "text": ""
+    },
+    {
+        "name": "lbl_radar",
+        "text": ""
+    },
+    {
+        "name": "lbl_forecast",
+        "text": ""
+    },
+    {
+        "name": "lbl_wind_gust",
+        "text": ""
+    },
+    {
+        "name": "lbl_dew_point",
+        "text": ""
+    },
+    {
+        "name": "lbl_msl_pressure",
+        "text": ""
+    },
+    {
+        "name": "lbl_emoji",
+        "text": ""
+    },
+    {
+        "name": "lbl_pressure",
+        "text": ""
+    },
+    {
+        "name": "lbl_rain_snow",
+        "text": ""
+    },
+    {
+        "name": "lbl_clouds",
+        "text": ""
+    },
+    {
+        "name": "lbl_waves",
+        "text": ""
+    },
+    {
+        "name": "lbl_currents",
+        "text": ""
+    },
+    {
+        "name": "lbl_index_uv",
+        "text": ""
+    },
+    {
+        "name": "lbl_ozone",
+        "text": ""
+    },
+    {
+        "name": "lbl_wind_speed",
+        "text": ""
+    },
+    {
+        "name": "lbl_temperature",
+        "text": ""
+    },
+    {
+        "name": "lbl_wind",
+        "text": ""
+    },
+    {
+        "name": "txt_mostly_sunny",
+        "text": ""
+    },
+    {
+        "name": "txt_partly_sunny",
+        "text": ""
+    },
+    {
+        "name": "txt_haze",
+        "text": ""
+    },
+    {
+        "name": "txt_showers",
+        "text": ""
+    },
+    {
+        "name": "txt_thunderstorm",
+        "text": ""
+    },
+    {
+        "name": "txt_sandstorm",
+        "text": ""
+    },
+    {
+        "name": "txt_snowstorm",
+        "text": ""
+    },
+    {
+        "name": "txt_tornadoes",
+        "text": ""
+    },
+    {
+        "name": "txt_blizzard",
+        "text": ""
+    },
+    {
+        "name": "txt_mist",
+        "text": ""
+    },
+    {
+        "name": "txt_drought",
+        "text": ""
+    },
+    {
+        "name": "txt_wildfire",
+        "text": ""
+    },
+    {
+        "name": "txt_avalanche",
+        "text": ""
+    },
+    {
+        "name": "txt_breezy",
+        "text": ""
+    },
+    {
+        "name": "txt_dust",
+        "text": ""
+    },
+    {
+        "name": "txt_smoky",
+        "text": ""
+    },
+    {
+        "name": "txt_blustery",
+        "text": ""
+    },
+    {
+        "name": "txt_humid",
+        "text": ""
+    },
+    {
+        "name": "txt_fair",
+        "text": ""
+    },
+    {
+        "name": "txt_ice_pellet",
+        "text": ""
+    },
+    {
+        "name": "txt_ice_crystals",
+        "text": ""
+    },
+    {
+        "name": "txt_cold",
+        "text": ""
+    },
+    {
+        "name": "txt_hot",
+        "text": ""
+    },
+    {
+        "name": "txt_dry",
+        "text": ""
+    },
+    {
+        "name": "txt_wet",
+        "text": ""
+    },
+    {
+        "name": "lbl_details",
+        "text": ""
+    },
+    {
+        "name": "lbl_chance_of_rain",
+        "text": ""
+    },
+    {
+        "name": "lbl_moon_phases",
+        "text": ""
+    },
+    {
+        "name": "lbl_date_format",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_date_format",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_wind_speed_format",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_pressure_format",
+        "text": ""
+    },
+    {
+        "name": "lbl_choose_precipitation_format",
+        "text": ""
+    },
+    {
+        "name": "distance_ms",
+        "text": ""
+    },
+    {
+        "name": "unit_mm",
+        "text": ""
+    },
+    {
+        "name": "unit_in",
+        "text": ""
+    },
+    {
+        "name": "unit_mmHg",
+        "text": ""
+    },
+    {
+        "name": "unit_hPa",
+        "text": ""
+    },
+    {
+        "name": "unit_mbar",
+        "text": ""
+    },
+    {
+        "name": "unit_dobson",
+        "text": ""
+    },
+    {
+        "name": "unit_inHg",
+        "text": ""
+    },
+    {
+        "name": "txt_new_moon",
+        "text": ""
+    },
+    {
+        "name": "txt_waxing_crescent",
+        "text": ""
+    },
+    {
+        "name": "txt_first_quarter",
+        "text": ""
+    },
+    {
+        "name": "txt_waxing_gibbous",
+        "text": ""
+    },
+    {
+        "name": "txt_full_moon",
+        "text": ""
+    },
+    {
+        "name": "txt_waning_gibbous",
+        "text": ""
+    },
+    {
+        "name": "txt_third_quarter",
+        "text": ""
+    },
+    {
+        "name": "txt_waning_crescent",
+        "text": ""
+    },
+    {
+        "name": "txt_dark_moon",
+        "text": ""
+    },
+    {
+        "name": "lbl_rain_probability",
+        "text": ""
+    },
+    {
+        "name": "lbl_low",
+        "text": ""
+    },
+    {
+        "name": "lbl_moderate",
+        "text": ""
+    },
+    {
+        "name": "lbl_high",
+        "text": ""
+    },
+    {
+        "name": "lbl_very_high",
+        "text": ""
+    },
+    {
+        "name": "lbl_extreme",
+        "text": ""
+    },
+    {
+        "name": "lbl_system",
+        "text": ""
+    }
+]

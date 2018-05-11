@@ -28,6 +28,15 @@ class Language extends Model
 	    return $this->belongsTo('App\User', 'updated_by');
 	}
 
+    public static function getLanguageCode($id){
+        $language = Language::find($id);
+        if($language){
+            return $language->code;
+        }else{
+            return '';
+        }
+    }
+
     public static function getDataForDatatable(){
         $query = \DB::table('languages')
                 ->join('users', 'users.id', 'languages.updated_by')

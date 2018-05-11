@@ -15,6 +15,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->messages = Cache::remember('messages', 1440, function() {
             return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
         });
@@ -144,10 +145,10 @@ class CategoryController extends Controller
 
         return datatables()->of($categories)
                 ->addColumn('action', function ($category) {
-                    return $category->id;
+                    return $category['id'];
                 })
                 ->addColumn('all', function ($category) {
-                    return $category->id;
+                    return $category['id'];
                 })
                 ->removeColumn('id')->make(true);
     }

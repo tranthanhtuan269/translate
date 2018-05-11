@@ -13,6 +13,7 @@ class PermissionController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->messages = Cache::remember('messages', 1440, function() {
             return \DB::table('messages')->where('category', 1)->pluck('message', 'name');
         });
@@ -172,10 +173,10 @@ class PermissionController extends Controller
 
         return datatables()->of($permissions)
                 ->addColumn('action', function ($permission) {
-                    return $permission->id;
+                    return $permission['id'];
                 })
                 ->addColumn('all', function ($permission) {
-                    return $permission->id;
+                    return $permission['id'];
                 })
                 ->removeColumn('id')->make(true);
     }

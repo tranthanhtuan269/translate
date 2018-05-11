@@ -101,14 +101,14 @@
             var $translate_content  = $('#translate-hold .text-content').html();
             var category            = $('select[name=category]').val();
             var language            = $('select[name=language]').val();
-            var slug                = $('#source-hold>.body-hold>.text-content').attr('data-slug');
+            var keyword                = $('#source-hold>.body-hold>.text-content').attr('data-keyword');
             
             var _self   = $(this);
             var id      = $(this).attr('data-id');
             var data    = {
                 category            : category,
                 language            : language,
-                slug                : slug,
+                keyword             : keyword,
                 source_text         : $source_content,
                 trans_text          : $translate_content,
                 _method             : "PUT"
@@ -218,13 +218,12 @@
         }
 
         function importText(id) {
-            console.log(id);
             // set current text to 1
             $('#currentNumber').html(id + 1);
             // set total of text equal $listText.length
             $('#totalNumber').html($listText.length);
             $('#source-hold>.body-hold>.text-content').html($listText[id].source_text);
-            $('#source-hold>.body-hold>.text-content').attr('data-slug', $listText[id].slug);
+            $('#source-hold>.body-hold>.text-content').attr('data-keyword', $listText[id].keyword);
             $('#translate-hold>.body-hold>.text-content').html($listText[id].trans_text);
         }
 
@@ -236,9 +235,9 @@
             $('#improve_btn').attr("disabled", "disabled");
         }
 
-        function changeDataOfList( slug, trans ) {
+        function changeDataOfList( keyword, trans ) {
             for (var i in $listText) {
-                if ($listText[i].slug == slug) {
+                if ($listText[i].keyword == keyword) {
                     $listText[i].trans = trans;
                     break; //Stop this loop, we found it!
                 }

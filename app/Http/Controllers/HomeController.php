@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category, App\TranslateGroup;
+use App\Category;
+use App\TranslateGroup;
+use App\Language;
 use App\Common\Helper;
 use Auth;
 
@@ -52,19 +54,6 @@ class HomeController extends Controller
     }
 
     public function test(){
-        $fileSource = public_path() . '/zipfile/zip.zip';
-        $fileDest   = public_path() . '/uploads/' . \Auth::id() .'/zip/zip.zip';
-        copy($fileSource, $fileDest);
-        chmod($fileDest, 0777); 
-        die(1);
-        dd(file_exists(public_path() . '/zipfile/zip.zip'));
-        dd(1);
-        $exists = \Storage::disk('zip')->has('zip.zip');
-        dd($exists);
-        $file = public_path() . '/zipfile/zip.zip';
-        $urlZipFolder   = public_path() . '/uploads/' . \Auth::id() .'/zip/zip.zip';
-
-        mkdir(dirname($urlZipFolder), 0777, true);
-        copy($file, $urlZipFolder);
+        dd(Language::getLanguageCode(2)->code);
     }
 }

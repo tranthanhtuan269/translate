@@ -35,9 +35,9 @@ class Category extends Model
                         'categories.id as id',
                         'categories.name as name',
                         'users.name as updater'
-                        )
-                ->orderBy('categories.updated_at', 'desc');
-        return collect($query->get());
+                        );
+                // ->orderBy('categories.updated_at', 'desc');
+        return $query;
     }
 
     public static function deleteMulti($id_list){

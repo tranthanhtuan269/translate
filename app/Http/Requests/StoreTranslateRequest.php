@@ -24,6 +24,7 @@ class StoreTranslateRequest extends FormRequest
     public function rules()
     {
         return [
+            'keyword'           => 'required|max:255',
             'source_text'       => 'required|max:255',
             'translated_text'   => 'required|max:255',
             'language'          => 'required',

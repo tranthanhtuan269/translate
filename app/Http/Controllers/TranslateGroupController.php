@@ -10,6 +10,11 @@ use App\Http\Requests\UpdateGroupRequest;
 
 class TranslateGroupController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -134,10 +139,10 @@ class TranslateGroupController extends Controller
 
         return datatables()->of($groups)
                 ->addColumn('action', function ($group) {
-                    return $group->id;
+                    return $group['id'];
                 })
                 ->addColumn('all', function ($group) {
-                    return $group->id;
+                    return $group['id'];
                 })
                 ->removeColumn('id')->make(true);
     }

@@ -16,7 +16,7 @@ class ContributorController extends Controller
 
     public function getData(Request $request){
     	if(isset($request->language) && isset($request->category)){
-    		$translateTexts = TranslateText::select('slug', 'source_text', 'trans_text')
+    		$translateTexts = TranslateText::select('keyword', 'source_text', 'trans_text')
     							->where('category_id', $request->category)
     							->where('language_id', $request->language)
     							->where('translate_type', 0)->get();
@@ -31,7 +31,7 @@ class ContributorController extends Controller
                                                     $request->category, 
                                                     $request->language, 
                                                     $request->language, 
-                                                    $request->slug, 
+                                                    $request->keyword, 
                                                     $request->source_text, 
                                                     $request->trans_text, 
                                                     1

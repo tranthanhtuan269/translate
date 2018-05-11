@@ -93,7 +93,8 @@
                     $('#permission-list').multiselect({
                         includeSelectAllOption: true,
                         includeSelectAllIfMoreThan: 0,
-                        numberDisplayed: 2
+                        numberDisplayed: 2,
+                        enableClickableOptGroups: true
                     });
                 },
                 error: function (data) {
