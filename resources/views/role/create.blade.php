@@ -22,11 +22,13 @@
                                 <input type="text" class="form-control" id="roleName" name="name" placeholder="Role Name">
                             </div>
                         </div>
-                        <div class="form-group row border rounded p-3">
+                        <div class="form-group border rounded p-3">
                             <input type="hidden" name="permission-checked" value="">
                             <?php 
                                 $UPermissions = App\Permission::where('group', 1)->get();
                             ?>
+                            <div class="row">
+                            <div class="col-sm-12 font-weight-bold font-italic my-3"><u>User Group</u></div>
                             @foreach($UPermissions as $permission)
                             <div class="col-sm-4">
                                 <label class="pointer">
@@ -35,10 +37,12 @@
                                 </label>
                             </div>
                             @endforeach
-
+                            </div>
                             <?php 
                                 $CPermissions = App\Permission::where('group', 2)->get();
                             ?>
+                            <div class="row">
+                            <div class="col-sm-12 font-weight-bold font-italic my-3"><u>Category Group</u></div>
                             @foreach($CPermissions as $permission)
                             <div class="col-sm-4">
                                 <label class="pointer">
@@ -47,10 +51,12 @@
                                 </label>
                             </div>
                             @endforeach
-
+                            </div>
                             <?php 
                                 $LPermissions = App\Permission::where('group', 3)->get();
                             ?>
+                            <div class="row">
+                            <div class="col-sm-12 font-weight-bold font-italic my-3"><u>Language Group</u></div>
                             @foreach($LPermissions as $permission)
                             <div class="col-sm-4">
                                 <label class="pointer">
@@ -59,6 +65,35 @@
                                 </label>
                             </div>
                             @endforeach
+                            </div>
+                            <?php 
+                                $LPermissions = App\Permission::where('group', 4)->get();
+                            ?>
+                            <div class="row">
+                            <div class="col-sm-12 font-weight-bold font-italic my-3"><u>Group Language Group</u></div>
+                            @foreach($LPermissions as $permission)
+                            <div class="col-sm-4">
+                                <label class="pointer">
+                                    {{ Form::checkbox('permission', $permission->id, false, ['class' => 'permission-check', 'data-id' => $permission->id]) }}
+                                    {{ $permission->name }}
+                                </label>
+                            </div>
+                            @endforeach
+                            </div>
+                            <?php 
+                                $LPermissions = App\Permission::where('group', 5)->get();
+                            ?>
+                            <div class="row">
+                            <div class="col-sm-12 font-weight-bold font-italic my-3"><u>Translate Group</u></div>
+                            @foreach($LPermissions as $permission)
+                            <div class="col-sm-4">
+                                <label class="pointer">
+                                    {{ Form::checkbox('permission', $permission->id, false, ['class' => 'permission-check', 'data-id' => $permission->id]) }}
+                                    {{ $permission->name }}
+                                </label>
+                            </div>
+                            @endforeach
+                            </div>
                         </div>
                         <div class="form-group row">
                             <div class="offset-sm-5 col-sm-2">
