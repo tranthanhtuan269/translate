@@ -57,5 +57,6 @@ class Authenticate
                 return response()->view('error.404', $data, 200);
             }
         }
+        return response()->view('error.404', $data, 200);
     }
 }
