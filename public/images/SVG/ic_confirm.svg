@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="46px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_confirm</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="10-REVIEW-CONTRIBUTOR" transform="translate(-1350.000000, -560.000000)" fill="#0073FF" fill-rule="nonzero">
+            <g id="RESULT" transform="translate(252.000000, 460.000000)">
+                <g id="1" transform="translate(2.000000, 100.000000)">
+                    <path d="M1135.26263,39.2626263 C1144.24579,30.2794613 1144.24579,15.7205387 1135.26263,6.73737374 C1126.27946,-2.24579125 1111.72054,-2.24579125 1102.73737,6.73737374 C1093.75421,15.7205387 1093.75421,30.2794613 1102.73737,39.2626263 C1111.72054,48.2457912 1126.28885,48.2457912 1135.26263,39.2626263 Z M1111.08691,19.0412621 L1116.36064,24.123301 L1127.91309,13 L1132,16.9383495 L1120.45712,28.0616505 L1116.36064,32 L1112.27374,28.0616505 L1107,22.9796117 L1111.08691,19.0412621 Z" id="ic_confirm"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

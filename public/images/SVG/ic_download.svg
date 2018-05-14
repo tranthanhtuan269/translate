@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_download</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4-HOME" transform="translate(-1312.000000, -2135.000000)" fill="#9B9B9B">
+            <g id="RESULT" transform="translate(252.000000, 1939.000000)">
+                <g id="1" transform="translate(0.000000, 194.000000)">
+                    <path d="M1095.08,6.46 L1092.3,3.1 C1091.76,2.42 1090.94,2 1090,2 L1066,2 C1065.06,2 1064.24,2.42 1063.68,3.1 L1060.92,6.46 C1060.34,7.14 1060,8.04 1060,9 L1060,34 C1060,36.2 1061.8,38 1064,38 L1092,38 C1094.2,38 1096,36.2 1096,34 L1096,9 C1096,8.04 1095.66,7.14 1095.08,6.46 L1095.08,6.46 Z M1078,31 L1067,20 L1074,20 L1074,16 L1082,16 L1082,20 L1089,20 L1078,31 L1078,31 Z M1064,6 L1065.59055,4 L1089.15418,4 L1091,6 L1064,6 L1064,6 Z" id="ic_download"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

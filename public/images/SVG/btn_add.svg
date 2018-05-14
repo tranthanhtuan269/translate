@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="46px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>btn_add</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="8-TRANSLATE-GROUP-CONFIG" transform="translate(-1193.000000, -752.000000)">
+            <g id="RESULT" transform="translate(252.000000, 652.000000)">
+                <g id="1" transform="translate(2.000000, 100.000000)">
+                    <g id="btn_add" transform="translate(939.000000, 0.000000)">
+                        <circle id="Oval-2" fill="#2688E9" cx="23" cy="23" r="23"></circle>
+                        <path d="M36.3719148,20.9069569 L25.0929736,20.9069569 L25.0929736,9.62790887 C25.0929736,9.11410204 24.3952751,8 22.999939,8 C21.6046029,8 20.9069044,9.11416303 20.9069044,9.62790887 L20.9069044,20.9070179 L9.62790225,20.9070179 C9.1141585,20.9069569 8,21.6046583 8,22.999939 C8,24.3952198 9.1141585,25.0929821 9.62790225,25.0929821 L20.9069654,25.0929821 L20.9069654,36.3720911 C20.9069654,36.885776 21.6046029,38 23,38 C24.3953971,38 25.0930346,36.885776 25.0930346,36.3720911 L25.0930346,25.0929821 L36.3720978,25.0929821 C36.8857805,25.0929821 38,24.3953417 38,22.999939 C38,21.6045363 36.8856585,20.9069569 36.3719148,20.9069569 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="10px" viewBox="0 0 15 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_tab_bar_dropdown</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4-HOME" transform="translate(-1529.000000, -59.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="USER" transform="translate(1360.000000, 26.000000)">
+                <g id="Group-18" transform="translate(84.000000, 25.000000)">
+                    <path d="M98.7391309,8.8 L85.9160189,8.8 C85.6677905,8.8 85.4531973,8.89062943 85.2718883,9.07173791 C85.0905793,9.2530469 85,9.46764015 85,9.71571816 C85,9.96379618 85.0905793,10.1785398 85.2718883,10.3597485 L91.6834694,16.7712294 C91.8649789,16.9525384 92.0795721,17.0433182 92.3276,17.0433182 C92.5756279,17.0433182 92.7904216,16.9525384 92.9715803,16.7712294 L99.3831613,10.3596984 C99.5642698,10.1785398 99.6552,9.96379618 99.6552,9.71566804 C99.6552,9.46764015 99.5643199,9.2530469 99.3831613,9.07168778 C99.2020027,8.89042892 98.987209,8.8 98.7391309,8.8 Z" id="ic_tab_bar_dropdown"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

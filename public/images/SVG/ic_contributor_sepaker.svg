@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_contributor_sepaker</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2-LANG-CONTRIBUTOR" transform="translate(-369.000000, -1314.000000)" fill="#9B9B9B">
+            <g id="Source" transform="translate(253.000000, 771.000000)">
+                <path d="M116,551.224059 L116,559.775941 L121.555556,559.775941 L128.5,566.902509 L128.5,544.097491 L121.555556,551.224059 L116,551.224059 L116,551.224059 Z M134.75,555.5 C134.75,552.977195 133.333333,550.810718 131.277778,549.755986 L131.277778,561.229761 C133.333333,560.189282 134.75,558.022805 134.75,555.5 L134.75,555.5 Z M131.277778,543 L131.277778,545.936146 C135.291667,547.161916 138.222222,550.981756 138.222222,555.5 C138.222222,560.018244 135.291667,563.838084 131.277778,565.063854 L131.277778,568 C136.847222,566.702965 141,561.600342 141,555.5 C141,549.399658 136.847222,544.297035 131.277778,543 L131.277778,543 Z" id="ic_contributor_sepaker"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -97,7 +97,7 @@ class PermissionController extends Controller
             try{
                 $rules = [
                     'name'    => 'required',
-                    'route'   => 'required',
+                    'group'   => 'required',
                 ];
 
                 $messages = [
@@ -117,7 +117,7 @@ class PermissionController extends Controller
                     $permission = Permission::find($id);
                     if($permission){
                         $permission->name         = $request->name;
-                        $permission->route        = strtolower($request->route);
+                        $permission->group        = $request->group;
                         $permission->updated_at   = date('Y-m-d H:i:s');
 
                         if($permission->save()){

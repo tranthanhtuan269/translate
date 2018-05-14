@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_import_cancel</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4-HOME" transform="translate(-1401.000000, -698.000000)" fill="#9B9B9B" fill-rule="nonzero">
+            <g id="BROWSE" transform="translate(252.000000, 434.000000)">
+                <g id="1" transform="translate(2.000000, 236.000000)">
+                    <path d="M1159,28 C1152.4,28 1147,33.4 1147,40 C1147,46.6 1152.4,52 1159,52 C1165.6,52 1171,46.6 1171,40 C1171,33.4 1165.6,28 1159,28 Z M1165,41.2 L1160.2,41.2 L1160.2,46 L1157.8,46 L1157.8,41.2 L1153,41.2 L1153,38.8 L1157.8,38.8 L1157.8,34 L1160.2,34 L1160.2,38.8 L1165,38.8 L1165,41.2 Z" id="ic_import_cancel" transform="translate(1159.000000, 40.000000) rotate(-315.000000) translate(-1159.000000, -40.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

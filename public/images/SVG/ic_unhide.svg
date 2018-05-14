@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_unhide</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M412.5,10 C406.818182,10 401.965909,13.5246667 400,18.5 C401.965909,23.4753333 406.818182,27 412.5,27 C418.181818,27 423.034091,23.4753333 425,18.5 C423.034091,13.5246667 418.181818,10 412.5,10 L412.5,10 Z M412.5,24.1666667 C409.363636,24.1666667 406.818182,21.628 406.818182,18.5 C406.818182,15.372 409.363636,12.8333333 412.5,12.8333333 C415.636364,12.8333333 418.181818,15.372 418.181818,18.5 C418.181818,21.628 415.636364,24.1666667 412.5,24.1666667 L412.5,24.1666667 Z M412.5,15.1 C410.613636,15.1 409.090909,16.6186667 409.090909,18.5 C409.090909,20.3813333 410.613636,21.9 412.5,21.9 C414.386364,21.9 415.909091,20.3813333 415.909091,18.5 C415.909091,16.6186667 414.386364,15.1 412.5,15.1 L412.5,15.1 Z" id="path-1"></path>
+    </defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1-Login_2" transform="translate(-1525.000000, -708.000000)">
+            <g id="form" transform="translate(1093.000000, 573.000000)">
+                <g id="ic_visibility-1" transform="translate(32.000000, 125.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="ic_unhide" fill="#FFFFFF" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

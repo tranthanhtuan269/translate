@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="46px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>btn_edit</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="6-CAT-CONFIG" transform="translate(-1252.000000, -752.000000)">
+            <g id="RESULT" transform="translate(252.000000, 652.000000)">
+                <g id="1" transform="translate(2.000000, 100.000000)">
+                    <g id="btn_edit" transform="translate(998.000000, 0.000000)">
+                        <circle id="Oval-2" fill="#7ED321" cx="23" cy="23" r="23"></circle>
+                        <g id="pencil" transform="translate(11.000000, 11.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                            <path d="M0.123315789,21.7944474 C-0.125526316,22.3878947 0.00915789474,23.0728421 0.464210526,23.5278947 C0.919263158,23.9829474 1.60421053,24.1176316 2.19765789,23.8687105 L7.99768421,21.4367368 L2.55528947,15.9944211 L0.123315789,21.7944474 Z" id="Shape"></path>
+                            <path d="M23.5279737,4.38623684 L19.6057895,0.464131579 C18.9869211,-0.154736842 17.9835,-0.154736842 17.3645526,0.464131579 L4.00839474,13.8205263 C4.005,13.8238421 4.00215789,13.8275526 3.99884211,13.8309474 L10.1612368,19.9933421 C10.1646316,19.9900263 10.1683421,19.9871842 10.1716579,19.9838684 L23.5279737,6.62755263 C24.1468421,6.00860526 24.1468421,5.00518421 23.5279737,4.38623684 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

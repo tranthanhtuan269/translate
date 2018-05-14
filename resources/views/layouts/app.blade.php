@@ -15,26 +15,17 @@
     <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ url('/') }}/css/style.css">
     <link rel="stylesheet" href="{{ url('/') }}/css/tmplt-default.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <base href="{{ url('/') }}" target="_self">
 </head>
 <body>
-  <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 bg-white border-bottom box-shadow nav-holder">
-    @if ( Auth::check() )
-    <h5 class="my-0 font-weight-normal nav-left"><a href="{{ url('/') }}/home" class="text-dark company-name">TOH Translation Tool</a></h5>
-    @else
-    <h5 class="my-0 font-weight-normal nav-left"><a href="{{ url('/') }}" class="text-dark company-name">TOH Translation Tool</a></h5>
-    @endif
-    <!-- <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="#">Features</a>
-      <a class="p-2 text-dark" href="#">Enterprise</a>
-      <a class="p-2 text-dark" href="#">Support</a>
-      <a class="p-2 text-dark" href="#">Pricing</a>
-    </nav> -->
-
-    @if ( Auth::check() )
+  @if ( Auth::check() )
+  <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 box-shadow nav-holder navbar-main-top">
+    <h5 class="my-1 font-weight-normal nav-left"><a href="{{ url('/') }}/home" class="text-dark company-name"><img src="{{ url('/') }}/images/SVG/logo_tab_bar.svg" width="80%" /></a></h5>
     <ul class="nav justify-content-center nav-center">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Parameter <br/>Configuration</a>
+        <a class="nav-link text-center color-white border-right-1" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Parameter <br/>Configuration</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="{{ url('category') }}">Category</a>
           <a class="dropdown-item" href="{{ url('language') }}">Language</a>
@@ -48,15 +39,15 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-center" href="{{ url('translates') }}">Translation <br />Management</a>
+        <a class="nav-link text-center color-white border-right-1" href="{{ url('translates') }}">Translation <br />Management</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-center" href="{{ url('translates/review') }}">Review <br />Contribute</a>
+        <a class="nav-link text-center color-white" href="{{ url('translates/review') }}">Review <br />Contribute</a>
       </li>
     </ul>
     <ul class="nav justify-content-center nav-right">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link text-center color-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         @if(strlen(Auth::user()->avatar) > 0)
         <img src="{{ url('/') }}/images/avatar/{{ Auth::user()->avatar }}" width="60" height="60" class="img-thumbnail rounded-circle" />
         @else
@@ -69,21 +60,24 @@
         </div>
       </li>
     </ul>
-    @else
+  </div>
+  @else
+  <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 bg-white box-shadow nav-holder navbar-top">
+    <h5 class="my-0 font-weight-normal nav-left"><a href="{{ url('/') }}" class="text-dark company-name"><img src="{{ url('/') }}/images/SVG/LOGO.svg" width="80%" /></a></h5>
     <ul class="nav justify-content-center nav-right">
-      @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@contributor')
+      @if(Route::currentRouteAction() == 'App\Http\Controllers\SiteController@welcome')
       <li class="nav-item">
-        <a class="nav-link text-center" href="{{ url('contributor') }}">Contributor</a>
+        <a class="nav-link text-center nav-btn" href="{{ url('contributor') }}">Language Contributor</a>
       </li>
       @endif
-      @if(Route::currentRouteAction() != 'App\Http\Controllers\SiteController@welcome')
+      @if(Route::currentRouteAction() == 'App\Http\Controllers\ContributorController@index')
       <li class="nav-item">
-        <a class="nav-link text-center" href="javascript:void(0)"  data-toggle="modal" data-target="#login-form">Sign in</a>
+        <a class="nav-link text-center nav-btn" href="javascript:void(0)"  data-toggle="modal" data-target="#login-form">Login</a>
       </li>
       @endif
     </ul>
-    @endif
   </div>
+  @endif
 
   <div class="container-fluid">
       @yield('content')

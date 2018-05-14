@@ -54,9 +54,9 @@ class Authenticate
                 view()->share('arr_route', $route_arr);
                 return $next($request);
             }else{
-                return response()->view('error.404', $data, 200);
+                return response()->view('error.404');
             }
         }
-        return response()->view('error.404', $data, 200);
+        return response()->view('error.404');
     }
 }

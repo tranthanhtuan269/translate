@@ -55,9 +55,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="permissionRoute_upd" class="col-sm-4 col-form-label">Permission Route</label>
+            <label for="permissionRoute_upd" class="col-sm-4 col-form-label">Permission Group</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="permissionRoute_upd" placeholder="Permission Route">
+            {{ Form::select('permissionGroup', ['1' => 'User', '2' => 'Category', '3' => 'Language', '4' => 'Language Group', '5' => 'Translate'], null, ['id' => 'permissionGroup_upd', 'class' => 'form-control', 'placeholder' => 'Select a group']) }}
             </div>
         </div>
       </div>
@@ -205,13 +205,13 @@
             $('.edit-permission').click(function(){
                 var id      = $(this).attr('data-id');
                 var name    = $(this).attr('data-name');
-                var route   = $(this).attr('data-route');
+                var group   = $(this).attr('data-group');
 
                 $('#edit_permission_modal').modal('show');
 
                 $('#permissionID_upd').val(id);
                 $('#permissionName_upd').val(name);
-                $('#permissionRoute_upd').val(route);
+                $('#permissionGroup_upd').val(group);
             });
 
             $('.delete-permission').off('click');
@@ -249,7 +249,7 @@
         $('#savePermission').click(function(){
             var data    = {
                 name                : $('#permissionName_upd').val(),
-                route               : $('#permissionRoute_upd').val(),
+                group               : $('#permissionGroup_upd').val(),
                 _method             : "PUT"
             };
             $.ajaxSetup({

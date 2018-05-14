@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_contributor_delete</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2-LANG-CONTRIBUTOR" transform="translate(-777.000000, -885.000000)" fill="#9B9B9B" fill-rule="nonzero">
+            <g id="Source" transform="translate(253.000000, 771.000000)">
+                <path d="M535.970563,113.970563 C529.370563,113.970563 523.970563,119.370563 523.970563,125.970563 C523.970563,132.570563 529.370563,137.970563 535.970563,137.970563 C542.570563,137.970563 547.970563,132.570563 547.970563,125.970563 C547.970563,119.370563 542.570563,113.970563 535.970563,113.970563 Z M541.970563,127.170563 L537.170563,127.170563 L537.170563,131.970563 L534.770563,131.970563 L534.770563,127.170563 L529.970563,127.170563 L529.970563,124.770563 L534.770563,124.770563 L534.770563,119.970563 L537.170563,119.970563 L537.170563,124.770563 L541.970563,124.770563 L541.970563,127.170563 Z" id="ic_contributor_delete" transform="translate(535.970563, 125.970563) rotate(-315.000000) translate(-535.970563, -125.970563) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

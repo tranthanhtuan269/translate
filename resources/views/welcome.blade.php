@@ -170,50 +170,37 @@
     });
 </script>
 @else
-<style type="text/css">
-    .login-form{
-        border:1px solid #ccc;
-        border-radius: 60px;
-    }
-    .login-header{
-        text-align: center;
-        margin: 26px auto;
-        font-size: 26px;
-        font-weight: bold;
-    }
-    .login-body{
-        padding: 10px 20px;
-    }
-</style>
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-4 mt-4">
+<div class="backgroud-home" data-url="{{ url('/') }}/images/SVG/">
+    <div class="row">
+        <div class="col-12 col-sm-6 offset-sm-6 col-md-4 offset-md-8">
             <div class="login-form">
-                <div class="login-header">Translation Tool</div>
+                <div class="login-header">Welcome to WebTrans!</div>
 
-                <div class="login-body">                    
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="userEmail" name="email" placeholder="Email">
+                <div class="login-body">
+                    <div class="row ic">
+                        <span class="ic-first"><img class="account-ic" src="{{ url('/') }}/images/SVG/ic_email.svg"/></span>
+                        <input type="text" class="form-input" id="userEmail" name="email" placeholder="Email">
+                    </div>
+                    <div class="row ic">
+                        <span class="ic-first"><img class="password-ic" src="{{ url('/') }}/images/SVG/ic_password.svg"/></span>
+                        <input type="password" class="form-input" id="userPassword" name="password" placeholder="Password">
+                        <span class="ic-last"><img class="view-ic" src="{{ url('/') }}/images/SVG/ic_hide.svg"/></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 remember-me">
+                            <img data-src="untick" src="{{ url('/') }}/images/SVG/ic_remember_untick.svg" width="27">
+                            <span>Remember Me</span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a class="btn btn-link" href="{{ route('password.request') }}"><u><i>Forgot password</i></u>
+                            </a>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <input type="password" class="form-control" id="userPassword" name="password" placeholder="Password">
-                        </div>
+                    <div class="row">
+                        <span id="error-text" style="display: none;"><div class="alert alert-danger" role="alert">Email or Password is incorrect.</div></span>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <span id="error-text" style="display: none;"><div class="alert alert-danger" role="alert">Email or Password is incorrect.</div></span>
-                        </div>
-                    </div>
-                    <div class="form-group row justify-content-center mb-0">
+                    <div class="row justify-content-center mb-0 width-86p">
                         <div class="btn btn-primary mb-2" id="login-btn">Login</div>
-                    </div>
-                    <div class="form-group row justify-content-center">
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                        </a>
                     </div>
                 </div>
             </div>
@@ -225,10 +212,12 @@
         $('#login-btn').click(function(){
             var $email = $('#userEmail').val();
             var $password = $('#userPassword').val();
+            var $remember = $('.remember-me img').attr('data-src') == 'untick' ? false:true;
 
             var data = {
                 email : $email,
-                password : $password
+                password : $password,
+                remember : $remember
             }
 
             $.ajaxSetup({
@@ -256,6 +245,25 @@
                     }
                 }
             });
+        });
+
+        $('.remember-me').click(function(){
+            var url_image = $('.backgroud-home').attr('data-url');
+            if($('.remember-me img').attr('data-src') == 'untick'){
+                $('.remember-me img').attr('src', url_image + 'ic_remember_ticked.svg');
+                $('.remember-me img').attr('data-src', 'ticked');
+            }else{
+                $('.remember-me img').attr('src', url_image + 'ic_remember_untick.svg');
+                $('.remember-me img').attr('data-src', 'untick');
+            }
+        });
+
+        $('.view-ic').click(function(){
+            if($('#userPassword').attr('type') == 'password'){
+                $('#userPassword').attr('type', 'text');
+            }else{
+                $('#userPassword').attr('type', 'password');
+            }
         });
     })
 </script>

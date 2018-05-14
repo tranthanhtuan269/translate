@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="17px" viewBox="0 0 30 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_contributor_dropdown</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2-LANG-CONTRIBUTOR" transform="translate(-429.000000, -1319.000000)" fill="#9B9B9B" fill-rule="nonzero">
+            <g id="Source" transform="translate(253.000000, 771.000000)">
+                <path d="M204.124756,548 L177.875141,548 C177.367004,548 176.92772,548.186903 176.55657,548.560399 C176.185421,548.934308 176,549.376858 176,549.888464 C176,550.400069 176.185421,550.84293 176.55657,551.216633 L189.681429,564.438878 C190.052989,564.812787 190.492273,565 191,565 C191.507727,565 191.947421,564.812787 192.318263,564.438878 L205.443122,551.216529 C205.813861,550.84293 206,550.400069 206,549.888361 C206,549.376858 205.813964,548.934308 205.443122,548.560295 C205.07228,548.186489 204.632586,548 204.124756,548 Z" id="ic_contributor_dropdown"></path>
+            </g>
+        </g>
+    </g>
+</svg>
