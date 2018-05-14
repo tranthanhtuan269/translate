@@ -62,21 +62,26 @@
     </ul>
   </div>
   @else
-  <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 bg-white box-shadow nav-holder navbar-top">
-    <h5 class="my-0 font-weight-normal nav-left"><a href="{{ url('/') }}" class="text-dark company-name"><img src="{{ url('/') }}/images/SVG/LOGO.svg" width="80%" /></a></h5>
-    <ul class="nav justify-content-center nav-right">
-      @if(Route::currentRouteAction() == 'App\Http\Controllers\SiteController@welcome')
-      <li class="nav-item">
-        <a class="nav-link text-center nav-btn" href="{{ url('contributor') }}">Language Contributor</a>
-      </li>
-      @endif
-      @if(Route::currentRouteAction() == 'App\Http\Controllers\ContributorController@index')
-      <li class="nav-item">
-        <a class="nav-link text-center nav-btn" href="javascript:void(0)"  data-toggle="modal" data-target="#login-form">Login</a>
-      </li>
-      @endif
-    </ul>
-  </div>
+    @if(Route::currentRouteAction() == 'App\Http\Controllers\SiteController@welcome')
+    <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 bg-white box-shadow nav-holder navbar-top">
+      <h5 class="my-0 font-weight-normal nav-left"><a href="{{ url('/') }}" class="text-dark company-name"><img src="{{ url('/') }}/images/SVG/LOGO.svg" width="80%" /></a></h5>
+      <ul class="nav justify-content-center nav-right">
+        <li class="nav-item">
+          <a class="nav-link text-center nav-btn" href="{{ url('contributor') }}">Language Contributor</a>
+        </li>
+      </ul>
+    </div>
+    @endif
+    @if(Route::currentRouteAction() == 'App\Http\Controllers\ContributorController@index')
+    <div class="position-relative align-items-center pb-3 px-3 px-md-4 mb-3 box-shadow nav-holder navbar-main-top">
+      <h5 class="my-1 font-weight-normal nav-left"><a href="{{ url('/') }}" class="text-dark company-name"><img src="{{ url('/') }}/images/SVG/logo_tab_bar.svg" width="80%" /></a></h5>
+      <ul class="nav justify-content-center nav-right">
+        <li class="nav-item">
+          <a class="nav-link text-center nav-btn" href="javascript:void(0)"  data-toggle="modal" data-target="#login-form">Login</a>
+        </li>
+      </ul>
+    </div>
+    @endif
   @endif
 
   <div class="container-fluid">

@@ -48,13 +48,14 @@
 
 .nav-btn{
     padding: 2px 18px;
-    background-color: #FF945B;
+    background-color: #FF945B!important;
     border-radius: 8px;
     color: #fff;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .nav-btn:hover{
+    background-color: #FF945B!important;
     color: #fff;
 }
 
@@ -295,18 +296,24 @@ input[type=checkbox]{
     outline: none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus {
+.backgroud-home input:-webkit-autofill,
+.backgroud-home input:-webkit-autofill:hover, 
+.backgroud-home input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 30px #0073FF inset;
     -webkit-text-fill-color: #fff !important;
     transition: background-color 5000s ease-in-out 0s;
 }
 
-*:focus {
+input,
+input:focus,
+button,
+button:focus,
+select,
+select:focus,
+a,
+a:focus {
     outline: none;
-    background-color: #0073FF;
-    color: #fff;
+    border:none;
 }
 .width-86p{
     width: 86%;
